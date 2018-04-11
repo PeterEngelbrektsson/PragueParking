@@ -10,9 +10,9 @@ namespace ParkingPlace
     {
         public static int Add(string [] parkingPlace, string registrationNumber, VehicleType vehicleType)
         {
-            pos = FindFreePlace(parkingPlace, registrationNumber, VehicleType);
+            int pos = FindFreePlace(parkingPlace, registrationNumber, VehicleType);
 
-            if (pos != null && VehicleType.MC)
+            if (parkingPlace[pos] != null && VehicleType.MC) // parkingPlace[pos] ! inte pos!
             {
                 parkingPlace[pos] = string.Concat(parkingPlace[pos],registrationNumber);
             }
