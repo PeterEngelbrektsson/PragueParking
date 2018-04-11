@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace ParkingPlace
 {
     public class Parking
@@ -22,6 +23,17 @@ namespace ParkingPlace
         }
         public static int Find(string[] parkingPlace, string registrationNumber)
         {
+            
+            for (int i=0; i < parkingPlace.Length; i++) {
+                if (parkingPlace[i] == registrationNumber)
+                {
+                    Console.WriteLine("Your Vehicle is found with registration number " + parkingPlace[i]);
+                    return i;
+                }
+            }
+            Console.WriteLine("Your Vehicle is not found with registration number " + registrationNumber);
+            
+
             return -1;
         }
         public static int FindFreePlace(string[] parkingPlace, string registrationNumber, VehicleType vehicleType)
