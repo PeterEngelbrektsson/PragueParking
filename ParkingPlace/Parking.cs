@@ -8,9 +8,21 @@ namespace ParkingPlace
 {
     public class Parking
     {
-        public static int Park(string regnr)
+        public static int Add(string [] parkingPlace, string registrationNumber, VehicleType vehicleType)
         {
-            return -1;
+            pos = FindFreePlace(parkingPlace, registrationNumber, VehicleType);
+
+            if (pos != null && VehicleType.MC)
+            {
+                parkingPlace[pos] = string.Concat(parkingPlace[pos],registrationNumber);
+            }
+
+            else
+            {               
+                parkingPlace[pos] = registrationNumber;
+            }               
+
+            return pos;
         }
         public static void Move(string[] parkingPlace, string registrationNumber, int newPosition)
         {
