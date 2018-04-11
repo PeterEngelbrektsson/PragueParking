@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Parking.cs" />
     <Compile Include="ParkingPlaceFullException.cs" />
+    <Compile Include="ParkingSpaceIsEmptyException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VehicleType.cs" />
   </ItemGroup>
