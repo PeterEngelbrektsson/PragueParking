@@ -84,7 +84,7 @@ namespace PaarkingPlaceFunctionTest
             actualPlace = Parking.FindFreePlace(park, "1poi43", VehicleType.Mc);
 
             //Verify
-            Assert.AreEqual(actualPlace, expected);
+            Assert.AreEqual(expected, actualPlace);
 
 
         }
@@ -94,7 +94,7 @@ namespace PaarkingPlaceFunctionTest
             // Setup
             string[] park = new string[2];
             park[0] = "abc123";
-            park[1] = "dbc423:";
+            park[1] = ":dbc423";
             int actualPlace = -1;
             int expected = 1;
 
@@ -102,7 +102,7 @@ namespace PaarkingPlaceFunctionTest
             actualPlace = Parking.FindFreePlace(park, "8toi43", VehicleType.Mc);
 
             //Verify
-            Assert.AreEqual(actualPlace, expected);
+            Assert.AreEqual(expected, actualPlace);
 
         }
         [TestMethod]
@@ -117,9 +117,9 @@ namespace PaarkingPlaceFunctionTest
 
             //Act
             actualPlace = Parking.FindFreePlace(park, "8toi43", VehicleType.Mc);
-            
+
             //Verify
-            Assert.AreEqual(actualPlace, expected);
+            Assert.AreEqual(expected, actualPlace);
         }
 
         [TestMethod]
@@ -137,7 +137,7 @@ namespace PaarkingPlaceFunctionTest
             actualPlace = Parking.FindFreePlace(park, "8toi43", VehicleType.Car);
 
             //Verify
-            Assert.AreEqual(actualPlace,expected);
+            Assert.AreEqual(expected, actualPlace);
         }
     }
 }

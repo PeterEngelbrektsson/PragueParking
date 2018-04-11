@@ -10,7 +10,7 @@ namespace PaarkingPlaceFunctionTest
     {
         [TestMethod]
         [ExpectedException(typeof(ParkingPlaceFullException))]
-        public void ParkAllFullCarCarTest()
+        public void FindFreePlaceParkAllFullCarCarTest()
         {
             // Should throw exception
 
@@ -24,7 +24,7 @@ namespace PaarkingPlaceFunctionTest
 
         [TestMethod]
         [ExpectedException(typeof(ParkingPlaceFullException))]
-        public void ParkAllFullCarMcTest()
+        public void FindFreePlaceParkAllFullCarMcTest()
         {
             // Should throw exception
 
@@ -37,7 +37,7 @@ namespace PaarkingPlaceFunctionTest
         }
         [TestMethod]
         [ExpectedException(typeof(ParkingPlaceFullException))]
-        public void ParkAllFull2McMcTest()
+        public void FindFreePlaceParkAllFull2McMcTest()
         {
             // Should throw exception
 
@@ -51,7 +51,7 @@ namespace PaarkingPlaceFunctionTest
 
         [TestMethod]
         [ExpectedException(typeof(ParkingPlaceFullException))]
-        public void ParkAllFull4McMcTest()
+        public void FindFreePlaceParkAllFull4McMcTest()
         {
             // Should throw exception
 
@@ -64,7 +64,7 @@ namespace PaarkingPlaceFunctionTest
             Parking.FindFreePlace(park, "1poi43", VehicleType.Mc); // Should throw exception
         }
         [TestMethod]
-        public void Park3McMcTest()
+        public void FindFreePlacePark3McMcTest()
         {
             // Setup
             string[] park = new string[2];
@@ -79,7 +79,7 @@ namespace PaarkingPlaceFunctionTest
             MyAssert.AreEqual(expected, park);
         }
         [TestMethod]
-        public void Park1Mc1CarMcTest()
+        public void FindFreePlacePark1Mc1CarMcTest()
         {
             // Setup
             string[] park = new string[2];
@@ -96,7 +96,7 @@ namespace PaarkingPlaceFunctionTest
    
 
         [TestMethod]
-        public void Park1McCarNullTest()
+        public void FindFreePlacePark1McCarNullTest()
         {
             // Setup
             string[] park = new string[2];

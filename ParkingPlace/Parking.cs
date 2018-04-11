@@ -24,9 +24,67 @@ namespace ParkingPlace
         {
             return -1;
         }
+        public static bool IsFreeForMc(string parkingSlot, VehicleType vehicleType)
+        {
+            bool isFree = false;
+
+            
+            if (parkingSlot==null)
+            {
+                isFree = true;
+            }
+            else
+            {
+                int positionOfColon = parkingSlot.IndexOf(':');
+
+                // : on first or last position means one available place.
+                if (positionOfColon == 0 | (positionOfColon == (parkingSlot.Length - 1)))
+                {
+                    isFree = true;
+                }
+            }
+
+            return isFree;
+
+        }
+        public static bool IsFreeFor(string parkingSlot, VehicleType vehicleType)
+        {
+            bool isFree = false;
+
+            if (vehicleType == VehicleType.Car)
+            {
+                isFree = (parkingSlot == null);
+            }else if (vehicleType == VehicleType.Mc)
+            {
+                isFree = IsFreeForMc(parkingSlot, vehicleType);
+            }
+
+            return isFree;
+        }
+
         public static int FindFreePlace(string[] parkingPlace, string registrationNumber, VehicleType vehicleType)
         {
-            return -1;
+            bool found = false;
+            int position = 0;
+
+            do
+            {
+                if (IsFreeFor(parkingPlace[position],vehicleType))
+                {
+                    found = true;
+                }
+                else
+                {
+                    position++;
+                }
+            } while (!found & (position < parkingPlace.Length));
+
+            // Not found => throw exception
+            if(!found && position >= parkingPlace.Length)
+            {
+                throw new ParkingPlaceFullException();
+            }
+            return position;
         }
 
         public static void Remove(string[] parkingPlace, string registrationNumber)
