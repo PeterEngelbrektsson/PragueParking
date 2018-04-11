@@ -8,7 +8,7 @@ namespace ParkingPlace
 {
     public class Parking
     {
-        public static int Park(string regnr)
+        public static int Park(string[] parkingPlace,string regnr, VehicleType vehicleType)
         {
             return -1;
         }
