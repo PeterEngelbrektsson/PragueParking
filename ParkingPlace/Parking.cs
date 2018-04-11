@@ -17,8 +17,35 @@ namespace ParkingPlace
         {
             
         }
+        public static VehicleType GetVehicleTypeOfParkedVehicle(string[] parkingPlace, int position, string registrationNumber)
+        {
+            VehicleType type;
+            if (parkingPlace[position] == null)
+            {
+                throw new ParkingSpaceIsEmptyException();
+            }
+            else
+            {
+                int positionOfColon = parkingPlace[position].IndexOf(':');
+                // : means it's one or two Mc
+                if (positionOfColon >-1)
+                {
+                    type = VehicleType.Mc;
+                }
+                else
+                {
+                    // All strings are considered cars.
+                    type = VehicleType.Car;
+                }
+            }
+            return type;
+        }
+
         public static void Move(string[] parkingPlace, string registrationNumber, int oldPosition,int newPosition)
         {
+            VehicleType vehicleType = GetVehicleTypeOfParkedVehicle(parkingPlace, oldPosition, registrationNumber);
+            Remove(parkingPlace, registrationNumber);
+            Park(parkingPlace, registrationNumber, vehicleType);
 
         }
         public static int Find(string[] parkingPlace, string registrationNumber)
