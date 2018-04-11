@@ -58,6 +58,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MyAsserts\MyAsserts.csproj">
+      <Project>{2ae00fd8-5dbf-4fad-a94c-e509b0446574}</Project>
+      <Name>MyAsserts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ParkingPlace\ParkingPlace.csproj">
       <Project>{37dd4bde-f2de-4bad-9ecb-00c3801a0502}</Project>
       <Name>ParkingPlace</Name>
