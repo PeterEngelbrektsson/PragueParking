@@ -143,28 +143,29 @@ namespace ParkingPlace
         
         public static int Add(string [] parkingPlace, string registrationNumber, VehicleType vehicleType)
         {
-                int pos = FindFreePlace(parkingPlace, registrationNumber, vehicleType);
+            int pos = FindFreePlace(parkingPlace, registrationNumber, vehicleType);
 
-                if ((parkingPlace[pos] != null) && vehicleType == VehicleType.Mc) // If parking place not empty and vehicle is motorcyle
+            if ((parkingPlace[pos] != null) && vehicleType == VehicleType.Mc) // If parking place not empty and vehicle is motorcyle
+            {
+                parkingPlace[pos] = string.Concat(parkingPlace[pos], registrationNumber); // then add the motorcycle after the ':' char after first motorcycle
+            }
+
+            else
+            {
+                if (vehicleType == VehicleType.Mc) // if parking place empty and the vehicle is a motorcycle ?
                 {
-                    parkingPlace[pos] = string.Concat(parkingPlace[pos], registrationNumber); // then add the motorcycle after the ':' char after first motorcycle
+                    parkingPlace[pos] = string.Concat(parkingPlace[pos], ':'); // add a char of ':' at end of registration number string to mark it as a motorcycle
                 }
 
                 else
                 {
-                    if (vehicleType == VehicleType.Mc)
-                    {
-                        parkingPlace[pos] = string.Concat(parkingPlace[pos], ':');
-                    }
-
-                    else
-                    {
-                        parkingPlace[pos] = registrationNumber; // else, add it
-                    }
+                    parkingPlace[pos] = registrationNumber; // else, add it
                 }
+            }
 
-                return pos;
+            return pos;
         }
+              
         public static void Move(string[] parkingPlace, string registrationNumber, int newPosition)
         {
             
