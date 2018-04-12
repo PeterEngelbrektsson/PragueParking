@@ -147,14 +147,14 @@ namespace ParkingPlace
 
             if ((parkingPlace[pos] != null) && vehicleType == VehicleType.Mc) // If parking place not empty and vehicle is motorcyle
             {
-                parkingPlace[pos] = string.Concat(registrationNumber,parkingPlace[pos] ); // then add the motorcycle after the ':' char after first motorcycle
+                parkingPlace[pos] = string.Concat(registrationNumber,parkingPlace[pos] ); // then add the motorcycle before  the ':' char before first motorcycle
             }
 
             else
             {
                 if (vehicleType == VehicleType.Mc) // if parking place empty and the vehicle is a motorcycle ?
                 {
-                    parkingPlace[pos] = string.Concat(':',registrationNumber); // add a char of ':' at end of registration number string to mark it as a motorcycle
+                    parkingPlace[pos] = string.Concat(':',registrationNumber); // add a char of ':' at beginning of registration number string to mark it as a motorcycle
                 }
 
                 else
