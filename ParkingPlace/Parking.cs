@@ -24,6 +24,8 @@ namespace ParkingPlace
             Console.WriteLine("5. Remove a vehicle");
             Console.WriteLine("6. Find free place");
             Console.WriteLine("7. Optimize parking lot");
+            Console.WriteLine();
+            Console.Write("Choose item from menu : ");
 
             int choice = int.Parse(Console.ReadLine()); // Store user choice
 
