@@ -99,8 +99,20 @@ namespace ParkingPlace
             return position;
         }
 
+
         public static void Remove(string[] parkingPlace, string registrationNumber)
         {
+            for (int i = 0; i < parkingPlace.Length; i++)
+            {
+                if (parkingPlace[i] == registrationNumber)
+                {
+                    
+                    parkingPlace.Where(w => w != parkingPlace[i]).ToArray();
+                    Console.WriteLine("The Vehicle with registration number " + registrationNumber +  " successfully removed.");
+                    return;
+                }
+            }
+            Console.WriteLine("The Vehicle with this number " + registrationNumber + " Not found. ");
 
         }
     }

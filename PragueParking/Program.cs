@@ -27,8 +27,12 @@ namespace PragueParking
             // Calling the find method 
             //parkingPlace[10] = "asb123";
             int pos;
-            pos=Parking.Find(parkingPlace, vehicle);
-            Console.WriteLine("Your pos is :- " + pos);
+            //pos=Parking.Find(parkingPlace, vehicle);
+            //pos = Parking.Find(parkingPlace, vehicle);
+            // Remove 
+            Parking.Remove(parkingPlace, vehicle);
+
+            //Console.WriteLine("Your pos is :- " + pos);
         }
     }
 }
