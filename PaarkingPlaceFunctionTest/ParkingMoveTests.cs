@@ -57,10 +57,10 @@ namespace ParkingPlaceFunctionTest
             park[3] = null;
 
             string[] expected = new string[4];
-            park[0] = null;
-            park[1] = "8toi43";
-            park[2] = null;
-            park[3] = "abc213";
+            expected[0] = null;
+            expected[1] = "8toi43";
+            expected[2] = null;
+            expected[3] = "abc213";
 
 
             //Act
@@ -80,9 +80,9 @@ namespace ParkingPlaceFunctionTest
             park[3] = null;
 
             string[] expected = new string[4];
-            park[0] = null;
-            park[1] = "8toi43";
-            park[2] = "abc213:";
+            expected[0] = null;
+            expected[1] = "8toi43";
+            expected[2] = "abc213:";
 
             //Act
             Parking.Move(park, "abc213", 3);
@@ -106,10 +106,10 @@ namespace ParkingPlaceFunctionTest
             park[3] = null;
 
             string[] expected = new string[4];
-            park[0] = null;
-            park[1] = "8toi43:abc213";
-            park[2] = ":tre765";
-            park[3] = null;
+            expected[0] = null;
+            expected[1] = "8toi43:abc213";
+            expected[2] = ":tre765";
+            expected[3] = null;
 
             //Act
             Parking.Move(park, "abc213", 1);

@@ -42,7 +42,7 @@ namespace ParkingPlaceFunctionTest
 
 
         //Act
-        Parking.Move(park, "8toi43", VehicleType.Mc, 1, 0);
+        Parking.Move(park, "8toi43", VehicleType.Car, 1, 0);
 
         //Verify
         MyAssert.AreEqual(expected, park);
@@ -58,14 +58,14 @@ namespace ParkingPlaceFunctionTest
         park[3] = null;
 
         string[] expected = new string[4];
-        park[0] = null;
-        park[1] = "8toi43";
-        park[2] = null;
-        park[3] = "abc213";
+            expected[0] = null;
+            expected[1] = "8toi43";
+            expected[2] = null;
+            expected[3] = "abc213";
 
 
         //Act
-        Parking.Move(park, "abc213", VehicleType.Mc, 2,3);
+        Parking.Move(park, "abc213", VehicleType.Car, 2,3);
 
         //Verify
         MyAssert.AreEqual(expected, park);
@@ -81,9 +81,9 @@ namespace ParkingPlaceFunctionTest
         park[3] = null;
 
         string[] expected = new string[4];
-        park[0] = null;
-        park[1] = "8toi43";
-        park[2] = ":abc213";
+            expected[0] = null;
+            expected[1] = "8toi43";
+            expected[2] = ":tre765";
 
         //Act
         Parking.Move(park, "abc213", VehicleType.Mc, 2,3);
@@ -107,10 +107,10 @@ namespace ParkingPlaceFunctionTest
         park[3] = null;
 
         string[] expected = new string[4];
-        park[0] = null;
-        park[1] = "8toi43:abc213";
-        park[2] = ":tre765";
-        park[3] = null;
+            expected[0] = null;
+            expected[1] = "8toi43:abc213";
+            expected[2] = ":tre765";
+            expected[3] = null;
 
         //Act
         Parking.Move(park, "abc213", VehicleType.Mc, 2,1);

@@ -9,9 +9,143 @@ namespace ParkingPlace
 {
     public class Parking
     {
+
+        public static void DisplayMenu(string[] parkingPlace, VehicleType vehicleType)
+        {
+            // Console.Clear(); -- Do we want to clear screen between repeat displays of the menu or not ? 
+
+            Console.WriteLine("  Prague Parking v1.0");
+            Console.WriteLine("-----------------------");
+            Console.WriteLine("1. Add a car"); 
+            Console.WriteLine("2. Add a motorcyle");
+            Console.WriteLine("3. Move a vehicle");
+            Console.WriteLine("4. Find a vehicle");
+            Console.WriteLine("5. Remove a vehicle");
+            Console.WriteLine("6. Find free place");
+            Console.WriteLine("7. Optimize parking lot");
+
+            int choice = int.Parse(Console.ReadLine());
+
+            string registrationNumber = "ABC123";
+
+            switch (choice)
+            {             
+                case 1: // Add a car
+
+                    Console.WriteLine("Please enter the registration number of the vehicle : ");
+
+                    registrationNumber = Console.ReadLine();
+
+                    vehicleType = VehicleType.Car;
+
+                    Add(parkingPlace, registrationNumber, vehicleType);
+
+                    break;
+
+                case 2: // Add a motorcycle
+
+                    Console.WriteLine("Please enter the registration number of the vehicle : ");
+
+                    registrationNumber = Console.ReadLine();
+                    
+                    vehicleType = VehicleType.Mc;
+
+                    Add(parkingPlace, registrationNumber, vehicleType);
+
+                    break;
+
+                case 3: // Move a vehicle
+
+                    int newPosition = FindFreePlace(parkingPlace, registrationNumber, vehicleType );
+
+                    Move(parkingPlace, registrationNumber, newPosition);
+
+                    break;
+
+                case 4: // Find a vehicle
+
+                    Console.WriteLine("Please enter the registration number of the vehicle : ");
+
+                    registrationNumber = Console.ReadLine();
+
+                    int position = Find(parkingPlace, registrationNumber);
+
+                    Console.WriteLine("Your vehicle is parked at spot number {0}, at array value {1}.", position + 1, position); // Parking spots numbered 1 - 100 !
+
+                    break;
+
+                case 5: // Remove a vehicle
+
+                    Console.WriteLine("Please enter the registration number of the vehicle : ");
+
+                    registrationNumber = Console.ReadLine();
+
+                    Console.WriteLine("Please specify if your vehicle is a car or an mc : ");
+
+                    string isCarOrMc = Console.ReadLine();
+
+                    if (isCarOrMc == "mc")
+                    {
+                        vehicleType = VehicleType.Mc; // It's a motorcycle
+                    }
+
+                    else if (isCarOrMc == "car")
+                    {
+                        vehicleType = VehicleType.Car; // It's a car
+                    }
+
+                    else
+                    {
+                        throw new ArgumentException(); // Neither nor, then throw exception !
+                    }
+
+                    break;
+
+                case 6: // Find free parking spot
+
+                    Console.WriteLine("Please specify if your vehicle is a car or an mc : ");
+
+                    isCarOrMc = Console.ReadLine();
+
+                    if (isCarOrMc == "mc")
+                    {
+                        vehicleType = VehicleType.Mc; // It's a motorcycle
+                    }
+
+                    else if (isCarOrMc == "car")
+                    {
+                        vehicleType = VehicleType.Car; // It's a car
+                    }
+
+                    else
+                    {
+                        throw new ArgumentException(); // Neither car nor mc, throw exception !
+
+                        break;
+                    }
+
+                    position = FindFreePlace(parkingPlace, registrationNumber, vehicleType);
+
+                    Console.WriteLine("There is a free place for your vehicle at location {0}.", position + 1);
+
+                    break;
+
+                case 7: // Optimize parking spot
+
+                    Optimize(parkingPlace);
+
+                    break;
+
+                default: // None of the above, throw exception !
+
+                    throw new ArgumentException();
+
+                    break;
+            }
+        }
+        
         public static int Add(string [] parkingPlace, string registrationNumber, VehicleType vehicleType)
         {
-            {
                 int pos = FindFreePlace(parkingPlace, registrationNumber, vehicleType);
 
                 if ((parkingPlace[pos] != null) && vehicleType == VehicleType.Mc)
@@ -25,11 +159,16 @@ namespace ParkingPlace
                 }
 
                 return pos;
-            }
         }
         public static void Move(string[] parkingPlace, string registrationNumber, int newPosition)
         {
-            
+            int oldPosition = Find(parkingPlace, registrationNumber);
+            if (oldPosition < 0)
+            {
+                throw new VehicleNotFoundException("The vehicle "+registrationNumber+" can not be found ");
+            }
+            VehicleType type = GetVehicleTypeOfParkedVehicle(parkingPlace, oldPosition, registrationNumber);
+            Move(parkingPlace, registrationNumber, type, oldPosition, newPosition);
         }
         public static VehicleType GetVehicleTypeOfParkedVehicle(string[] parkingPlace, int position, string registrationNumber)
         {
@@ -110,6 +249,7 @@ namespace ParkingPlace
                 if (firstSingleMcPosition != lastSingleMcPosition && (firstSingleMcPosition != -1 && lastSingleMcPosition != -1))
                 {
                     string registrationNumber = (parkingPlace[lastSingleMcPosition]).Trim(':');
+                    Console.WriteLine("Move motorcycle {0} from parkingplace {1} to place {2}.",registrationNumber, lastSingleMcPosition, firstSingleMcPosition);
                     Move(parkingPlace, registrationNumber, VehicleType.Mc, lastSingleMcPosition, firstSingleMcPosition);
                     found = true;
                 }
@@ -199,9 +339,7 @@ namespace ParkingPlace
 
                 if (numberOfMcAtOldPosition == 2)
                 {
-                    // Remove(registrationNumner) // Fixme
-                    throw new NotImplementedException();
-
+                    Remove(parkingPlaces, registrationNumber); 
                     AddMcAtPosition(parkingPlaces, registrationNumber, newPosition);
                 }
                 if (numberOfMcAtOldPosition == 1)
@@ -212,19 +350,28 @@ namespace ParkingPlace
             }
 
         }
+    
         public static int Find(string[] parkingPlace, string registrationNumber)
         {
 
             for (int i = 0; i < parkingPlace.Length; i++)
             {
+                // Try to find car
                 if (parkingPlace[i] == registrationNumber)
                 {
                     Console.WriteLine("Your Vehicle is found with registration number " + parkingPlace[i]);
                     return i;
+                }else 
+                {
+                    // Try to find motorcycle
+                    if (ParkingSlot.ContainsMc(parkingPlace[i], registrationNumber)) { 
+                            Console.WriteLine("Your Vehicle is found with registration number " + parkingPlace[i]);
+                            return i;
+                        
+                    }
                 }
             }
             Console.WriteLine("Your Vehicle is not found with registration number " + registrationNumber);
-
 
             return -1;
         }
@@ -232,6 +379,11 @@ namespace ParkingPlace
 
         public static int FindFreePlace(string[] parkingPlace, string registrationNumber, VehicleType vehicleType)
         {
+            if (String.IsNullOrEmpty(registrationNumber))
+            {
+                throw new ArgumentException("Registration number can not be null or empty.");
+            }
+
             bool found = false;
             int position = 0;
 

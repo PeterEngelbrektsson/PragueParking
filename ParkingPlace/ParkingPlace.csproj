@@ -51,6 +51,7 @@
     <Compile Include="ParkingSlot.cs" />
     <Compile Include="ParkingSpaceIsEmptyException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VehicleNotFoundException.cs" />
     <Compile Include="VehicleType.cs" />
   </ItemGroup>
   <ItemGroup>

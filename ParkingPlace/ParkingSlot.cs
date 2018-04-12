@@ -70,5 +70,49 @@ namespace ParkingPlace
 
             return isFree;
         }
+        public static string[] SplitVehicle(string parkingSlot)
+        {
+            string[] result = new string[1];
+            if (parkingSlot == null)
+            {
+                result = null;
+            }
+            else if (parkingSlot.Contains(':'))
+            {
+                char[] separator =new char[] {':'};
+                result = parkingSlot.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+            }
+            else
+            {
+                result[0] = parkingSlot;
+            }
+            return result;
+        }
+        public static bool ContainsMc(string parkingSlot, string registrationNumber)
+        {
+            bool found = false;
+            if (parkingSlot == null)
+            {
+                found = false;
+            }
+            else if(parkingSlot.Contains(':'))
+            {
+                string[] vehilces = SplitVehicle(parkingSlot);
+                foreach (string vehicle in vehilces)
+                {
+                    if (vehicle == registrationNumber)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                // Its a car not an MC.
+                found = false;
+            }
+            return found;
+        }
     }
 }

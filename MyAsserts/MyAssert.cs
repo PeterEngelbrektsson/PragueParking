@@ -13,7 +13,7 @@ namespace MyAsserts
 
             for (int i = 0; i < arr1.Length; i++)
             {
-                Assert.AreEqual(arr1[i], arr2[i]);
+                Assert.AreEqual(arr1[i], arr2[i]," Missmatch at array element "+i);
             }
         }
         public static void AreEqual(int[] arr1, int[] arr2)
@@ -23,7 +23,7 @@ namespace MyAsserts
 
             for (int i = 0; i < arr1.Length; i++)
             {
-                Assert.AreEqual(arr1[i], arr2[i]);
+                Assert.AreEqual(arr1[i], arr2[i]," Missmatch at array element " + i);
             }
         }
         public static void AreEqual(int[] arr1, int[] arr2, string msg)

@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ParkingPlace;
 using MyAsserts;
 
-namespace ParkingPlaceFunctionTest
+namespace ParkingPlaceTests
 {
     [TestClass]
     public class OptimizeTests
@@ -408,66 +408,7 @@ namespace ParkingPlaceFunctionTest
             //Verify
             Assert.AreEqual(expectedPosition, actualPosition);
         }
-        [TestMethod]
-        public void CountMc1McTest()
-        {
-            //Setup
-            string parkingPlace;
-            parkingPlace = ":abc124";
-            int expectedCount = 1;
-            int actualCount;
-
-            //Act
-            actualCount = ParkingSlot.CountMc(parkingPlace);
-
-            //Verify
-            Assert.AreEqual(expectedCount, actualCount);
-        }
-        [TestMethod]
-        public void CountMc2McTest()
-        {
-            //Setup
-            string parkingPlace;
-            parkingPlace = "poi987:abc124";
-            int expectedCount = 2;
-            int actualCount;
-
-            //Act
-            actualCount = ParkingSlot.CountMc(parkingPlace);
-
-            //Verify
-            Assert.AreEqual(expectedCount, actualCount);
-        }
-        [TestMethod]
-        public void CountMc1CarTest()
-        {
-            //Setup
-            string parkingPlace;
-            parkingPlace = "poi987";
-            int expectedCount = 0;
-            int actualCount;
-
-            //Act
-            actualCount = ParkingSlot.CountMc(parkingPlace);
-
-            //Verify
-            Assert.AreEqual(expectedCount, actualCount);
-        }
-        [TestMethod]
-        public void CountMcNullTest()
-        {
-            //Setup
-            string parkingPlace;
-            parkingPlace = null;
-            int expectedCount = 0;
-            int actualCount;
-
-            //Act
-            actualCount = ParkingSlot.CountMc(parkingPlace);
-
-            //Verify
-            Assert.AreEqual(expectedCount, actualCount);
-        }
+     
         [TestMethod]
         public void AddMcAtPosition1stTest()
         {
