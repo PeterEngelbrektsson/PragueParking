@@ -30,6 +30,10 @@ namespace ParkingPlace
         public static void Move(string[] parkingPlace, string registrationNumber, int newPosition)
         {
             int oldPosition = Find(parkingPlace, registrationNumber);
+            if (oldPosition < 0)
+            {
+                throw new VehicleNotFoundException("The vehicle "+registrationNumber+" can not be found ");
+            }
             VehicleType type = GetVehicleTypeOfParkedVehicle(parkingPlace, oldPosition, registrationNumber);
             Move(parkingPlace, registrationNumber, type, oldPosition, newPosition);
         }

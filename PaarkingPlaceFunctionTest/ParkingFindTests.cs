@@ -8,8 +8,6 @@ namespace PaarkingPlaceFunctionTest
     [TestClass]
     public class ParkingFindTests
     {
-        public class ParkingFindFreePlaceTests
-        {
             [TestMethod]
             public void FindCarAllFullCarTest()
             {
@@ -50,7 +48,7 @@ namespace PaarkingPlaceFunctionTest
                 string[] park = new string[4];
                 park[0] = ":abc123";
                 park[1] = "der123:pou456";
-                park[2] = "htr863:";
+                park[2] = ":htr863";
                 park[3] = "ytr654";
                 int actualPlace = -1;
                 int expectedPlace = 2;
@@ -62,13 +60,49 @@ namespace PaarkingPlaceFunctionTest
                 Assert.AreEqual(expectedPlace, actualPlace);
             }
             [TestMethod]
+            public void FindMC2McsRightTest()
+            {
+                // Setup
+                string[] park = new string[4];
+                park[0] = ":abc123";
+                park[1] = "der123:pou456";
+                park[2] = ":htr863";
+                park[3] = "ytr654";
+                int actualPlace = -1;
+                int expectedPlace = 1;
+
+                //Act
+                actualPlace = Parking.Find(park, "pou456");
+
+                //Verify
+                Assert.AreEqual(expectedPlace, actualPlace);
+            }
+            [TestMethod]
+            public void FindMC2McsLeftTest()
+            {
+                // Setup
+                string[] park = new string[4];
+                park[0] = ":abc123";
+                park[1] = "der123:pou456";
+                park[2] = ":htr863";
+                park[3] = "ytr654";
+                int actualPlace = -1;
+                int expectedPlace = 1;
+
+                //Act
+                actualPlace = Parking.Find(park, "der123");
+
+                //Verify
+                Assert.AreEqual(expectedPlace, actualPlace);
+            }
+            [TestMethod]
             public void FindMC2Test()
             {
                 // Setup
                 string[] park = new string[4];
                 park[0] = ":abc123";
                 park[1] = "der123:pou456";
-                park[2] = "htr863:";
+                park[2] = ":htr863";
                 park[3] = "ytr654";
                 int actualPlace = -1;
                 int expectedPlace = 1;
@@ -86,7 +120,7 @@ namespace PaarkingPlaceFunctionTest
                 string[] park = new string[4];
                 park[0] = ":abc123";
                 park[1] = "der123:pou456";
-                park[2] = "htr863:";
+                park[2] = ":htr863";
                 park[3] = "ytr654";
                 int actualPlace = -1;
                 int expectedPlace = 0;
@@ -98,6 +132,6 @@ namespace PaarkingPlaceFunctionTest
                 Assert.AreEqual(expectedPlace, actualPlace);
             }
 
-        }
+        
     }
 }
