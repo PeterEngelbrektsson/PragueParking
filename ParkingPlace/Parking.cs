@@ -29,7 +29,9 @@ namespace ParkingPlace
         }
         public static void Move(string[] parkingPlace, string registrationNumber, int newPosition)
         {
-            
+            int oldPosition = Find(parkingPlace, registrationNumber);
+            VehicleType type = GetVehicleTypeOfParkedVehicle(parkingPlace, oldPosition, registrationNumber);
+            Move(parkingPlace, registrationNumber, type, oldPosition, newPosition);
         }
         public static VehicleType GetVehicleTypeOfParkedVehicle(string[] parkingPlace, int position, string registrationNumber)
         {
@@ -199,9 +201,7 @@ namespace ParkingPlace
 
                 if (numberOfMcAtOldPosition == 2)
                 {
-                    // Remove(registrationNumner) // Fixme
-                    throw new NotImplementedException();
-
+                    Remove(parkingPlaces, registrationNumber); 
                     AddMcAtPosition(parkingPlaces, registrationNumber, newPosition);
                 }
                 if (numberOfMcAtOldPosition == 1)
