@@ -103,7 +103,7 @@ namespace ParkingPlace
 
                     Console.WriteLine("Please specify if your vehicle is a car or an mc : ");
 
-                    isCarOrMc = Console.ReadLine();
+                    isCarOrMc = Console.ReadLine(); // get user input
 
                     if (isCarOrMc == "mc")
                     {
