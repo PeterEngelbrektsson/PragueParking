@@ -5,9 +5,20 @@ using MyAsserts;
 
 namespace PaarkingPlaceFunctionTest
 {
+
     [TestClass]
     public class ParkingParkTests
     {
+        public string[] PopulateParkingPlace(int size)
+        {
+            string[] parkingPlaces = new string[size];
+            for (int i = 0; i < parkingPlaces.Length; i++)
+            {
+                parkingPlaces[i] = "abc" + 100 + i;
+            }
+            return parkingPlaces;
+        }
+
         [TestMethod]
         [ExpectedException(typeof(ParkingPlaceFullException))]
         public void ParkAllFullCarCarTest()
@@ -73,10 +84,15 @@ namespace PaarkingPlaceFunctionTest
             string[] expected = new string[2];
             expected[0] = "abc123:uyt345";
             expected[1] = "dbc423:1poi43";
+            int expectedPosition = 1;
+            int actualPosition;
 
             //Act
-            Parking.Add(park, "1poi43", VehicleType.Mc);
+            actualPosition= Parking.Add(park, "1poi43", VehicleType.Mc);
+
+            // Verify
             MyAssert.AreEqual(expected, park);
+            Assert.AreEqual(expectedPosition, actualPosition);
         }
         [TestMethod]
         public void Park1Mc1CarMcTest()
@@ -88,12 +104,33 @@ namespace PaarkingPlaceFunctionTest
             string[] expected = new string[2];
             expected[0] = "abc123:uyt345";
             expected[1] = "dbc423:8toi43";
+            int expectedPosition = 1;
+            int actualPosition;
 
             //Act
-            Parking.Add(park, "8toi43", VehicleType.Mc);
+            actualPosition = Parking.Add(park, "8toi43", VehicleType.Mc);
             MyAssert.AreEqual(expected, park);
+            Assert.AreEqual(expectedPosition, actualPosition);
         }
-   
+        [TestMethod]
+        public void Park1Mc100VehiclesTest()
+        {
+            // Setup
+            string[] park = PopulateParkingPlace(100);
+            park[0] = "abc123:uyt345";
+            park[1] = "dbc423:";
+            string[] expected = PopulateParkingPlace(100);
+            expected[0] = "abc123:uyt345";
+            expected[1] = "dbc423:8toi43";
+            int expectedPosition=1;
+            int actualPosition;
+            //Act
+            actualPosition = Parking.Add(park, "8toi43", VehicleType.Mc);
+
+            // Verify
+            MyAssert.AreEqual(expected, park);
+            Assert.AreEqual(expectedPosition, actualPosition);
+        }
 
         [TestMethod]
         public void Park1McCarNullTest()
@@ -107,11 +144,15 @@ namespace PaarkingPlaceFunctionTest
             expected[0] = "8toi43";
             expected[1] = "dbc423:lk433";
 
+            int expectedPosition = 0;
+            int actualPosition;
+
             //Act
-            Parking.Add(park, "8toi43", VehicleType.Car);
+            actualPosition=Parking.Add(park, "8toi43", VehicleType.Car);
 
             //Verify
             MyAssert.AreEqual(expected, park);
+            Assert.AreEqual(expectedPosition, actualPosition);
         }
 
     }
