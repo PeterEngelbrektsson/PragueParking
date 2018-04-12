@@ -411,7 +411,7 @@ namespace ParkingPlace
         {
             for (int i = 0; i < parkingPlace.Length; i++)
             {
-                if (parkingPlace[i] == registrationNumber)
+                if (ParkingSlot.ContainsVehicle(parkingPlace[i],registrationNumber))
                 {
 
                     parkingPlace.Where(w => w != parkingPlace[i]).ToArray();

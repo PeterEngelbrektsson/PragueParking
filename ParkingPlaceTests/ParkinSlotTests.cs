@@ -284,5 +284,117 @@ namespace ParkingPlaceTests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestMethod]
+        public void ContainsVehicleNullTest()
+        {
+            //Setup
+            string parkingPlace;
+            parkingPlace = null;
+            string registrationNumber = "gfd765";
+            bool expected = false;
+            bool actual;
+
+            //Act
+            actual = ParkingSlot.ContainsVehicle(parkingPlace, registrationNumber);
+
+            //Verify
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void ContainsVehicleCarTest()
+        {
+            //Setup
+            string parkingPlace;
+            parkingPlace = "gfd765";
+            string registrationNumber = "gfd765";
+            bool expected = true;
+            bool actual;
+
+            //Act
+            actual = ParkingSlot.ContainsVehicle(parkingPlace, registrationNumber);
+
+            //Verify
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void ContainsVehicle1McTrueTest()
+        {
+            //Setup
+            string parkingPlace;
+            parkingPlace = ":gfd765";
+            string registrationNumber = "gfd765";
+            bool expected = true;
+            bool actual;
+
+            //Act
+            actual = ParkingSlot.ContainsVehicle(parkingPlace, registrationNumber);
+
+            //Verify
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void ContainsVehicle1McFalseTest()
+        {
+            //Setup
+            string parkingPlace;
+            parkingPlace = ":gfd765";
+            string registrationNumber = "ifd765";
+            bool expected = false;
+            bool actual;
+
+            //Act
+            actual = ParkingSlot.ContainsVehicle(parkingPlace, registrationNumber);
+
+            //Verify
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void ContainsVehicle2McFalseTest()
+        {
+            //Setup
+            string parkingPlace;
+            parkingPlace = "098iuy:gfd765";
+            string registrationNumber = "ifd765";
+            bool expected = false;
+            bool actual;
+
+            //Act
+            actual = ParkingSlot.ContainsVehicle(parkingPlace, registrationNumber);
+
+            //Verify
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void ContainsVehicle2McTrueRightTest()
+        {
+            //Setup
+            string parkingPlace;
+            parkingPlace = "098iuy:gfd765";
+            string registrationNumber = "gfd765";
+            bool expected = true;
+            bool actual;
+
+            //Act
+            actual = ParkingSlot.ContainsVehicle(parkingPlace, registrationNumber);
+
+            //Verify
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void ContainsVehicle2McTrueleftTest()
+        {
+            //Setup
+            string parkingPlace;
+            parkingPlace = "098iuy:gfd765";
+            string registrationNumber = "098iuy";
+            bool expected = true;
+            bool actual;
+
+            //Act
+            actual = ParkingSlot.ContainsVehicle(parkingPlace, registrationNumber);
+
+            //Verify
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

@@ -114,5 +114,31 @@ namespace ParkingPlace
             }
             return found;
         }
+        public static bool ContainsVehicle(string parkingSlot, string registrationNumber)
+        {
+            bool found = false;
+            if (parkingSlot == null)
+            {
+                found = false;
+            }
+            else if (parkingSlot.Contains(':'))
+            {
+                string[] vehilces = SplitVehicle(parkingSlot);
+                foreach (string vehicle in vehilces)
+                {
+                    if (vehicle == registrationNumber)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                // Its a car
+                found = true;
+            }
+            return found;
+        }
     }
 }
