@@ -25,20 +25,20 @@ namespace ParkingPlace
             Console.WriteLine("6. Find free place");
             Console.WriteLine("7. Optimize parking lot");
 
-            int choice = int.Parse(Console.ReadLine());
+            int choice = int.Parse(Console.ReadLine()); // Store user choice
 
-            string registrationNumber = "ABC123";
+            string registrationNumber = "ABC123"; // pseudo registration number
 
-            switch (choice)
+            switch (choice) // Check user choice
             {             
                 case 1: // Add a car
 
                     Console.WriteLine("Please enter the registration number of the vehicle : ");
                     registrationNumber = Console.ReadLine();
 
-                    vehicleType = VehicleType.Car;
+                    vehicleType = VehicleType.Car; // Set vehicle type to car
 
-                    int position = Add(parkingPlace, registrationNumber, vehicleType);
+                    int position = Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
 
                     Console.WriteLine("Your vehicle has been parked at place number {0}.", position + 1); 
                     break;
@@ -48,18 +48,18 @@ namespace ParkingPlace
                     Console.WriteLine("Please enter the registration number of the vehicle : ");
                     registrationNumber = Console.ReadLine();
                     
-                    vehicleType = VehicleType.Mc;
+                    vehicleType = VehicleType.Mc; // Set vehicle type to motorcycle
 
-                    position = Add(parkingPlace, registrationNumber, vehicleType);
+                    position = Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
 
                     Console.WriteLine("Your vehicle has been parked at place number {0}.", position + 1);
                     break;
 
                 case 3: // Move a vehicle
 
-                    int newPosition = FindFreePlace(parkingPlace, registrationNumber, vehicleType );
+                    int newPosition = FindFreePlace(parkingPlace, registrationNumber, vehicleType ); // Original position of the vehicle
 
-                    Move(parkingPlace, registrationNumber, newPosition);
+                    Move(parkingPlace, registrationNumber, newPosition);  // Move vehicle to new position
                     break;
 
                 case 4: // Find a vehicle
@@ -67,9 +67,9 @@ namespace ParkingPlace
                     Console.WriteLine("Please enter the registration number of the vehicle : ");
                     registrationNumber = Console.ReadLine();
 
-                    position = Find(parkingPlace, registrationNumber);
+                    position = Find(parkingPlace, registrationNumber); // Position where vehicle is located (if any)
 
-                    Console.WriteLine("Your vehicle is parked at spot number {0}, at array value {1}.", position + 1, position); // Parking spots numbered 1 - 100 !
+                    Console.WriteLine("Your vehicle is parked at spot number {0}.", position + 1); // Parking spots numbered 1 - 100 !
                     break;
 
                 case 5: // Remove a vehicle
@@ -81,12 +81,12 @@ namespace ParkingPlace
 
                     string isCarOrMc = Console.ReadLine();
 
-                    if (isCarOrMc == "mc")
+                    if (isCarOrMc == "mc") // User input is mc ?
                     {
                         vehicleType = VehicleType.Mc; // It's a motorcycle
                     }
 
-                    else if (isCarOrMc == "car")
+                    else if (isCarOrMc == "car") // User input is car ?
                     {
                         vehicleType = VehicleType.Car; // It's a car
                     }
@@ -96,7 +96,7 @@ namespace ParkingPlace
                         throw new ArgumentException(); // Neither nor, then throw exception !
                     }
 
-                    Remove(parkingPlace, registrationNumber);
+                    Remove(parkingPlace, registrationNumber); // Remove the vehicle with the specificed registration number (if it exists in the parking lot)
                     break;
 
                 case 6: // Find free parking spot
@@ -122,14 +122,14 @@ namespace ParkingPlace
                         break;
                     }
 
-                    position = FindFreePlace(parkingPlace, registrationNumber, vehicleType);
+                    position = FindFreePlace(parkingPlace, registrationNumber, vehicleType); // Find a free position for car or mc, depending on user choice
 
-                    Console.WriteLine("There is a free place for your vehicle at location {0}, at array value {1}.", position + 1, position);
+                    Console.WriteLine("There is a free place for your vehicle at {0}.", position + 1);
                     break;
 
                 case 7: // Optimize parking spot
 
-                    Optimize(parkingPlace);
+                    Optimize(parkingPlace); // Optimize the parking place
                     break;
 
                 default: // None of the above, throw exception !
