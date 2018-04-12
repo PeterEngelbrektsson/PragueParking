@@ -19,7 +19,7 @@ namespace PaarkingPlaceFunctionTest
             park[0] = "abc123";
 
             //Act
-            Parking.Park(park, "bcd987", VehicleType.Car); // Should throw exception
+            Parking.Add(park, "bcd987", VehicleType.Car); // Should throw exception
         }
 
         [TestMethod]
@@ -33,7 +33,7 @@ namespace PaarkingPlaceFunctionTest
             park[0] = "abc123";
 
             //Act
-            Parking.Park(park, "bcd987", VehicleType.Mc); // Should throw exception
+            Parking.Add(park, "bcd987", VehicleType.Mc); // Should throw exception
         }
         [TestMethod]
         [ExpectedException(typeof(ParkingPlaceFullException))]
@@ -46,7 +46,7 @@ namespace PaarkingPlaceFunctionTest
             park[0] = "abc123:uyt345";
 
             //Act
-            Parking.Park(park, "bcd987:1poi43", VehicleType.Mc); // Should throw exception
+            Parking.Add(park, "bcd987:1poi43", VehicleType.Mc); // Should throw exception
         }
 
         [TestMethod]
@@ -61,7 +61,7 @@ namespace PaarkingPlaceFunctionTest
             park[1] = "dbc423:uto765";
 
             //Act
-            Parking.Park(park, "1poi43", VehicleType.Mc); // Should throw exception
+            Parking.Add(park, "1poi43", VehicleType.Mc); // Should throw exception
         }
         [TestMethod]
         public void Park3McMcTest()
@@ -75,7 +75,7 @@ namespace PaarkingPlaceFunctionTest
             expected[1] = "dbc423:1poi43";
 
             //Act
-            Parking.Park(park, "1poi43", VehicleType.Mc);
+            Parking.Add(park, "1poi43", VehicleType.Mc);
             MyAssert.AreEqual(expected, park);
         }
         [TestMethod]
@@ -90,7 +90,7 @@ namespace PaarkingPlaceFunctionTest
             expected[1] = "dbc423:8toi43";
 
             //Act
-            Parking.Park(park, "8toi43", VehicleType.Mc);
+            Parking.Add(park, "8toi43", VehicleType.Mc);
             MyAssert.AreEqual(expected, park);
         }
    
@@ -108,7 +108,7 @@ namespace PaarkingPlaceFunctionTest
             expected[1] = "dbc423:lk433";
 
             //Act
-            Parking.Park(park, "8toi43", VehicleType.Car);
+            Parking.Add(park, "8toi43", VehicleType.Car);
 
             //Verify
             MyAssert.AreEqual(expected, park);
