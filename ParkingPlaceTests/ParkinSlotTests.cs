@@ -283,6 +283,353 @@ namespace ParkingPlaceTests
             //Verify
             Assert.AreEqual(expected, actual);
         }
+        [TestMethod]
+        [ExpectedException(typeof(ParkingSpaceIsEmptyException))]
+        public void GetVehicleTypeOfParkedVehicleNullTest()
+        {
+            // Setup
+            VehicleType expectedVehicleType = VehicleType.Car;
+            VehicleType actualVehicleType;
+            string registrationNumber = "abc123";
 
+            string parkingSlot = null;
+
+            // Act
+            actualVehicleType = ParkingSlot.GetVehicleTypeOfParkedVehicle(parkingSlot, registrationNumber);
+            // Should throw exception
+
+        }
+
+        [TestMethod]
+        public void GetVehicleTypeOfParkedVehicleCarTest()
+        {
+            // Setup
+            VehicleType expectedVehicleType = VehicleType.Car;
+            VehicleType actualVehicleType;
+            string registrationNumber = "abc123";
+
+            string parkingSlot = "abc123";
+
+            // Act
+            actualVehicleType = ParkingSlot.GetVehicleTypeOfParkedVehicle(parkingSlot, registrationNumber);
+
+            // Verify
+            Assert.AreEqual(expectedVehicleType, actualVehicleType);
+        }
+
+        [TestMethod]
+        public void GetVehicleTypeOfParkedVehicle1McTest()
+        {
+            // Setup
+            VehicleType expectedVehicleType = VehicleType.Mc;
+            VehicleType actualVehicleType;
+            string registrationNumber = "abc123";
+
+            string parkingSlot = ":abc123";
+
+            // Act
+            actualVehicleType = ParkingSlot.GetVehicleTypeOfParkedVehicle(parkingSlot, registrationNumber);
+
+            // Verify
+            Assert.AreEqual(expectedVehicleType, actualVehicleType);
+        }
+        [TestMethod]
+        public void GetVehicleTypeOfParkedVehicle2McFirstTest()
+        {
+            // Setup
+            VehicleType expectedVehicleType = VehicleType.Mc;
+            VehicleType actualVehicleType;
+            string registrationNumber = "lkj987";
+
+            string parkingSlot = "lkj987:abc123";
+
+            // Act
+            actualVehicleType = ParkingSlot.GetVehicleTypeOfParkedVehicle(parkingSlot, registrationNumber);
+
+            // Verify
+            Assert.AreEqual(expectedVehicleType, actualVehicleType);
+        }
+        [TestMethod]
+        public void GetVehicleTypeOfParkedVehicle2McSecondTest()
+        {
+            // Setup
+            VehicleType expectedVehicleType = VehicleType.Mc;
+            VehicleType actualVehicleType;
+            string registrationNumber = "abc123";
+
+            string parkingSlot = "lkj987:abc123";
+
+            // Act
+            actualVehicleType = ParkingSlot.GetVehicleTypeOfParkedVehicle(parkingSlot, registrationNumber);
+
+            // Verify
+            Assert.AreEqual(expectedVehicleType, actualVehicleType);
+        }
+        [TestMethod]
+        public void ParkingSlotRemoveMcLeftTest()
+        {
+            // Setup
+            string registrationNumber = "lkj987";
+            string parkingSlot = "lkj987:abc123";
+            string expectedParkingSlot = ":abc123";
+
+            // Act
+             ParkingSlot.RemoveMc(ref parkingSlot, registrationNumber);
+
+            // Verify
+            Assert.AreEqual(expectedParkingSlot, parkingSlot);
+        }
+        [TestMethod]
+        public void ParkingSlotRemoveMcRightTest()
+        {
+            // Setup
+            string registrationNumber = "abc123";
+            string parkingSlot = "lkj987:abc123";
+            string expectedParkingSlot = ":lkj987";
+
+            // Act
+            ParkingSlot.RemoveMc(ref parkingSlot, registrationNumber);
+
+            // Verify
+            Assert.AreEqual(expectedParkingSlot, parkingSlot);
+        }
+        [TestMethod]
+        public void ParkingSlotRemoveMcOneMcTest()
+        {
+            // Setup
+            string registrationNumber = "abc123";
+            string parkingSlot = ":abc123";
+            string expectedParkingSlot = null;
+
+            // Act
+            ParkingSlot.RemoveMc(ref parkingSlot, registrationNumber);
+
+            // Verify
+            Assert.AreEqual(expectedParkingSlot, parkingSlot);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ParkingSlotRemoveMcNullTest()
+        {
+            // Setup
+            string registrationNumber = "abc123";
+            string parkingSlot = null;
+            string expectedParkingSlot = null;
+
+            // Act
+            ParkingSlot.RemoveMc(ref parkingSlot, registrationNumber);
+
+            // Verify
+            Assert.AreEqual(expectedParkingSlot, parkingSlot);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ParkingSlotRemoveMcCarTest()
+        {
+            // Setup
+            string registrationNumber = "abc123";
+            string parkingSlot = "poi654";
+            string expectedParkingSlot = null;
+
+            // Act
+            ParkingSlot.RemoveMc(ref parkingSlot, registrationNumber);
+
+            // Verify
+            Assert.AreEqual(expectedParkingSlot, parkingSlot);
+        }
+        [TestMethod]
+        public void ParkingSlotRemoveVehicleLeftTest()
+        {
+            // Setup
+            string registrationNumber = "lkj987";
+            string parkingSlot = "lkj987:abc123";
+            string expectedParkingSlot = ":abc123";
+
+            // Act
+            ParkingSlot.RemoveVehicle(ref parkingSlot, registrationNumber);
+
+            // Verify
+            Assert.AreEqual(expectedParkingSlot, parkingSlot);
+        }
+        [TestMethod]
+        public void ParkingSlotRemoveVehicleRightTest()
+        {
+            // Setup
+            string registrationNumber = "abc123";
+            string parkingSlot = "lkj987:abc123";
+            string expectedParkingSlot = ":lkj987";
+
+            // Act
+            ParkingSlot.RemoveVehicle(ref parkingSlot, registrationNumber);
+
+            // Verify
+            Assert.AreEqual(expectedParkingSlot, parkingSlot);
+        }
+        [TestMethod]
+        public void ParkingSlotRemoveVehicleOneMcTest()
+        {
+            // Setup
+            string registrationNumber = "abc123";
+            string parkingSlot = ":abc123";
+            string expectedParkingSlot = null;
+
+            // Act
+            ParkingSlot.RemoveVehicle(ref parkingSlot, registrationNumber);
+
+            // Verify
+            Assert.AreEqual(expectedParkingSlot, parkingSlot);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ParkingSpaceIsEmptyException))]
+        public void ParkingSlotRemoveVehicleNullTest()
+        {
+            // Setup
+            string registrationNumber = "abc123";
+            string parkingSlot = null;
+            string expectedParkingSlot = null;
+
+            // Act
+            ParkingSlot.RemoveVehicle(ref parkingSlot, registrationNumber);
+
+            // Verify
+            Assert.AreEqual(expectedParkingSlot, parkingSlot);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(VehicleNotFoundException))]
+        public void ParkingSlotRemoveVehicleCarNotFoundTest()
+        {
+            // Setup
+            string registrationNumber = "abc123";
+            string parkingSlot = "poi654";
+
+            // Act
+            ParkingSlot.RemoveVehicle(ref parkingSlot, registrationNumber);
+        }
+        [TestMethod]
+        public void ParkingSlotRemoveVehicleCarFoundTest()
+        {
+            // Setup
+            string registrationNumber = "poi654";
+            string parkingSlot = "poi654";
+            string expectedParkingSlot = null;
+
+            // Act
+            ParkingSlot.RemoveVehicle(ref parkingSlot, registrationNumber);
+
+            // Verify
+            Assert.AreEqual(expectedParkingSlot, parkingSlot);
+        }
+        [TestMethod]
+        public void ContainsVehicleNullTest()
+        {
+            //Setup
+            string parkingPlace;
+            parkingPlace = null;
+            string registrationNumber = "gfd765";
+            bool expected = false;
+            bool actual;
+
+            //Act
+            actual = ParkingSlot.ContainsVehicle(parkingPlace, registrationNumber);
+
+            //Verify
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void ContainsVehicleCarTest()
+        {
+            //Setup
+            string parkingPlace;
+            parkingPlace = "gfd765";
+            string registrationNumber = "gfd765";
+            bool expected = true;
+            bool actual;
+
+            //Act
+            actual = ParkingSlot.ContainsVehicle(parkingPlace, registrationNumber);
+
+            //Verify
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void ContainsVehicle1McTrueTest()
+        {
+            //Setup
+            string parkingPlace;
+            parkingPlace = ":gfd765";
+            string registrationNumber = "gfd765";
+            bool expected = true;
+            bool actual;
+
+            //Act
+            actual = ParkingSlot.ContainsVehicle(parkingPlace, registrationNumber);
+
+            //Verify
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void ContainsVehicle1McFalseTest()
+        {
+            //Setup
+            string parkingPlace;
+            parkingPlace = ":gfd765";
+            string registrationNumber = "ifd765";
+            bool expected = false;
+            bool actual;
+
+            //Act
+            actual = ParkingSlot.ContainsVehicle(parkingPlace, registrationNumber);
+
+            //Verify
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void ContainsVehicle2McFalseTest()
+        {
+            //Setup
+            string parkingPlace;
+            parkingPlace = "098iuy:gfd765";
+            string registrationNumber = "ifd765";
+            bool expected = false;
+            bool actual;
+
+            //Act
+            actual = ParkingSlot.ContainsVehicle(parkingPlace, registrationNumber);
+
+            //Verify
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void ContainsVehicle2McTrueRightTest()
+        {
+            //Setup
+            string parkingPlace;
+            parkingPlace = "098iuy:gfd765";
+            string registrationNumber = "gfd765";
+            bool expected = true;
+            bool actual;
+
+            //Act
+            actual = ParkingSlot.ContainsVehicle(parkingPlace, registrationNumber);
+
+            //Verify
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void ContainsVehicle2McTrueleftTest()
+        {
+            //Setup
+            string parkingPlace;
+            parkingPlace = "098iuy:gfd765";
+            string registrationNumber = "098iuy";
+            bool expected = true;
+            bool actual;
+
+            //Act
+            actual = ParkingSlot.ContainsVehicle(parkingPlace, registrationNumber);
+
+            //Verify
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

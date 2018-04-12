@@ -114,5 +114,112 @@ namespace ParkingPlace
             }
             return found;
         }
+        public static bool ContainsVehicle(string parkingSlot, string registrationNumber)
+        {
+            bool found = false;
+            if (parkingSlot == null)
+            {
+                found = false;
+            }
+            else if (parkingSlot.Contains(':'))
+            {
+                string[] vehilces = SplitVehicle(parkingSlot);
+                foreach (string vehicle in vehilces)
+                {
+                    if (vehicle == registrationNumber)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                // Its a car 
+                if (parkingSlot == registrationNumber)
+                {
+                    found = true;
+                }
+                
+            }
+            return found;
+        }
+        public static VehicleType GetVehicleTypeOfParkedVehicle(string parkingSlot, string registrationNumber)
+        {
+            VehicleType type;
+            if (parkingSlot== null)
+            {
+                throw new ParkingSpaceIsEmptyException();
+            }
+            else
+            {
+                int positionOfColon = parkingSlot.IndexOf(':');
+                // : means it's one or two Mc
+                if (positionOfColon > -1)
+                {
+                    type = VehicleType.Mc;
+                }
+                else
+                {
+                    // All strings are considered cars.
+                    type = VehicleType.Car;
+                }
+            }
+            return type;
+        }
+        public static void RemoveMc(ref string parkingSlot, string registrationNumber)
+        {
+            int countMc = CountMc(parkingSlot);
+            if (countMc==2)
+            {
+                string[] mcs = parkingSlot.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+                if (mcs.Length == 2)
+                {
+                    if (mcs[0] == registrationNumber)
+                    {
+                        parkingSlot = ":" + mcs[1];
+                    } else if(mcs[1] == registrationNumber)
+                    {
+                        parkingSlot = ":" + mcs[0];
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Expected to find the mcs registration number in parkingslot.");
+                    }
+                }
+            }
+            else if(countMc==1)
+            {
+                // only one Mc
+                parkingSlot = null;
+            }
+            else
+            {
+                throw new ArgumentException("Expected to find the 1 or 2 mcs in the parkingslot.");
+            }
+        }
+        public static void RemoveVehicle(ref string parkingSlot, string registrationNumber)
+        {
+
+            VehicleType type = ParkingSlot.GetVehicleTypeOfParkedVehicle(parkingSlot, registrationNumber);
+            if (type == VehicleType.Car)
+            {
+                if (parkingSlot == registrationNumber)
+                {
+                    // Setting to null tells its empty
+                    parkingSlot = null;
+                }
+                else
+                {
+                    throw new VehicleNotFoundException();
+                }
+            }
+            else if (type == VehicleType.Mc)
+            {
+                // Remove Mc
+                RemoveMc(ref parkingSlot, registrationNumber);
+            }
+
+        }
     }
 }

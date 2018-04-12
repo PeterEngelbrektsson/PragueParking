@@ -55,6 +55,7 @@
     <Compile Include="ParkingParkTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ParkingMovePosition.cs" />
+    <Compile Include="ParkingRemoveTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
