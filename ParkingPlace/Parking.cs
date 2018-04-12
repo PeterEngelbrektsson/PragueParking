@@ -137,6 +137,8 @@ namespace ParkingPlace
                     throw new ArgumentException();
                     break;
             }
+
+            return;
         }
         
         public static int Add(string [] parkingPlace, string registrationNumber, VehicleType vehicleType)
