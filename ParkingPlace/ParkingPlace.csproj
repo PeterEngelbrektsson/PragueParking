@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Parking.cs" />
+    <Compile Include="ParkingHelpFunctions.cs" />
     <Compile Include="ParkingPlaceFullException.cs" />
     <Compile Include="ParkingPlaceOccupiedException.cs" />
     <Compile Include="ParkingSlot.cs" />
