@@ -145,14 +145,22 @@ namespace ParkingPlace
         {
                 int pos = FindFreePlace(parkingPlace, registrationNumber, vehicleType);
 
-                if ((parkingPlace[pos] != null) && vehicleType == VehicleType.Mc)
+                if ((parkingPlace[pos] != null) && vehicleType == VehicleType.Mc) // If parking place not empty and vehicle is motorcyle
                 {
-                    parkingPlace[pos] = string.Concat(parkingPlace[pos], registrationNumber);
+                    parkingPlace[pos] = string.Concat(parkingPlace[pos], registrationNumber); // then add the motorcycle after the ':' char after first motorcycle
                 }
 
                 else
                 {
-                    parkingPlace[pos] = registrationNumber;
+                    if (vehicleType == VehicleType.Mc)
+                    {
+                        parkingPlace[pos] = string.Concat(parkingPlace[pos], ':');
+                    }
+
+                    else
+                    {
+                        parkingPlace[pos] = registrationNumber; // else, add it
+                    }
                 }
 
                 return pos;
