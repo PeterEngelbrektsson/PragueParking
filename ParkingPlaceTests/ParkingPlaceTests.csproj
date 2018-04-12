@@ -54,6 +54,7 @@
     <Compile Include="ParkingFindTests.cs" />
     <Compile Include="ParkingMoveTests.cs" />
     <Compile Include="ParkingParkTests.cs" />
+    <Compile Include="ParkinSlotTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -217,19 +217,28 @@ namespace ParkingPlace
             }
 
         }
+    
         public static int Find(string[] parkingPlace, string registrationNumber)
         {
 
             for (int i = 0; i < parkingPlace.Length; i++)
             {
+                // Try to find car
                 if (parkingPlace[i] == registrationNumber)
                 {
                     Console.WriteLine("Your Vehicle is found with registration number " + parkingPlace[i]);
                     return i;
+                }else 
+                {
+                    // Try to find motorcycle
+                    if (ParkingSlot.ContainsMc(parkingPlace[i], registrationNumber)) { 
+                            Console.WriteLine("Your Vehicle is found with registration number " + parkingPlace[i]);
+                            return i;
+                        
+                    }
                 }
             }
             Console.WriteLine("Your Vehicle is not found with registration number " + registrationNumber);
-
 
             return -1;
         }
