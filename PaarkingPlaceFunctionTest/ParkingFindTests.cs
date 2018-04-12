@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ParkingPlace;
 using MyAsserts;
 
-namespace PaarkingPlaceFunctionTest
+namespace ParkingPlaceFunctionTest
 {
     [TestClass]
     public class ParkingFindTests

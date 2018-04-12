@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ParkingPlace;
 using MyAsserts;
 
-namespace PaarkingPlaceFunctionTest
+namespace ParkingPlaceFunctionTest
 {
 
     [TestClass]
@@ -89,6 +89,26 @@ namespace PaarkingPlaceFunctionTest
 
             //Act
             actualPosition= Parking.Add(park, "1poi43", VehicleType.Mc);
+
+            // Verify
+            MyAssert.AreEqual(expected, park);
+            Assert.AreEqual(expectedPosition, actualPosition);
+        }
+        [TestMethod]
+        public void Park1Mc2McTest()
+        {
+            // Setup
+            string[] park = new string[2];
+            park[0] = "abc123:uyt345";
+            park[1] = null;
+            string[] expected = new string[2];
+            expected[0] = "abc123:uyt345";
+            expected[1] = ":1poi43";
+            int expectedPosition = 1;
+            int actualPosition;
+
+            //Act
+            actualPosition = Parking.Add(park, "1poi43", VehicleType.Mc);
 
             // Verify
             MyAssert.AreEqual(expected, park);

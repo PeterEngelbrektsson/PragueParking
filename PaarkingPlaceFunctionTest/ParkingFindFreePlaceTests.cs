@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ParkingPlace;
 using MyAsserts;
 
-namespace PaarkingPlaceFunctionTest
+namespace ParkingPlaceFunctionTest
 {
     [TestClass]
   
@@ -21,7 +21,7 @@ namespace PaarkingPlaceFunctionTest
             int actualPlace = -1;
 
             //Act
-            actualPlace = Parking.FindFreePlace(park, "bcd987", VehicleType.Car); // Should throw exception
+            actualPlace = Parking.FindFreePlace(park, VehicleType.Car); // Should throw exception
 
 
         }
@@ -38,7 +38,7 @@ namespace PaarkingPlaceFunctionTest
             int actualPlace = -1;
 
             //Act
-            actualPlace = Parking.FindFreePlace(park, "bcd987", VehicleType.Mc); // Should throw exception
+            actualPlace = Parking.FindFreePlace(park, VehicleType.Mc); // Should throw exception
         }
         [TestMethod]
         [ExpectedException(typeof(ParkingPlaceFullException))]
@@ -52,7 +52,7 @@ namespace PaarkingPlaceFunctionTest
             int actualPlace = -1;
 
             //Act
-            actualPlace = Parking.FindFreePlace(park, "bcd987:1poi43", VehicleType.Mc); // Should throw exception
+            actualPlace = Parking.FindFreePlace(park, VehicleType.Mc); // Should throw exception
         }
 
         [TestMethod]
@@ -68,7 +68,7 @@ namespace PaarkingPlaceFunctionTest
             int actualPlace = -1;
 
             //Act
-            actualPlace = Parking.FindFreePlace(park, "1poi43", VehicleType.Mc); // Should throw exception
+            actualPlace = Parking.FindFreePlace(park, VehicleType.Mc); // Should throw exception
         }
         [TestMethod]
         public void FindFreePlace3McMcTest()
@@ -81,7 +81,7 @@ namespace PaarkingPlaceFunctionTest
             int expected = 1;
 
             //Act
-            actualPlace = Parking.FindFreePlace(park, "1poi43", VehicleType.Mc);
+            actualPlace = Parking.FindFreePlace(park, VehicleType.Mc);
 
             //Verify
             Assert.AreEqual(expected, actualPlace);
@@ -99,7 +99,7 @@ namespace PaarkingPlaceFunctionTest
             int expected = 1;
 
             //Act
-            actualPlace = Parking.FindFreePlace(park, "8toi43", VehicleType.Mc);
+            actualPlace = Parking.FindFreePlace(park, VehicleType.Mc);
 
             //Verify
             Assert.AreEqual(expected, actualPlace);
@@ -116,7 +116,7 @@ namespace PaarkingPlaceFunctionTest
             int expected = 0;
 
             //Act
-            actualPlace = Parking.FindFreePlace(park, "8toi43", VehicleType.Mc);
+            actualPlace = Parking.FindFreePlace(park,  VehicleType.Mc);
 
             //Verify
             Assert.AreEqual(expected, actualPlace);
@@ -134,7 +134,7 @@ namespace PaarkingPlaceFunctionTest
             int expected = 0;
 
             //Act
-            actualPlace = Parking.FindFreePlace(park, "8toi43", VehicleType.Car);
+            actualPlace = Parking.FindFreePlace(park,  VehicleType.Car);
 
             //Verify
             Assert.AreEqual(expected, actualPlace);
