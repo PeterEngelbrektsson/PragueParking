@@ -11,24 +11,7 @@ namespace ParkingPlace
         public static VehicleType GetVehicleTypeOfParkedVehicle(string[] parkingPlace, int position, string registrationNumber)
         {
             VehicleType type;
-            if (parkingPlace[position] == null)
-            {
-                throw new ParkingSpaceIsEmptyException();
-            }
-            else
-            {
-                int positionOfColon = parkingPlace[position].IndexOf(':');
-                // : means it's one or two Mc
-                if (positionOfColon > -1)
-                {
-                    type = VehicleType.Mc;
-                }
-                else
-                {
-                    // All strings are considered cars.
-                    type = VehicleType.Car;
-                }
-            }
+            type = ParkingSlot.GetVehicleTypeOfParkedVehicle(parkingPlace[position],registrationNumber);
             return type;
         }
         public static int FindFirstSingleParkedMc(string[] parkingPlace, int startPosition)

@@ -84,13 +84,13 @@ namespace ParkingPlaceFunctionTest
             // Setup
             string[] park = new string[2];
             park[0] = "abc123:uyt345";
-            park[1] = "dbc423";
+            park[1] = "dbc423:8toi43";
             string[] expected = new string[2];
             expected[0] = "abc123:uyt345";
-            expected[1] = "dbc423:8toi43";
+            expected[1] = ":8toi43";
 
             //Act
-            Parking.Add(park, "dbc423", VehicleType.Mc);
+            Parking.Remove(park, "dbc423");
             MyAssert.AreEqual(expected, park);
         }
         [TestMethod]
@@ -103,9 +103,10 @@ namespace ParkingPlaceFunctionTest
             string[] expected = new string[2];
             expected[0] = "abc123:uyt345";
             expected[1] = null;
+            string carToRemove = "dbc423";
 
             //Act
-            Parking.Add(park, "dbc423", VehicleType.Mc);
+            Parking.Remove(park, carToRemove);
             MyAssert.AreEqual(expected, park);
         }
         [TestMethod]
@@ -114,10 +115,10 @@ namespace ParkingPlaceFunctionTest
             // Setup
             string[] park = PopulateParkingPlace(100);
             park[0] = "abc123:uyt345";
-            park[1] = "dbc423:";
+            park[1] = "dbc423:8toi43";
             string[] expected = PopulateParkingPlace(100);
             expected[0] = "abc123:uyt345";
-            expected[1] = "dbc423:8toi43";
+            expected[1] = ":dbc423";
 
             //Act
             Parking.Remove(park, "8toi43");

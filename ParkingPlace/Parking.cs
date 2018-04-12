@@ -308,18 +308,22 @@ namespace ParkingPlace
 
         public static void Remove(string[] parkingPlace, string registrationNumber)
         {
+            bool found = false;
             for (int i = 0; i < parkingPlace.Length; i++)
             {
-                if (parkingPlace[i] == registrationNumber)
+                if (ParkingSlot.ContainsVehicle(parkingPlace[i],registrationNumber))
                 {
-
-                    parkingPlace.Where(w => w != parkingPlace[i]).ToArray();
+                    found = true;
+                    ParkingSlot.RemoveVehicle(ref parkingPlace[i], registrationNumber);
                     Console.WriteLine("The Vehicle with registration number " + registrationNumber + " successfully removed.");
-                    return;
+                    break;
                 }
             }
-            Console.WriteLine("The Vehicle with this number " + registrationNumber + " Not found. ");
-
+            if (!found)
+            {
+                Console.WriteLine("The Vehicle with this number " + registrationNumber + " Not found. ");
+                throw new VehicleNotFoundException("The vehicle " + registrationNumber + " you are trying to remove can not be found in the parkingplace");
+            }
         }
     }
 }
