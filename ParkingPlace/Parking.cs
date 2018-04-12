@@ -14,131 +14,133 @@ namespace ParkingPlace
         {
             // Console.Clear(); -- Do we want to clear screen between repeat displays of the menu or not ? 
 
-            Console.WriteLine();
-            Console.WriteLine("  Prague Parking v1.0");
-            Console.WriteLine("-----------------------");
-            Console.WriteLine("1. Add a car"); 
-            Console.WriteLine("2. Add a motorcyle");
-            Console.WriteLine("3. Move a vehicle");
-            Console.WriteLine("4. Find a vehicle");
-            Console.WriteLine("5. Remove a vehicle");
-            Console.WriteLine("6. Find free place");
-            Console.WriteLine("7. Optimize parking lot");
+            while (true)
+            {
+                Console.WriteLine();
+                Console.WriteLine("  Prague Parking v1.0");
+                Console.WriteLine("-----------------------");
+                Console.WriteLine("1. Add a car");
+                Console.WriteLine("2. Add a motorcyle");
+                Console.WriteLine("3. Move a vehicle");
+                Console.WriteLine("4. Find a vehicle");
+                Console.WriteLine("5. Remove a vehicle");
+                Console.WriteLine("6. Find free place");
+                Console.WriteLine("7. Optimize parking lot");
 
-            int choice = int.Parse(Console.ReadLine()); // Store user choice
+                int choice = int.Parse(Console.ReadLine()); // Store user choice
 
-            string registrationNumber = "ABC123"; // pseudo registration number
+                string registrationNumber = "ABC123"; // pseudo registration number
 
-            switch (choice) // Check user choice
-            {             
-                case 1: // Add a car
+                switch (choice) // Check user choice
+                {
+                    case 1: // Add a car
 
-                    Console.WriteLine("Please enter the registration number of the vehicle : ");
-                    registrationNumber = Console.ReadLine();
+                        Console.WriteLine("Please enter the registration number of the vehicle : ");
+                        registrationNumber = Console.ReadLine();
 
-                    vehicleType = VehicleType.Car; // Set vehicle type to car
+                        vehicleType = VehicleType.Car; // Set vehicle type to car
 
-                    int position = Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
+                        int position = Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
 
-                    Console.WriteLine("Your vehicle has been parked at place number {0}.", position + 1); 
-                    break;
+                        Console.WriteLine("Your vehicle has been parked at place number {0}.", position + 1);
+                        break;
 
-                case 2: // Add a motorcycle
+                    case 2: // Add a motorcycle
 
-                    Console.WriteLine("Please enter the registration number of the vehicle : ");
-                    registrationNumber = Console.ReadLine();
-                    
-                    vehicleType = VehicleType.Mc; // Set vehicle type to motorcycle
+                        Console.WriteLine("Please enter the registration number of the vehicle : ");
+                        registrationNumber = Console.ReadLine();
 
-                    position = Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
+                        vehicleType = VehicleType.Mc; // Set vehicle type to motorcycle
 
-                    Console.WriteLine("Your vehicle has been parked at place number {0}.", position + 1);
-                    break;
+                        position = Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
 
-                case 3: // Move a vehicle
+                        Console.WriteLine("Your vehicle has been parked at place number {0}.", position + 1);
+                        break;
+
+                    case 3: // Move a vehicle
 
                     int newPosition = FindFreePlace(parkingPlace, vehicleType ); // Original position of the vehicle
 
-                    Move(parkingPlace, registrationNumber, newPosition);  // Move vehicle to new position
-                    break;
-
-                case 4: // Find a vehicle
-
-                    Console.WriteLine("Please enter the registration number of the vehicle : ");
-                    registrationNumber = Console.ReadLine();
-
-                    position = Find(parkingPlace, registrationNumber); // Position where vehicle is located (if any)
-
-                    Console.WriteLine("Your vehicle is parked at spot number {0}.", position + 1); // Parking spots numbered 1 - 100 !
-                    break;
-
-                case 5: // Remove a vehicle
-
-                    Console.WriteLine("Please enter the registration number of the vehicle : ");
-                    registrationNumber = Console.ReadLine();
-
-                    Console.WriteLine("Please specify if your vehicle is a car or an mc : ");
-
-                    string isCarOrMc = Console.ReadLine();
-
-                    if (isCarOrMc == "mc") // User input is mc ?
-                    {
-                        vehicleType = VehicleType.Mc; // It's a motorcycle
-                    }
-
-                    else if (isCarOrMc == "car") // User input is car ?
-                    {
-                        vehicleType = VehicleType.Car; // It's a car
-                    }
-
-                    else
-                    {
-                        throw new ArgumentException(); // Neither nor, then throw exception !
-                    }
-
-                    Remove(parkingPlace, registrationNumber); // Remove the vehicle with the specificed registration number (if it exists in the parking lot)
-                    break;
-
-                case 6: // Find free parking spot
-
-                    Console.WriteLine("Please specify if your vehicle is a car or an mc : ");
-
-                    isCarOrMc = Console.ReadLine(); // get user input
-
-                    if (isCarOrMc == "mc")
-                    {
-                        vehicleType = VehicleType.Mc; // It's a motorcycle
-                    }
-
-                    else if (isCarOrMc == "car")
-                    {
-                        vehicleType = VehicleType.Car; // It's a car
-                    }
-
-                    else
-                    {
-                        throw new ArgumentException(); // Neither car nor mc, throw exception !
-
+                        Move(parkingPlace, registrationNumber, newPosition);  // Move vehicle to new position
                         break;
-                    }
+
+                    case 4: // Find a vehicle
+
+                        Console.WriteLine("Please enter the registration number of the vehicle : ");
+                        registrationNumber = Console.ReadLine();
+
+                        position = Find(parkingPlace, registrationNumber); // Position where vehicle is located (if any)
+
+                        Console.WriteLine("Your vehicle is parked at spot number {0}.", position + 1); // Parking spots numbered 1 - 100 !
+                        break;
+
+                    case 5: // Remove a vehicle
+
+                        Console.WriteLine("Please enter the registration number of the vehicle : ");
+                        registrationNumber = Console.ReadLine();
+
+                        Console.WriteLine("Please specify if your vehicle is a car or an mc : ");
+
+                        string isCarOrMc = Console.ReadLine();
+
+                        if (isCarOrMc == "mc") // User input is mc ?
+                        {
+                            vehicleType = VehicleType.Mc; // It's a motorcycle
+                        }
+
+                        else if (isCarOrMc == "car") // User input is car ?
+                        {
+                            vehicleType = VehicleType.Car; // It's a car
+                        }
+
+                        else
+                        {
+                            throw new ArgumentException(); // Neither nor, then throw exception !
+                        }
+
+                        Remove(parkingPlace, registrationNumber); // Remove the vehicle with the specificed registration number (if it exists in the parking lot)
+                        break;
+
+                    case 6: // Find free parking spot
+
+                        Console.WriteLine("Please specify if your vehicle is a car or an mc : ");
+
+                        isCarOrMc = Console.ReadLine(); // get user input
+
+                        if (isCarOrMc == "mc")
+                        {
+                            vehicleType = VehicleType.Mc; // It's a motorcycle
+                        }
+
+                        else if (isCarOrMc == "car")
+                        {
+                            vehicleType = VehicleType.Car; // It's a car
+                        }
+
+                        else
+                        {
+                            throw new ArgumentException(); // Neither car nor mc, throw exception !
+
+                            break;
+                        }
 
                     position = FindFreePlace(parkingPlace, vehicleType); // Find a free position for car or mc, depending on user choice
 
-                    Console.WriteLine("There is a free place for your vehicle at {0}.", position + 1);
-                    break;
+                        Console.WriteLine("There is a free place for your vehicle at {0}.", position + 1);
+                        break;
 
-                case 7: // Optimize parking spot
+                    case 7: // Optimize parking spot
 
-                    Optimize(parkingPlace); // Optimize the parking place
-                    break;
+                        Optimize(parkingPlace); // Optimize the parking place
+                        break;
 
-                default: // None of the above, throw exception !
+                    default: // None of the above, throw exception !
 
-                    throw new ArgumentException();
-                    break;
+                        Console.WriteLine();
+                        Console.WriteLine("That number does not exist. Please enter a correct number.");
+                        break;
+                }
             }
-
-            return;
         }
         
         public static int Add(string [] parkingPlace, string registrationNumber, VehicleType vehicleType)
