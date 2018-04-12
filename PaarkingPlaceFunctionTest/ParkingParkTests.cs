@@ -80,10 +80,10 @@ namespace ParkingPlaceFunctionTest
             // Setup
             string[] park = new string[2];
             park[0] = "abc123:uyt345";
-            park[1] = "dbc423:";
+            park[1] = ":dbc423";
             string[] expected = new string[2];
             expected[0] = "abc123:uyt345";
-            expected[1] = "dbc423:1poi43";
+            expected[1] = "1poi43:dbc423";
             int expectedPosition = 1;
             int actualPosition;
 
@@ -120,10 +120,10 @@ namespace ParkingPlaceFunctionTest
             // Setup
             string[] park = new string[2];
             park[0] = "abc123:uyt345";
-            park[1] = "dbc423:";
+            park[1] = ":dbc423";
             string[] expected = new string[2];
             expected[0] = "abc123:uyt345";
-            expected[1] = "dbc423:8toi43";
+            expected[1] = "8toi43:dbc423";
             int expectedPosition = 1;
             int actualPosition;
 
@@ -138,10 +138,10 @@ namespace ParkingPlaceFunctionTest
             // Setup
             string[] park = PopulateParkingPlace(100);
             park[0] = "abc123:uyt345";
-            park[1] = "dbc423:";
+            park[1] = ":dbc423";
             string[] expected = PopulateParkingPlace(100);
             expected[0] = "abc123:uyt345";
-            expected[1] = "dbc423:8toi43";
+            expected[1] = "8toi43:dbc423";
             int expectedPosition=1;
             int actualPosition;
             //Act
