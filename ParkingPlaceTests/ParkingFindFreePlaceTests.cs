@@ -18,7 +18,7 @@ namespace ParkingPlaceTests
             bool actual;
 
             // Act
-            actual = Parking.IsFreeFor(parkingSlot, vehicle);
+            actual = ParkingSlot.IsFreeFor(parkingSlot, vehicle);
 
             // Verify
             Assert.AreEqual(expected, actual);
@@ -34,7 +34,7 @@ namespace ParkingPlaceTests
             bool actual;
 
             // Act
-            actual = Parking.IsFreeFor(parkingSlot, vehicle);
+            actual = ParkingSlot.IsFreeFor(parkingSlot, vehicle);
 
             // Verify
             Assert.AreEqual(expected, actual);
@@ -49,7 +49,7 @@ namespace ParkingPlaceTests
             bool actual;
 
             // Act
-            actual = Parking.IsFreeFor(parkingSlot, vehicle);
+            actual = ParkingSlot.IsFreeFor(parkingSlot, vehicle);
 
             // Verify
             Assert.AreEqual(expected, actual);
@@ -64,7 +64,7 @@ namespace ParkingPlaceTests
             bool actual;
 
             // Act
-            actual = Parking.IsFreeFor(parkingSlot, vehicle);
+            actual = ParkingSlot.IsFreeFor(parkingSlot, vehicle);
 
             // Verify
             Assert.AreEqual(expected, actual);
@@ -79,7 +79,7 @@ namespace ParkingPlaceTests
             bool actual;
 
             // Act
-            actual = Parking.IsFreeFor(parkingSlot, vehicle);
+            actual = ParkingSlot.IsFreeFor(parkingSlot, vehicle);
 
             // Verify
             Assert.AreEqual(expected, actual);
@@ -94,7 +94,7 @@ namespace ParkingPlaceTests
             bool actual;
 
             // Act
-            actual = Parking.IsFreeFor(parkingSlot, vehicle);
+            actual = ParkingSlot.IsFreeFor(parkingSlot, vehicle);
 
             // Verify
             Assert.AreEqual(expected, actual);
@@ -110,7 +110,7 @@ namespace ParkingPlaceTests
             bool actual;
 
             // Act
-            actual = Parking.IsFreeForMc(parkingSlot, vehicle);
+            actual = ParkingSlot.IsFreeForMc(parkingSlot, vehicle);
 
             // Verify
             Assert.AreEqual(expected, actual);
@@ -125,7 +125,7 @@ namespace ParkingPlaceTests
             bool actual;
 
             // Act
-            actual = Parking.IsFreeForMc(parkingSlot, vehicle);
+            actual = ParkingSlot.IsFreeForMc(parkingSlot, vehicle);
 
             // Verify
             Assert.AreEqual(expected, actual);
@@ -140,7 +140,7 @@ namespace ParkingPlaceTests
             bool actual;
 
             // Act
-            actual = Parking.IsFreeForMc(parkingSlot, vehicle);
+            actual = ParkingSlot.IsFreeForMc(parkingSlot, vehicle);
 
             // Verify
             Assert.AreEqual(expected, actual);

@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ParkingPlace;
 using MyAsserts;
 
-namespace PaarkingPlaceFunctionTest
+namespace ParkingPlaceFunctionTest
 {
     [TestClass]
     public class ParkingMovePositionTests
@@ -23,7 +23,7 @@ namespace PaarkingPlaceFunctionTest
 
 
         //Act
-        Parking.Move(park, "8toi43", 1,0);
+        Parking.Move(park, "8toi43",VehicleType.Mc, 1,0);
 
         //Verify
         MyAssert.AreEqual(expected, park);
@@ -42,7 +42,7 @@ namespace PaarkingPlaceFunctionTest
 
 
         //Act
-        Parking.Move(park, "8toi43",1, 0);
+        Parking.Move(park, "8toi43", VehicleType.Mc, 1, 0);
 
         //Verify
         MyAssert.AreEqual(expected, park);
@@ -65,7 +65,7 @@ namespace PaarkingPlaceFunctionTest
 
 
         //Act
-        Parking.Move(park, "abc213", 2,3);
+        Parking.Move(park, "abc213", VehicleType.Mc, 2,3);
 
         //Verify
         MyAssert.AreEqual(expected, park);
@@ -86,7 +86,7 @@ namespace PaarkingPlaceFunctionTest
         park[2] = ":abc213";
 
         //Act
-        Parking.Move(park, "abc213", 2,3);
+        Parking.Move(park, "abc213", VehicleType.Mc, 2,3);
 
         //Verify
         Assert.AreEqual(expected[0], park[0]);
@@ -113,7 +113,7 @@ namespace PaarkingPlaceFunctionTest
         park[3] = null;
 
         //Act
-        Parking.Move(park, "abc213", 2,1);
+        Parking.Move(park, "abc213", VehicleType.Mc, 2,1);
 
         //Verify
         MyAssert.AreEqual(expected, park);

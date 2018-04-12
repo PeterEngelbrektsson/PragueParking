@@ -10,7 +10,7 @@ namespace PaarkingPlaceFunctionTest
     {
         [TestMethod]
         [ExpectedException(typeof(ParkingPlaceFullException))]
-        public void FindFreePlaceParkAllFullCarCarTest()
+        public void ParkAllFullCarCarTest()
         {
             // Should throw exception
 
@@ -19,12 +19,12 @@ namespace PaarkingPlaceFunctionTest
             park[0] = "abc123";
 
             //Act
-            Parking.FindFreePlace(park, "bcd987", VehicleType.Car); // Should throw exception
+            Parking.Add(park, "bcd987", VehicleType.Car); // Should throw exception
         }
 
         [TestMethod]
         [ExpectedException(typeof(ParkingPlaceFullException))]
-        public void FindFreePlaceParkAllFullCarMcTest()
+        public void ParkAllFullCarMcTest()
         {
             // Should throw exception
 
@@ -33,11 +33,11 @@ namespace PaarkingPlaceFunctionTest
             park[0] = "abc123";
 
             //Act
-            Parking.FindFreePlace(park, "bcd987", VehicleType.Mc); // Should throw exception
+            Parking.Add(park, "bcd987", VehicleType.Mc); // Should throw exception
         }
         [TestMethod]
         [ExpectedException(typeof(ParkingPlaceFullException))]
-        public void FindFreePlaceParkAllFull2McMcTest()
+        public void ParkAllFull2McMcTest()
         {
             // Should throw exception
 
@@ -46,12 +46,12 @@ namespace PaarkingPlaceFunctionTest
             park[0] = "abc123:uyt345";
 
             //Act
-            Parking.FindFreePlace(park, "bcd987:1poi43", VehicleType.Mc); // Should throw exception
+            Parking.Add(park, "bcd987:1poi43", VehicleType.Mc); // Should throw exception
         }
 
         [TestMethod]
         [ExpectedException(typeof(ParkingPlaceFullException))]
-        public void FindFreePlaceParkAllFull4McMcTest()
+        public void ParkAllFull4McMcTest()
         {
             // Should throw exception
 
@@ -61,10 +61,10 @@ namespace PaarkingPlaceFunctionTest
             park[1] = "dbc423:uto765";
 
             //Act
-            Parking.FindFreePlace(park, "1poi43", VehicleType.Mc); // Should throw exception
+            Parking.Add(park, "1poi43", VehicleType.Mc); // Should throw exception
         }
         [TestMethod]
-        public void FindFreePlacePark3McMcTest()
+        public void Park3McMcTest()
         {
             // Setup
             string[] park = new string[2];
@@ -75,11 +75,11 @@ namespace PaarkingPlaceFunctionTest
             expected[1] = "dbc423:1poi43";
 
             //Act
-            Parking.FindFreePlace(park, "1poi43", VehicleType.Mc);
+            Parking.Add(park, "1poi43", VehicleType.Mc);
             MyAssert.AreEqual(expected, park);
         }
         [TestMethod]
-        public void FindFreePlacePark1Mc1CarMcTest()
+        public void Park1Mc1CarMcTest()
         {
             // Setup
             string[] park = new string[2];
@@ -90,13 +90,13 @@ namespace PaarkingPlaceFunctionTest
             expected[1] = "dbc423:8toi43";
 
             //Act
-            Parking.FindFreePlace(park, "8toi43", VehicleType.Mc);
+            Parking.Add(park, "8toi43", VehicleType.Mc);
             MyAssert.AreEqual(expected, park);
         }
    
 
         [TestMethod]
-        public void FindFreePlacePark1McCarNullTest()
+        public void Park1McCarNullTest()
         {
             // Setup
             string[] park = new string[2];
@@ -108,7 +108,7 @@ namespace PaarkingPlaceFunctionTest
             expected[1] = "dbc423:lk433";
 
             //Act
-            Parking.FindFreePlace(park, "8toi43", VehicleType.Car);
+            Parking.Add(park, "8toi43", VehicleType.Car);
 
             //Verify
             MyAssert.AreEqual(expected, park);
