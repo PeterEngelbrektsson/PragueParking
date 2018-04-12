@@ -112,6 +112,7 @@ namespace ParkingPlace
                 if (firstSingleMcPosition != lastSingleMcPosition && (firstSingleMcPosition != -1 && lastSingleMcPosition != -1))
                 {
                     string registrationNumber = (parkingPlace[lastSingleMcPosition]).Trim(':');
+                    Console.WriteLine("Move motorcycle {0} from parkingplace {1} to place {2}.",registrationNumber, lastSingleMcPosition, firstSingleMcPosition);
                     Move(parkingPlace, registrationNumber, VehicleType.Mc, lastSingleMcPosition, firstSingleMcPosition);
                     found = true;
                 }
@@ -232,6 +233,11 @@ namespace ParkingPlace
 
         public static int FindFreePlace(string[] parkingPlace, string registrationNumber, VehicleType vehicleType)
         {
+            if (String.IsNullOrEmpty(registrationNumber))
+            {
+                throw new ArgumentException("Registration number can not be null or empty.");
+            }
+
             bool found = false;
             int position = 0;
 
