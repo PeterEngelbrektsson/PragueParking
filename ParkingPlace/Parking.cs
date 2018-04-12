@@ -77,25 +77,6 @@ namespace ParkingPlace
                     Console.WriteLine("Please enter the registration number of the vehicle : ");
                     registrationNumber = Console.ReadLine();
 
-                    Console.WriteLine("Please specify if your vehicle is a car or an mc : ");
-
-                    string isCarOrMc = Console.ReadLine();
-
-                    if (isCarOrMc == "mc") // User input is mc ?
-                    {
-                        vehicleType = VehicleType.Mc; // It's a motorcycle
-                    }
-
-                    else if (isCarOrMc == "car") // User input is car ?
-                    {
-                        vehicleType = VehicleType.Car; // It's a car
-                    }
-
-                    else
-                    {
-                        throw new ArgumentException(); // Neither nor, then throw exception !
-                    }
-
                     Remove(parkingPlace, registrationNumber); // Remove the vehicle with the specificed registration number (if it exists in the parking lot)
                     break;
 
@@ -103,7 +84,7 @@ namespace ParkingPlace
 
                     Console.WriteLine("Please specify if your vehicle is a car or an mc : ");
 
-                    isCarOrMc = Console.ReadLine(); // get user input
+                    string isCarOrMc = Console.ReadLine(); // get user input
 
                     if (isCarOrMc == "mc")
                     {
