@@ -113,7 +113,7 @@ namespace ParkingPlaceFunctionTest
             expected[3] = null;
 
             //Act
-            Parking.Move(park, "abc213", 1);
+            Parking.Move(park, registrationNumeberToMove, 1);
 
             //Verify
             Assert.AreEqual(expected[0], park[0]);

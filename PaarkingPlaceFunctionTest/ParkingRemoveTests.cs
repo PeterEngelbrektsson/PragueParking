@@ -20,7 +20,7 @@ namespace ParkingPlaceFunctionTest
 
         [TestMethod]
         [ExpectedException(typeof(VehicleNotFoundException))]
-        public void RemoveCarNotFound1CarTest()
+        public void RemoveCarNotFound1CarThrowsExeptionTest()
         {
             // Should throw exception
 
@@ -35,7 +35,7 @@ namespace ParkingPlaceFunctionTest
 
         [TestMethod]
         [ExpectedException(typeof(VehicleNotFoundException))]
-        public void RemoveCarNotFound2McTest()
+        public void RemoveCarNotFound2McThrowsExeptionTest()
         {
             // Should throw exception
 
@@ -49,7 +49,7 @@ namespace ParkingPlaceFunctionTest
 
         [TestMethod]
         [ExpectedException(typeof(VehicleNotFoundException))]
-        public void RemoveNotFound4McTest()
+        public void RemoveNotFound4McThrowsExeptionTest()
         {
             // Should throw exception
 
