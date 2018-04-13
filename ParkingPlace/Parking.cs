@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ParkingPlace
 {
-    public partial class Parking
+    public partial class Parking // Parking place
     {
 
         public static void DisplayMenu(string[] parkingPlace, VehicleType vehicleType)
@@ -153,25 +153,6 @@ namespace ParkingPlace
 
                         Console.WriteLine("Please enter the registration number of the vehicle : ");
                         registrationNumber = Console.ReadLine().ToUpper();
-
-                        /*Console.WriteLine("Please specify if your vehicle is a car or an mc : ");
-
-                        string isCarOrMc = Console.ReadLine();
-
-                        if (isCarOrMc == "mc") // User input is mc ?
-                        {
-                            vehicleType = VehicleType.Mc; // It's a motorcycle
-                        }
-
-                        else if (isCarOrMc == "car") // User input is car ?
-                        {
-                            vehicleType = VehicleType.Car; // It's a car
-                        }
-
-                        else
-                        {
-                            Console.WriteLine("Please choose between car or mc.");
-                        }*/
 
                         Remove(parkingPlace, registrationNumber); // Remove the vehicle with the specificed registration number (if it exists in the parking lot)
                         break;
