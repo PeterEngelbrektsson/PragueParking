@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ParkingPlace;
 using MyAsserts;
 
-namespace PaarkingPlaceFunctionTest
+namespace ParkingPlaceFunctionTest
 {
 
     [TestClass]
@@ -57,7 +57,7 @@ namespace PaarkingPlaceFunctionTest
             park[0] = "abc123:uyt345";
 
             //Act
-            Parking.Add(park, "bcd987:1poi43", VehicleType.Mc); // Should throw exception
+            Parking.Add(park, "bcd987", VehicleType.Mc); // Should throw exception
         }
 
         [TestMethod]
@@ -80,10 +80,10 @@ namespace PaarkingPlaceFunctionTest
             // Setup
             string[] park = new string[2];
             park[0] = "abc123:uyt345";
-            park[1] = "dbc423:";
+            park[1] = ":dbc423";
             string[] expected = new string[2];
             expected[0] = "abc123:uyt345";
-            expected[1] = "dbc423:1poi43";
+            expected[1] = "1poi43:dbc423";
             int expectedPosition = 1;
             int actualPosition;
 
@@ -95,15 +95,35 @@ namespace PaarkingPlaceFunctionTest
             Assert.AreEqual(expectedPosition, actualPosition);
         }
         [TestMethod]
+        public void Park1Mc2McTest()
+        {
+            // Setup
+            string[] park = new string[2];
+            park[0] = "abc123:uyt345";
+            park[1] = null;
+            string[] expected = new string[2];
+            expected[0] = "abc123:uyt345";
+            expected[1] = ":1poi43";
+            int expectedPosition = 1;
+            int actualPosition;
+
+            //Act
+            actualPosition = Parking.Add(park, "1poi43", VehicleType.Mc);
+
+            // Verify
+            MyAssert.AreEqual(expected, park);
+            Assert.AreEqual(expectedPosition, actualPosition);
+        }
+        [TestMethod]
         public void Park1Mc1CarMcTest()
         {
             // Setup
             string[] park = new string[2];
             park[0] = "abc123:uyt345";
-            park[1] = "dbc423:";
+            park[1] = ":dbc423";
             string[] expected = new string[2];
             expected[0] = "abc123:uyt345";
-            expected[1] = "dbc423:8toi43";
+            expected[1] = "8toi43:dbc423";
             int expectedPosition = 1;
             int actualPosition;
 
@@ -118,10 +138,10 @@ namespace PaarkingPlaceFunctionTest
             // Setup
             string[] park = PopulateParkingPlace(100);
             park[0] = "abc123:uyt345";
-            park[1] = "dbc423:";
+            park[1] = ":dbc423";
             string[] expected = PopulateParkingPlace(100);
             expected[0] = "abc123:uyt345";
-            expected[1] = "dbc423:8toi43";
+            expected[1] = "8toi43:dbc423";
             int expectedPosition=1;
             int actualPosition;
             //Act
@@ -154,6 +174,19 @@ namespace PaarkingPlaceFunctionTest
             MyAssert.AreEqual(expected, park);
             Assert.AreEqual(expectedPosition, actualPosition);
         }
+        [TestMethod]
+        [ExpectedException(typeof(RegistrationNumberAlreadyExistException))]
+        public void ParkDuplicateRegistrationNumberThrowsExceptionTest()
+        {
+            // Should throw exception
 
+            // Setup
+            string[] park = new string[2];
+            park[0] = "abc123:uyt345";
+            park[1] = "dbc423:uto765";
+
+            //Act
+            Parking.Add(park, "uto765", VehicleType.Mc); // Should throw exception
+        }
     }
 }

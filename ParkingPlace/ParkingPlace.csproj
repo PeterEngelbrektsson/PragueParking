@@ -46,11 +46,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Parking.cs" />
+    <Compile Include="ParkingHelpFunctions.cs" />
     <Compile Include="ParkingPlaceFullException.cs" />
     <Compile Include="ParkingPlaceOccupiedException.cs" />
     <Compile Include="ParkingSlot.cs" />
     <Compile Include="ParkingSpaceIsEmptyException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegistrationNumberAlreadyExistException.cs" />
     <Compile Include="VehicleNotFoundException.cs" />
     <Compile Include="VehicleType.cs" />
   </ItemGroup>
