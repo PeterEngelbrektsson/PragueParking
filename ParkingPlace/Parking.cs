@@ -299,9 +299,7 @@ namespace ParkingPlace
             int oldPosition = Find(parkingPlace, registrationNumber);
             if (oldPosition < 0)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
                 throw new VehicleNotFoundException("The vehicle "+registrationNumber+" can not be found ");
-                Console.ForegroundColor = ConsoleColor.White;
             }
             VehicleType type = GetVehicleTypeOfParkedVehicle(parkingPlace, oldPosition, registrationNumber);
             Move(parkingPlace, registrationNumber, type, oldPosition, newPosition);
@@ -385,9 +383,7 @@ namespace ParkingPlace
                 int numberOfMcAtOldPosition = ParkingSlot.CountMc(parkingPlaces[oldPosition]);
                 if (numberOfMcAtOldPosition < 0)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
                     throw new ArgumentException("No Mc found to move at that position.");
-                    Console.ForegroundColor = ConsoleColor.White;
                 }
 
                 if (numberOfMcAtOldPosition == 2)
