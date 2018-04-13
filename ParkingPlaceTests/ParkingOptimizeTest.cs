@@ -78,7 +78,7 @@ namespace ParkingPlaceTests
             parkingPlaces[30] = ":abc125";
 
             //Act
-            Parking.Optimize(parkingPlaces);
+            Parking.doOptimize(parkingPlaces);
 
             //Verify
             AssertOptimized(parkingPlaces);
@@ -101,7 +101,7 @@ namespace ParkingPlaceTests
             parkingPlaces[9] = ":abc121";
 
             //Act
-            Parking.Optimize(parkingPlaces);
+            Parking.doOptimize(parkingPlaces);
 
 
             //Verify
@@ -125,7 +125,7 @@ namespace ParkingPlaceTests
             parkingPlaces[9] = "abc121";
 
             //Act
-            Parking.Optimize(parkingPlaces);
+            Parking.doOptimize(parkingPlaces);
 
             //Verify
             AssertOptimized(parkingPlaces);
