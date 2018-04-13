@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace MyAsserts
 {
@@ -14,6 +15,16 @@ namespace MyAsserts
             for (int i = 0; i < arr1.Length; i++)
             {
                 Assert.AreEqual(arr1[i], arr2[i]," Missmatch at array element "+i);
+            }
+        }
+        public static void AreEqual(List<String> expected, List<string> actual)
+        {
+
+            Assert.AreEqual(expected.Count, actual.Count);
+
+            for (int i = 0; i < expected.Count; i++)
+            {
+                Assert.AreEqual(expected[i], actual[i], " Missmatch at list element " + i);
             }
         }
         public static void AreEqual(int[] arr1, int[] arr2)
