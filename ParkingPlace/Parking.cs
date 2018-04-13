@@ -389,14 +389,14 @@ namespace ParkingPlace
                 {
                     found = true;
                     ParkingSlot.RemoveVehicle(ref parkingPlace[i], registrationNumber);
-                    Console.WriteLine("The Vehicle with registration number " + registrationNumber + " successfully removed.");
+                    Console.WriteLine("The Vehicle with registration number " + registrationNumber + " successfully removed from position " + i);
                     break;
                 }
             }
             if (!found)
             {
                 Console.WriteLine("The Vehicle with this number " + registrationNumber + " Not found. ");
-                Console.WriteLine("The vehicle " + registrationNumber + " you are trying to remove can not be found in the parkingplace"); // throw new VehicleNotFoundException
+                Console.WriteLine("The vehicle " + registrationNumber + " you are trying to remove can not be found in the parkingplace"); 
             }
         }
         public static Dictionary<int,string> ListParkedVehicels(string[] parkingPlace)
