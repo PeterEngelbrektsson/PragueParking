@@ -40,7 +40,15 @@ namespace ParkingPlace
 
                         vehicleType = VehicleType.Car; // Set vehicle type to car
 
-                        int position = Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
+                        try
+                        {
+                            int position = Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
+                        }
+
+                        catch
+                        {
+
+                        }
 
                         Console.WriteLine("Your vehicle has been parked at place number {0}.", position + 1);
                         break;
