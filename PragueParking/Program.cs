@@ -32,6 +32,7 @@ namespace PragueParking
             Console.Write("Please input number : ");
 
         }
+  
         public static void DisplayMenu(string[] parkingPlace, VehicleType vehicleType)
         {
             // Console.Clear(); -- Do we want to clear screen between repeat displays of the menu or not ? 
@@ -71,10 +72,14 @@ namespace PragueParking
 
                             Console.WriteLine("Please enter the registration number of the vehicle : ");
                             registrationNumber = Console.ReadLine().ToUpper();
-
                             if (registrationNumber.Length > MaxLengthOfRegistrationNumber)
                             {
                                 Messager.WriteErrorMessage("The registration number is too long.");
+                                break;
+                            }
+                            if (!Parking.ValidRegistrationNumber(registrationNumber))
+                            {
+                                Messager.WriteErrorMessage("The registration number is not valid.");
                                 break;
                             }
                             vehicleType = VehicleType.Car; // Set vehicle type to car                       
@@ -100,6 +105,11 @@ namespace PragueParking
                             if (registrationNumber.Length > MaxLengthOfRegistrationNumber)
                             {
                                 Messager.WriteErrorMessage("The registration number is too long.");
+                                break;
+                            }
+                            if (!Parking.ValidRegistrationNumber(registrationNumber))
+                            {
+                                Messager.WriteErrorMessage("The registration number is not valid.");
                                 break;
                             }
 

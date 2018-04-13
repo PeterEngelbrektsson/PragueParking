@@ -10,7 +10,19 @@ namespace ParkingPlace
     public partial class Parking // Parking place
     {
 
-  
+        public static bool ValidRegistrationNumber(string registrationNumber)
+        {
+            bool valid = true;
+            if (registrationNumber.IndexOf(':') > -1)
+            {
+                valid = false;
+            }
+            if (registrationNumber.Length > 10)
+            {
+                valid = false;
+            }
+            return valid;
+        }
 
         public static int Add(string [] parkingPlace, string registrationNumber, VehicleType vehicleType)
         {
