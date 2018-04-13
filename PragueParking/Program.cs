@@ -20,7 +20,7 @@ namespace PragueParking
             Console.WriteLine("  Prague Parking v1.0");
             Console.WriteLine("-----------------------");
             Console.WriteLine("1. Add a car");
-            Console.WriteLine("2. Add a motorcyle");
+            Console.WriteLine("2. Add a motorcycle");
             Console.WriteLine("3. Move a vehicle");
             Console.WriteLine("4. Find a vehicle");
             Console.WriteLine("5. Remove a vehicle");
