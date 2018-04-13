@@ -35,7 +35,6 @@ namespace ParkingPlace
                 Console.Write("Please input number : ");
 
                 String Str = Console.ReadLine(); // Store user choice
-                int choice = 0;
                 //int choice = int.Parse(Console.ReadLine()); // Store user choice                
                 if (!int.TryParse(Str, out choice))
                 {
@@ -127,27 +126,35 @@ namespace ParkingPlace
                             }
                             catch (VehicleNotFoundException)
                             {
-                                Console.WriteLine("The vehicle could not be found.");
-                            }
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("The vehicle could not be found.");
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                }
 
                         }
 
                         else if (yesOrNo == "NO")
                         {
-                            Console.WriteLine("OK, lets try finding another parking place that is suitable for you");
-                            Console.Write("Please choose a parking place and we shall see if it is available : ");
-                            int userPosition = int.Parse(Console.ReadLine());
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                Console.WriteLine("OK, lets try finding another parking place that is suitable for you");
+                                Console.Write("Please choose a parking place and we shall see if it is available : ");
+                                Console.ForegroundColor = ConsoleColor.White;
+                                int userPosition = int.Parse(Console.ReadLine());
                             try
                             {
                                 Move(parkingPlace, registrationNumber.ToUpper(), userPosition-1);// convert form one based to zerop based index
                             }
                             catch (VehicleNotFoundException)
                             {
-                                Console.WriteLine("The vehicle could not be found.");
-                            }
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("The vehicle could not be found.");
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                }
                             catch (ParkingPlaceOccupiedException)
                             { 
+                                Console.ForegroundColor = ConsoleColor.Yellow;
                                 Console.WriteLine("The selected new position is already full.");
+                                Console.ForegroundColor = ConsoleColor.White;
                             }
                         }
                         else
@@ -160,7 +167,6 @@ namespace ParkingPlace
                             break;
 
                         case 4: // Find a vehicle
-
                             Console.WriteLine("Please enter the registration number of the vehicle : ");
                             registrationNumber = Console.ReadLine().ToUpper();
 
