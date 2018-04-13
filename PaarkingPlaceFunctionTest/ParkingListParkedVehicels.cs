@@ -17,11 +17,11 @@ namespace PaarkingPlaceFunctionTest
             park[0] = ":lk433";
             park[1] = "dbc423:lk433";
 
-            List<string> expected = new List<string>();
-            expected.Add(":lk433");
-            expected.Add("dbc423:lk433");
+            Dictionary<int, string> expected = new Dictionary<int, string>();
+            expected.Add(0,":lk433");
+            expected.Add(1,"dbc423:lk433");
 
-            List<string> actual;
+            Dictionary<int,string> actual;
 
             //Act
             actual = Parking.ListParkedVehicels(park);
@@ -32,22 +32,22 @@ namespace PaarkingPlaceFunctionTest
         }
 
         [TestMethod]
-        public void ListParkedVehiclesNullTest()
+        public void ListParkedVehiclesNullaTest()
         {
             // Setup
             string[] park = new string[5];
             park[0] = ":lk433";
             park[1] = "dbc423:lk433";
             park[2] = null;
-            park[3] = "dbc423";
-            park[4] = null;
+            park[3] = null;
+            park[4] = "dbt423:ltt33";
 
-            List<string> expected = new List<string>();
-            expected.Add(":lk433");
-            expected.Add("dbc423:lk433");
-            expected.Add("dbc423");
+            Dictionary<int, string> expected = new Dictionary<int, string>();
+            expected.Add(0, ":lk433");
+            expected.Add(1, "dbc423:lk433");
+            expected.Add(4, "dbt423:ltt33");
 
-            List<string> actual;
+            Dictionary<int, string> actual;
 
             //Act
             actual = Parking.ListParkedVehicels(park);
