@@ -15,6 +15,7 @@ namespace ParkingPlace
             // Console.Clear(); -- Do we want to clear screen between repeat displays of the menu or not ? 
 
             bool keepLoop = true;
+            int choice = 0;
 
             while (keepLoop) // Perpetual loop
             {
@@ -33,8 +34,20 @@ namespace ParkingPlace
                 Console.WriteLine();
                 Console.Write("Please input number : ");
 
-                int choice = int.Parse(Console.ReadLine()); // Store user choice
+                string menuchoice = Console.ReadLine();
 
+                if ( String.IsNullOrEmpty(menuchoice) == true)
+                {
+                    Console.WriteLine("You have to make a proper choice!");
+                    Console.WriteLine("Exiting.");
+                    choice = 0;
+                }
+
+                else
+                {
+                    choice = int.Parse(menuchoice); // Store user choice
+                }
+                
                 int position = 0; // Position in array of vehicles                
 
                 string registrationNumber = "ABC123"; // pseudo registration number
