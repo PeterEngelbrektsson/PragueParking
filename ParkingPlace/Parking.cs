@@ -16,7 +16,7 @@ namespace ParkingPlace
 
             bool keepLoop = true;
 
-            while (true) // Perpetual loop
+            while (keepLoop) // Perpetual loop
             {
                 Console.WriteLine();
                 Console.WriteLine("  Prague Parking v1.0");
@@ -47,7 +47,6 @@ namespace ParkingPlace
 
                         keepLoop = false;
                         break;
-
 
                     case 1: // Add a car
 
