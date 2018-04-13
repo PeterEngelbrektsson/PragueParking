@@ -174,6 +174,19 @@ namespace ParkingPlaceFunctionTest
             MyAssert.AreEqual(expected, park);
             Assert.AreEqual(expectedPosition, actualPosition);
         }
+        [TestMethod]
+        [ExpectedException(typeof(RegistrationNumberAlreadyExistException))]
+        public void ParkDuplicateRegistrationNumberThrowsExceptionTest()
+        {
+            // Should throw exception
 
+            // Setup
+            string[] park = new string[2];
+            park[0] = "abc123:uyt345";
+            park[1] = "dbc423:uto765";
+
+            //Act
+            Parking.Add(park, "uto765", VehicleType.Mc); // Should throw exception
+        }
     }
 }

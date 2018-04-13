@@ -145,7 +145,14 @@ namespace ParkingPlace
         
         public static int Add(string [] parkingPlace, string registrationNumber, VehicleType vehicleType)
         {
-            int pos = FindFreePlace(parkingPlace, vehicleType);
+            int pos = Find(parkingPlace, registrationNumber);
+            if(pos != -1)
+            {
+                // The registration mnumber already exists
+                throw new RegistrationNumberAlreadyExistException();
+            }
+
+            pos = FindFreePlace(parkingPlace, vehicleType);
 
             if ((parkingPlace[pos] != null) && vehicleType == VehicleType.Mc) // If parking place not empty and vehicle is motorcyle
             {
