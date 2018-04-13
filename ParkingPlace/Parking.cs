@@ -212,7 +212,7 @@ namespace ParkingPlace
             {
                 foreach (KeyValuePair<int, string> slot in parkedVehicles)
                 {
-                    Console.WriteLine("{0} {1} ", slot.Key, slot.Value);
+                    Console.WriteLine("{0} {1} ", slot.Key+1, slot.Value); // Display should be 1 based
                 }
             }
             else
@@ -278,7 +278,7 @@ namespace ParkingPlace
                 if (firstSingleMcPosition != lastSingleMcPosition && (firstSingleMcPosition != -1 && lastSingleMcPosition != -1))
                 {
                     string registrationNumber = (parkingPlace[lastSingleMcPosition]).Trim(':');
-                    Console.WriteLine("Move motorcycle {0} from parkingplace {1} to place {2}.",registrationNumber, lastSingleMcPosition, firstSingleMcPosition);
+                    Console.WriteLine("Move motorcycle {0} from parkingplace {1} to place {2}.",registrationNumber, lastSingleMcPosition+1, firstSingleMcPosition+1); // Display should be one based
                     Move(parkingPlace, registrationNumber, VehicleType.Mc, lastSingleMcPosition, firstSingleMcPosition);
                     found = true;
                 }
@@ -395,22 +395,37 @@ namespace ParkingPlace
 
         public static void Remove(string[] parkingPlace, string registrationNumber)
         {
-            bool found = false;
+            
+            try
+            {
+                int pos=doRemove(parkingPlace, registrationNumber);
+                Console.WriteLine("The Vehicle with registration number " + registrationNumber + " successfully removed from position " + (pos + 1)); // Display of parking number should be one based
+
+            }
+            catch (VehicleNotFoundException)
+            {
+                Console.WriteLine("The Vehicle with this number " + registrationNumber + " Not found. ");
+                Console.WriteLine("The vehicle " + registrationNumber + " you are trying to remove can not be found in the parkingplace");
+
+            }
+        }
+        public static int doRemove(string[] parkingPlace, string registrationNumber)
+        {
+            int found = -1;
             for (int i = 0; i < parkingPlace.Length; i++)
             {
-                if (ParkingSlot.ContainsVehicle(parkingPlace[i],registrationNumber))
+                if (ParkingSlot.ContainsVehicle(parkingPlace[i], registrationNumber))
                 {
-                    found = true;
+                    found = i;
                     ParkingSlot.RemoveVehicle(ref parkingPlace[i], registrationNumber);
-                    Console.WriteLine("The Vehicle with registration number " + registrationNumber + " successfully removed from position " + i);
                     break;
                 }
             }
-            if (!found)
+            if (found<0)
             {
-                Console.WriteLine("The Vehicle with this number " + registrationNumber + " Not found. ");
-                Console.WriteLine("The vehicle " + registrationNumber + " you are trying to remove can not be found in the parkingplace"); 
+                throw new VehicleNotFoundException();
             }
+            return found;
         }
         public static Dictionary<int,string> ListParkedVehicels(string[] parkingPlace)
         {
