@@ -12,6 +12,20 @@ namespace PragueParking
     {
         public const int NumberOfParkinPlaces = 100;
 
+        public static void WriteLineColor(string text,ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.WriteLine(text);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+        public static void WriteErrorMessage(string text)
+        {
+            WriteLineColor(text, ConsoleColor.Red);
+        }
+        public static void WriteInformationMessage(string text)
+        {
+            WriteLineColor(text, ConsoleColor.Green);
+        }
         public static void DisplayMenu(string[] parkingPlace, VehicleType vehicleType)
         {
             // Console.Clear(); -- Do we want to clear screen between repeat displays of the menu or not ? 
@@ -41,9 +55,7 @@ namespace PragueParking
                 //int choice = int.Parse(Console.ReadLine()); // Store user choice                
                 if (!int.TryParse(Str, out choice))
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid Input, Please enter number only");
-                    Console.ForegroundColor = ConsoleColor.White;
+                    WriteErrorMessage("Invalid Input, Please enter number only");
                 }
                 else
                 {
@@ -72,16 +84,12 @@ namespace PragueParking
                             try
                             {
                                 position = Parking.Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
-                                Console.ForegroundColor = ConsoleColor.Green;
-                                Console.WriteLine("Your vehicle has been parked at place number {0}.", position + 1);
-                                Console.ForegroundColor = ConsoleColor.White;
+                                WriteInformationMessage(String.Format("Your vehicle has been parked at place number {0}.", position + 1));
                             }
 
                             catch (RegistrationNumberAlreadyExistException)
                             {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("Registration number already exist. Cannot have two vehicles with same.");
-                                Console.ForegroundColor = ConsoleColor.White;
+                                WriteErrorMessage("Registration number already exist. Cannot have two vehicles with same.");
                             }
 
                             break;
@@ -96,16 +104,12 @@ namespace PragueParking
                             try
                             {
                                 position = Parking.Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
-                                Console.ForegroundColor = ConsoleColor.Green;
-                                Console.WriteLine("Your vehicle has been parked at place number {0}.", position + 1);
-                                Console.ForegroundColor = ConsoleColor.White;
+                                WriteInformationMessage(String.Format("Your vehicle has been parked at place number {0}.", position + 1));
                             }
 
                             catch (RegistrationNumberAlreadyExistException)
                             {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("Registration number already exist. Cannot hav two vehicles with same.");
-                                Console.ForegroundColor = ConsoleColor.White;
+                                WriteErrorMessage("Registration number already exist. Cannot hav two vehicles with same.");
                             }
 
                             break;
@@ -145,18 +149,16 @@ namespace PragueParking
                                 }
                                 catch (VehicleNotFoundException)
                                 {
-                                    Console.WriteLine("The vehicle could not be found.");
+                                    WriteErrorMessage("The vehicle could not be found.");
                                 }
                                 catch (ParkingPlaceOccupiedException)
                                 {
-                                    Console.WriteLine("The selected new position is already full.");
+                                    WriteErrorMessage("The selected new position is already full.");
                                 }
                             }
                             else
                             {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("You have to make a proper choice.");
-                                Console.ForegroundColor = ConsoleColor.White;
+                                WriteErrorMessage("You have to make a proper choice.");
                             }
 
                             break;
@@ -170,17 +172,13 @@ namespace PragueParking
 
                             if (position != -1)
                             {
-                                Console.ForegroundColor = ConsoleColor.Green;
-                                Console.WriteLine("Your vehicle is parked at spot number {0}.", position + 1); // Parking spots numbered 1 - 100 !
-                                Console.ForegroundColor = ConsoleColor.White;
+                                WriteInformationMessage(String.Format("Your vehicle is parked at spot number {0}.", position + 1)); // Parking spots numbered 1 - 100 !
                             }
 
                             else
                             {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("I am sorry to say you vehicle does not exist in our parking lot.");
-                                Console.WriteLine("Perhaps someone has taken it for a joyride. Our apologies.");
-                                Console.ForegroundColor = ConsoleColor.White;
+                                WriteErrorMessage("I am sorry to say you vehicle does not exist in our parking lot.");
+                                WriteErrorMessage("Perhaps someone has taken it for a joyride. Our apologies.");
                             }
 
                             break;
@@ -194,9 +192,7 @@ namespace PragueParking
                             break;
 
                         case 6: // Find free parking spot
-                            Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("Please specify if your vehicle is a car or an mc : ");
-                            Console.ForegroundColor = ConsoleColor.White;
 
                             isCarOrMc = Console.ReadLine(); // get user input
 
@@ -212,16 +208,12 @@ namespace PragueParking
 
                             else
                             {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("Choose either car or mc. Other vehicles not allowed in the parking lot."); // Neither car nor mc, throw exception !
-                                Console.ForegroundColor = ConsoleColor.White;
+                                WriteErrorMessage("Choose either car or mc. Other vehicles not allowed in the parking lot."); // Neither car nor mc, throw exception !
                                 break;
                             }
 
                             position = Parking.FindFreePlace(parkingPlace, vehicleType); // Find a free position for car or mc, depending on user choice
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.WriteLine("There is a free place for your vehicle at {0}.", position + 1);
-                            Console.ForegroundColor = ConsoleColor.White;
+                            WriteInformationMessage(String.Format("There is a free place for your vehicle at {0}.", position + 1));
                             break;
 
                         case 7: // Optimize parking spot
@@ -237,9 +229,7 @@ namespace PragueParking
                         default: // None of the above
 
                             Console.WriteLine();
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("That number does not exist. Please enter a correct number.");
-                            Console.ForegroundColor = ConsoleColor.White;
+                            WriteErrorMessage("That number does not exist. Please enter a correct number.");
                             break;
                     }
                 }
