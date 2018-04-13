@@ -199,7 +199,7 @@ namespace ParkingPlace
             {
                 foreach (KeyValuePair<int, string> slot in parkedVehicles)
                 {
-                    Console.WriteLine("{0} {1} ", slot.Key, slot.Value);
+                    Console.WriteLine("{0} {1} ", slot.Key+1, slot.Value); // Display should be 1 based
                 }
             }
             else
@@ -265,7 +265,7 @@ namespace ParkingPlace
                 if (firstSingleMcPosition != lastSingleMcPosition && (firstSingleMcPosition != -1 && lastSingleMcPosition != -1))
                 {
                     string registrationNumber = (parkingPlace[lastSingleMcPosition]).Trim(':');
-                    Console.WriteLine("Move motorcycle {0} from parkingplace {1} to place {2}.",registrationNumber, lastSingleMcPosition, firstSingleMcPosition);
+                    Console.WriteLine("Move motorcycle {0} from parkingplace {1} to place {2}.",registrationNumber, lastSingleMcPosition+1, firstSingleMcPosition+1); // Display should be one based
                     Move(parkingPlace, registrationNumber, VehicleType.Mc, lastSingleMcPosition, firstSingleMcPosition);
                     found = true;
                 }
