@@ -9,6 +9,8 @@ namespace ParkingPlaceFunctionTest
     [TestClass]
     public class ParkingParkTests
     {
+        const string GoodCustomPlateRegistrationNumber = "AGoodNumber";
+
         public string[] PopulateParkingPlace(int size)
         {
             string[] parkingPlaces = new string[size];
@@ -21,7 +23,7 @@ namespace ParkingPlaceFunctionTest
 
         [TestMethod]
         [ExpectedException(typeof(ParkingPlaceFullException))]
-        public void ParkAllFullCarCarTest()
+        public void ParkAllFullCarCarThrowsExeptionTest()
         {
             // Should throw exception
 
@@ -35,7 +37,7 @@ namespace ParkingPlaceFunctionTest
 
         [TestMethod]
         [ExpectedException(typeof(ParkingPlaceFullException))]
-        public void ParkAllFullCarMcTest()
+        public void ParkAllFullCarMcThrowsExeptionTest()
         {
             // Should throw exception
 
@@ -48,7 +50,7 @@ namespace ParkingPlaceFunctionTest
         }
         [TestMethod]
         [ExpectedException(typeof(ParkingPlaceFullException))]
-        public void ParkAllFull2McMcTest()
+        public void ParkAllFull2McMcThrowsExeptionTest()
         {
             // Should throw exception
 
@@ -62,7 +64,7 @@ namespace ParkingPlaceFunctionTest
 
         [TestMethod]
         [ExpectedException(typeof(ParkingPlaceFullException))]
-        public void ParkAllFull4McMcTest()
+        public void ParkAllFull4McMcThrowsExeptionTest()
         {
             // Should throw exception
 
@@ -176,17 +178,103 @@ namespace ParkingPlaceFunctionTest
         }
         [TestMethod]
         [ExpectedException(typeof(RegistrationNumberAlreadyExistException))]
-        public void ParkDuplicateRegistrationNumberThrowsExceptionTest()
+        public void ParkDuplicateMcVsMcRegistrationNumberThrowsExceptionTest()
         {
             // Should throw exception
 
             // Setup
             string[] park = new string[2];
-            park[0] = "abc123:uyt345";
+            park[0] = ":abc123";
             park[1] = "dbc423:uto765";
 
             //Act
             Parking.Add(park, "uto765", VehicleType.Mc); // Should throw exception
+        }
+        [TestMethod]
+        [ExpectedException(typeof(RegistrationNumberAlreadyExistException))]
+        public void ParkDuplicateMcVsCarRegistrationNumberThrowsExceptionTest()
+        {
+            // Should throw exception
+
+            // Setup
+            string[] park = new string[2];
+            park[0] = "abc123";
+            park[1] = ":dbc423";
+
+            //Act
+            Parking.Add(park, "abc123", VehicleType.Mc); // Should throw exception
+        }
+        [TestMethod]
+        [ExpectedException(typeof(RegistrationNumberAlreadyExistException))]
+        public void ParkDuplicateCarVsMcRegistrationNumberThrowsExceptionTest()
+        {
+            // Should throw exception
+
+            // Setup
+            string[] park = new string[2];
+            park[0] = null;
+            park[1] = "dbc423:uto765";
+
+            //Act
+            Parking.Add(park, "uto765", VehicleType.Car); // Should throw exception
+        }
+        [TestMethod]
+        [ExpectedException(typeof(RegistrationNumberAlreadyExistException))]
+        public void ParkDuplicateCarVsCarRegistrationNumberThrowsExceptionTest()
+        {
+            // Should throw exception
+
+            // Setup
+            string[] park = new string[2];
+            park[0] = null;
+            park[1] = "uto765";
+
+            //Act
+            Parking.Add(park, "uto765", VehicleType.Car); // Should throw exception
+        }
+        [TestMethod]
+        public void ParkGoodCustomPlateCarTest()
+        {
+            // Setup
+            string[] park = new string[2];
+            park[0] = null;
+            park[1] = "dbc423:lk433";
+
+            string[] expected = new string[2];
+            expected[0] = GoodCustomPlateRegistrationNumber;
+            expected[1] = "dbc423:lk433";
+
+            int expectedPosition = 0;
+            int actualPosition;
+
+            //Act
+            actualPosition = Parking.Add(park, GoodCustomPlateRegistrationNumber, VehicleType.Car);
+
+            //Verify
+            MyAssert.AreEqual(expected, park);
+            Assert.AreEqual(expectedPosition, actualPosition);
+        }
+        [TestMethod]
+        public void ParkGoodCustomPlateMcTest()
+        {
+            // Setup
+            string[] park = new string[2];
+            park[0] = ":lk433";
+            park[1] = "dbc423:lk433";
+
+            string[] expected = new string[2];
+            expected[0] = GoodCustomPlateRegistrationNumber+ ":lk433";
+            expected[1] = "dbc423:lk433";
+
+            int expectedPosition = 0;
+            int actualPosition;
+
+            //Act
+            actualPosition = Parking.Add(park, GoodCustomPlateRegistrationNumber, VehicleType.Mc);
+
+            //Verify
+            MyAssert.AreEqual(expected, park);
+            Assert.AreEqual(expectedPosition, actualPosition);
         }
     }
 }
