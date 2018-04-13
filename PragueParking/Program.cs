@@ -100,6 +100,7 @@ namespace PragueParking
                 }
             }
         }
+
         public static void DisplayParkedVehicels(string[] parkingPlace)
         {
             Dictionary<int, string> parkedVehicles;
@@ -319,13 +320,9 @@ namespace PragueParking
             string registrationNumber = Console.ReadLine().ToUpper();
             Remove(parkingPlace, registrationNumber); // Remove the vehicle with the specificed registration number (if it exists in the parking lot)
         }
-        public static void Main(string[] args)
+        public static string[] PopulateTestData()
         {
-            //Main file
-
-            // String array with 100 elements of parking Temp
-             string[] parkingPlace = new string[100];
-
+            string[] parkingPlace = new string[100];
             // Testdata
             parkingPlace[10] = "ABC123";
             parkingPlace[12] = "CAR432";
@@ -340,6 +337,18 @@ namespace PragueParking
             parkingPlace[85] = "CAR987";
             parkingPlace[86] = "CAR123";
 
+            return parkingPlace;
+        }
+
+        public static void Main(string[] args)
+        {
+            //Main file
+
+            // String array with elements of parking 
+             string[] parkingPlace = new string[NumberOfParkinPlaces];
+
+            // Setup demo with testdata.  FIXME remove this in production code.
+            parkingPlace = PopulateTestData();
 
             DisplayMenu(parkingPlace);
             Console.ReadLine();
