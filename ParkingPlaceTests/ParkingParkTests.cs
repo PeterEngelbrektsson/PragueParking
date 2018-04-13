@@ -6,9 +6,6 @@ namespace ParkingPlaceTests
     [TestClass]
     public class ParkingParkTests
     {
-        [TestMethod]
-        public void TestMethod1()
-        {
-        }
+        
     }
 }
