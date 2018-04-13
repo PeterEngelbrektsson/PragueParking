@@ -312,7 +312,9 @@ namespace ParkingPlace
 
             foreach (string message in messages)
             {
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine(message);
+                Console.ForegroundColor = ConsoleColor.White;
             }
             if (messages.Length < 1)
             {
