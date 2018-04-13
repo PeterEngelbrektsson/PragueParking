@@ -47,14 +47,14 @@ namespace ParkingPlace
                         try
                         {
                             position = Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
+                            Console.WriteLine("Your vehicle has been parked at place number {0}.", position + 1);
                         }
 
                         catch (RegistrationNumberAlreadyExistException)
                         {
                             Console.WriteLine("Registration number already exist. Cannot have two vehicles with same.");
                         }
-
-                        Console.WriteLine("Your vehicle has been parked at place number {0}.", position + 1);
+                     
                         break;
 
                     case 2: // Add a motorcycle
@@ -67,14 +67,14 @@ namespace ParkingPlace
                         try
                         {
                             position = Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
+                            Console.WriteLine("Your vehicle has been parked at place number {0}.", position + 1);
                         }
 
                         catch (RegistrationNumberAlreadyExistException)
                         {
                             Console.WriteLine("Registration number already exist. Cannot hav two vehicles with same.");
                         }
-
-                        Console.WriteLine("Your vehicle has been parked at place number {0}.", position + 1);
+                       
                         break;
 
                     case 3: // Move a vehicle
