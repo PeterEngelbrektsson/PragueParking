@@ -327,19 +327,19 @@ namespace ParkingPlace
                 // Try to find car
                 if (parkingPlace[i] == registrationNumber)
                 {
-                    Console.WriteLine("Your Vehicle is found with registration number " + parkingPlace[i]);
+                   // Console.WriteLine("Your Vehicle is found with registration number " + parkingPlace[i]);
                     return i;
                 }else 
                 {
                     // Try to find motorcycle
                     if (ParkingSlot.ContainsMc(parkingPlace[i], registrationNumber)) { 
-                            Console.WriteLine("Your Vehicle is found with registration number " + parkingPlace[i]);
+                           // Console.WriteLine("Your Vehicle is found with registration number " + parkingPlace[i]);
                             return i;
                         
                     }
                 }
             }
-            Console.WriteLine("Your Vehicle is not found with registration number " + registrationNumber);
+            //Console.WriteLine("Your Vehicle is not found with registration number " + registrationNumber);
 
             return -1;
         }
@@ -388,6 +388,18 @@ namespace ParkingPlace
                 Console.WriteLine("The Vehicle with this number " + registrationNumber + " Not found. ");
                 Console.WriteLine("The vehicle " + registrationNumber + " you are trying to remove can not be found in the parkingplace"); // throw new VehicleNotFoundException
             }
+        }
+        public static List<string> ListParkedVehicels(string[] parkingPlace)
+        {
+            List<string> parkedVehicles= new List<string>();
+            foreach(string slot in parkingPlace)
+            {
+                if (slot != null)
+                {
+                    parkedVehicles.Add(slot);
+                }
+            }
+            return parkedVehicles;
         }
     }
 }
