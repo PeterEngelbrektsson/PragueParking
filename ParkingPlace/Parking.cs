@@ -51,6 +51,10 @@ namespace ParkingPlace
             {
                 throw new VehicleNotFoundException("The vehicle "+registrationNumber+" can not be found ");
             }
+            if (oldPosition == newPosition)
+            {
+                throw new VehicleAlreadyAtThatPlaceException();
+            }
             VehicleType type = GetVehicleTypeOfParkedVehicle(parkingPlace, oldPosition, registrationNumber);
             Move(parkingPlace, registrationNumber, type, oldPosition, newPosition);
         }    

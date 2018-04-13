@@ -168,6 +168,10 @@ namespace PragueParking
                                 {
                                     Messager.WriteErrorMessage("The selected new position is already full.");
                                 }
+                                catch (VehicleAlreadyAtThatPlaceException)
+                                {
+                                    Messager.WriteErrorMessage("The vehicle is already parked at that position.");
+                                }
                             }
                             else
                             {

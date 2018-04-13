@@ -79,7 +79,7 @@ namespace ParkingPlaceFunctionTest
             park[2] = "abc213:tre765";
             park[3] = null;
 
-            string registrationNumeberToMove = "abc213";
+            string registrationNumberToMove = "abc213";
 
             string[] expected = new string[4];
             expected[0] = null;
@@ -88,7 +88,7 @@ namespace ParkingPlaceFunctionTest
             expected[3] = ":abc213";
 
             //Act
-            Parking.Move(park, registrationNumeberToMove, 3);
+            Parking.Move(park, registrationNumberToMove, 3);
 
             //Verify
             MyAssert.AreEqual(expected, park);
@@ -104,7 +104,7 @@ namespace ParkingPlaceFunctionTest
             park[2] = "abc213:tre765";
             park[3] = null;
 
-            string registrationNumeberToMove = "abc213";
+            string registrationNumberToMove = "abc213";
 
             string[] expected = new string[4];
             expected[0] = null;
@@ -113,13 +113,46 @@ namespace ParkingPlaceFunctionTest
             expected[3] = null;
 
             //Act
-            Parking.Move(park, registrationNumeberToMove, 1);
+            Parking.Move(park, registrationNumberToMove, 1);
 
             //Verify
             Assert.AreEqual(expected[0], park[0]);
             Assert.AreEqual(expected[2], park[2]);
             Assert.AreEqual(expected[3], park[3]);
             Assert.IsTrue( park[1]== "8toi43:abc213" | park[1]== "abc213:8toi43");
+        }
+        [TestMethod]
+        [ExpectedException(typeof(VehicleAlreadyAtThatPlaceException))]
+        public void MoveMcToSamePositionTest()
+        {
+            // Setup
+            string[] park = new string[4];
+            park[0] = null;
+            park[1] = ":8toi43";
+            park[2] = "abc213:tre765";
+            park[3] = null;
+
+            string registrationNumberToMove = "abc213";
+
+            //Act
+            Parking.Move(park, registrationNumberToMove, 2);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(VehicleAlreadyAtThatPlaceException))]
+        public void MoveCarToSamePositionTest()
+        {
+            // Setup
+            string[] park = new string[4];
+            park[0] = null;
+            park[1] = "8toi43";
+            park[2] = "abc213:tre765";
+            park[3] = null;
+
+            string registrationNumberToMove = "8toi43";
+
+
+            //Act
+            Parking.Move(park, registrationNumberToMove, 1);
         }
     }
 }
