@@ -288,7 +288,7 @@ namespace PragueParking
             try
             {
                 int pos = Parking.Remove(parkingPlace, registrationNumber);
-                Messager.WriteInformationMessage(String.Format("The Vehicle with registration number {0} successfully removed from position ", registrationNumber, pos + 1)); // Display of parking number should be one based
+                Messager.WriteInformationMessage(String.Format("The Vehicle with registration number {0} successfully removed from position {1}", registrationNumber, pos + 1)); // Display of parking number should be one based
             }
             catch (VehicleNotFoundException)
             {
