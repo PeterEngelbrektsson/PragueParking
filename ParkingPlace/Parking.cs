@@ -216,7 +216,23 @@ namespace ParkingPlace
                 }
             }
         }
-        
+        public static void DisplayParkedVehicels(string[] parkingPlace)
+        {
+            Dictionary<int,string> parkedVehicles;
+            parkedVehicles = ListParkedVehicels(parkingPlace);
+            if (parkedVehicles != null && parkedVehicles.Count > 0)
+            {
+                foreach (KeyValuePair<int, string> slot in parkedVehicles)
+                {
+                    Console.WriteLine("{0} {1} ", slot.Key, slot.Value);
+                }
+            }
+            else
+            {
+                Console.WriteLine("The parkingplace is empty.");
+            }
+        }
+
         public static int Add(string [] parkingPlace, string registrationNumber, VehicleType vehicleType)
         {
             int pos = Find(parkingPlace, registrationNumber);
@@ -408,14 +424,14 @@ namespace ParkingPlace
                 Console.WriteLine("The vehicle " + registrationNumber + " you are trying to remove can not be found in the parkingplace"); // throw new VehicleNotFoundException
             }
         }
-        public static List<string> ListParkedVehicels(string[] parkingPlace)
+        public static Dictionary<int,string> ListParkedVehicels(string[] parkingPlace)
         {
-            List<string> parkedVehicles= new List<string>();
-            foreach(string slot in parkingPlace)
+            Dictionary<int, string> parkedVehicles= new Dictionary<int, string>();
+            for(int i=0;i<parkingPlace.Length;i++)
             {
-                if (slot != null)
+                if (parkingPlace[i]!= null)
                 {
-                    parkedVehicles.Add(slot);
+                    parkedVehicles.Add(i, parkingPlace[i]);
                 }
             }
             return parkedVehicles;
