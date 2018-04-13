@@ -389,7 +389,7 @@ namespace ParkingPlace
                 {
                     found = true;
                     ParkingSlot.RemoveVehicle(ref parkingPlace[i], registrationNumber);
-                    Console.WriteLine("The Vehicle with registration number " + registrationNumber + " successfully removed from position " + i);
+                    Console.WriteLine("The Vehicle with registration number " + registrationNumber + " successfully removed from position " + i+1); // Display of parking number should be one based
                     break;
                 }
             }
