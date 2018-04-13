@@ -11,6 +11,7 @@ namespace PragueParking
     public class Program
     {
         public const int NumberOfParkinPlaces = 100;
+        public const int MaxLengthOfRegistrationNumber = 10;
 
         public static void WriteLineColor(string text,ConsoleColor color)
         {
@@ -79,6 +80,11 @@ namespace PragueParking
                             Console.WriteLine("Please enter the registration number of the vehicle : ");
                             registrationNumber = Console.ReadLine().ToUpper();
 
+                            if (registrationNumber.Length > MaxLengthOfRegistrationNumber)
+                            {
+                                WriteErrorMessage("The registration number is too long.");
+                                break;
+                            }
                             vehicleType = VehicleType.Car; // Set vehicle type to car                       
 
                             try
@@ -98,6 +104,12 @@ namespace PragueParking
 
                             Console.WriteLine("Please enter the registration number of the vehicle : ");
                             registrationNumber = Console.ReadLine().ToUpper();
+
+                            if (registrationNumber.Length > MaxLengthOfRegistrationNumber)
+                            {
+                                WriteErrorMessage("The registration number is too long.");
+                                break;
+                            }
 
                             vehicleType = VehicleType.Mc; // Set vehicle type to motorcycle
 
