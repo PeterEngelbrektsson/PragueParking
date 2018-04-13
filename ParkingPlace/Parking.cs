@@ -9,6 +9,7 @@ namespace ParkingPlace
 {
     public partial class Parking // Parking place
     {
+        public const int MaxLengthOfRegistrationNumber = 10;
 
         public static bool ValidRegistrationNumber(string registrationNumber)
         {
@@ -17,7 +18,7 @@ namespace ParkingPlace
             {
                 valid = false;
             }
-            if (registrationNumber.Length > 10)
+            if (registrationNumber.Length > MaxLengthOfRegistrationNumber)
             {
                 valid = false;
             }

@@ -11,7 +11,7 @@ namespace PragueParking
     public class Program
     {
         public const int NumberOfParkinPlaces = 100;
-        public const int MaxLengthOfRegistrationNumber = 10;
+        
 
 
         public static void WriteMenu()
@@ -264,7 +264,7 @@ namespace PragueParking
             Console.WriteLine("Please enter the registration number of the vehicle : ");
             string registrationNumber = Console.ReadLine().ToUpper();
 
-            if (registrationNumber.Length > MaxLengthOfRegistrationNumber)
+            if (registrationNumber.Length > Parking.MaxLengthOfRegistrationNumber)
             {
                 Messager.WriteErrorMessage("The registration number is too long.");
                 return;
@@ -293,7 +293,7 @@ namespace PragueParking
         {
             Console.WriteLine("Please enter the registration number of the vehicle : ");
             string registrationNumber = Console.ReadLine().ToUpper();
-            if (registrationNumber.Length > MaxLengthOfRegistrationNumber)
+            if (registrationNumber.Length > Parking.MaxLengthOfRegistrationNumber)
             {
                 Messager.WriteErrorMessage("The registration number is too long.");
                 return;
