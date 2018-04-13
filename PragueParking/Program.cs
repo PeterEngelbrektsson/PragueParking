@@ -13,20 +13,7 @@ namespace PragueParking
         public const int NumberOfParkinPlaces = 100;
         public const int MaxLengthOfRegistrationNumber = 10;
 
-        public static void WriteLineColor(string text,ConsoleColor color)
-        {
-            Console.ForegroundColor = color;
-            Console.WriteLine(text);
-            Console.ForegroundColor = ConsoleColor.White;
-        }
-        public static void WriteErrorMessage(string text)
-        {
-            WriteLineColor(text, ConsoleColor.Red);
-        }
-        public static void WriteInformationMessage(string text)
-        {
-            WriteLineColor(text, ConsoleColor.Green);
-        }
+
         public static void WriteMenu()
         {
             Console.WriteLine();
@@ -61,7 +48,7 @@ namespace PragueParking
                 //int choice = int.Parse(Console.ReadLine()); // Store user choice                
                 if (!int.TryParse(Str, out choice))
                 {
-                    WriteErrorMessage("Invalid Input, Please enter number only");
+                    Messager.WriteErrorMessage("Invalid Input, Please enter number only");
                 }
                 else
                 {
@@ -87,7 +74,7 @@ namespace PragueParking
 
                             if (registrationNumber.Length > MaxLengthOfRegistrationNumber)
                             {
-                                WriteErrorMessage("The registration number is too long.");
+                                Messager.WriteErrorMessage("The registration number is too long.");
                                 break;
                             }
                             vehicleType = VehicleType.Car; // Set vehicle type to car                       
@@ -95,12 +82,12 @@ namespace PragueParking
                             try
                             {
                                 position = Parking.Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
-                                WriteInformationMessage(String.Format("Your vehicle has been parked at place number {0}.", position + 1));
+                                Messager.WriteInformationMessage(String.Format("Your vehicle has been parked at place number {0}.", position + 1));
                             }
 
                             catch (RegistrationNumberAlreadyExistException)
                             {
-                                WriteErrorMessage("Registration number already exist. Cannot have two vehicles with same.");
+                                Messager.WriteErrorMessage("Registration number already exist. Cannot have two vehicles with same.");
                             }
 
                             break;
@@ -112,7 +99,7 @@ namespace PragueParking
 
                             if (registrationNumber.Length > MaxLengthOfRegistrationNumber)
                             {
-                                WriteErrorMessage("The registration number is too long.");
+                                Messager.WriteErrorMessage("The registration number is too long.");
                                 break;
                             }
 
@@ -121,12 +108,12 @@ namespace PragueParking
                             try
                             {
                                 position = Parking.Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
-                                WriteInformationMessage(String.Format("Your vehicle has been parked at place number {0}.", position + 1));
+                                Messager.WriteInformationMessage(String.Format("Your vehicle has been parked at place number {0}.", position + 1));
                             }
 
                             catch (RegistrationNumberAlreadyExistException)
                             {
-                                WriteErrorMessage("Registration number already exist. Cannot hav two vehicles with same.");
+                                Messager.WriteErrorMessage("Registration number already exist. Cannot hav two vehicles with same.");
                             }
 
                             break;
@@ -166,16 +153,16 @@ namespace PragueParking
                                 }
                                 catch (VehicleNotFoundException)
                                 {
-                                    WriteErrorMessage("The vehicle could not be found.");
+                                    Messager.WriteErrorMessage("The vehicle could not be found.");
                                 }
                                 catch (ParkingPlaceOccupiedException)
                                 {
-                                    WriteErrorMessage("The selected new position is already full.");
+                                    Messager.WriteErrorMessage("The selected new position is already full.");
                                 }
                             }
                             else
                             {
-                                WriteErrorMessage("You have to make a proper choice.");
+                                Messager.WriteErrorMessage("You have to make a proper choice.");
                             }
 
                             break;
@@ -189,13 +176,13 @@ namespace PragueParking
 
                             if (position != -1)
                             {
-                                WriteInformationMessage(String.Format("Your vehicle is parked at spot number {0}.", position + 1)); // Parking spots numbered 1 - 100 !
+                                Messager.WriteInformationMessage(String.Format("Your vehicle is parked at spot number {0}.", position + 1)); // Parking spots numbered 1 - 100 !
                             }
 
                             else
                             {
-                                WriteErrorMessage("I am sorry to say you vehicle does not exist in our parking lot.");
-                                WriteErrorMessage("Perhaps someone has taken it for a joyride. Our apologies.");
+                                Messager.WriteErrorMessage("I am sorry to say you vehicle does not exist in our parking lot.");
+                                Messager.WriteErrorMessage("Perhaps someone has taken it for a joyride. Our apologies.");
                             }
 
                             break;
@@ -225,12 +212,12 @@ namespace PragueParking
 
                             else
                             {
-                                WriteErrorMessage("Choose either car or mc. Other vehicles not allowed in the parking lot."); // Neither car nor mc, throw exception !
+                                Messager.WriteErrorMessage("Choose either car or mc. Other vehicles not allowed in the parking lot."); // Neither car nor mc, throw exception !
                                 break;
                             }
 
                             position = Parking.FindFreePlace(parkingPlace, vehicleType); // Find a free position for car or mc, depending on user choice
-                            WriteInformationMessage(String.Format("There is a free place for your vehicle at {0}.", position + 1));
+                            Messager.WriteInformationMessage(String.Format("There is a free place for your vehicle at {0}.", position + 1));
                             break;
 
                         case 7: // Optimize parking spot
@@ -246,7 +233,7 @@ namespace PragueParking
                         default: // None of the above
 
                             Console.WriteLine();
-                            WriteErrorMessage("That number does not exist. Please enter a correct number.");
+                            Messager.WriteErrorMessage("That number does not exist. Please enter a correct number.");
                             break;
                     }
                 }
@@ -265,27 +252,21 @@ namespace PragueParking
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("The parkingplace is empty.");
-                Console.ForegroundColor = ConsoleColor.White;
+                Messager.WriteInformationMessage("The parkingplace is empty.");
             }
         }
         public static void Optimize(string[] parkingPlace)
         {
             string[] messages;
-            messages = Parking.doOptimize(parkingPlace);
+            messages = Parking.Optimize(parkingPlace);
 
             foreach (string message in messages)
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine(message);
-                Console.ForegroundColor = ConsoleColor.White;
+                Messager.WriteInformationMessage(message);
             }
             if (messages.Length < 1)
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("The parkingplace is alreadey optimized.");
-                Console.ForegroundColor = ConsoleColor.White;
+                Messager.WriteInformationMessage("The parkingplace is alreadey optimized.");
             }
         }
         public static void Remove(string[] parkingPlace, string registrationNumber)
@@ -293,18 +274,14 @@ namespace PragueParking
 
             try
             {
-                int pos = Parking.doRemove(parkingPlace, registrationNumber);
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("The Vehicle with registration number " + registrationNumber + " successfully removed from position " + (pos + 1)); // Display of parking number should be one based
-                Console.ForegroundColor = ConsoleColor.White;
-
+                int pos = Parking.Remove(parkingPlace, registrationNumber);
+                Messager.WriteInformationMessage(String.Format("The Vehicle with registration number {0} successfully removed from position ", registrationNumber, pos + 1)); // Display of parking number should be one based
             }
             catch (VehicleNotFoundException)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("The Vehicle with this number " + registrationNumber + " Not found. ");
-                Console.WriteLine("The vehicle " + registrationNumber + " you are trying to remove can not be found in the parkingplace");
-                Console.ForegroundColor = ConsoleColor.White;
+
+                Messager.WriteErrorMessage("The Vehicle with this number " + registrationNumber + " Not found. ");
+                Messager.WriteErrorMessage("The vehicle " + registrationNumber + " you are trying to remove can not be found in the parkingplace");
 
             }
         }

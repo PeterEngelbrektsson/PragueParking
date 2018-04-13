@@ -29,7 +29,7 @@ namespace ParkingPlaceFunctionTest
             park[0] = "abc123";
 
             //Act
-            Parking.doRemove(park, "bcd987"); // Should throw exception
+            Parking.Remove(park, "bcd987"); // Should throw exception
         }
 
 
@@ -44,7 +44,7 @@ namespace ParkingPlaceFunctionTest
             park[0] = "abc123:uyt345";
 
             //Act
-            Parking.doRemove(park, "bcd987"); // Should throw exception
+            Parking.Remove(park, "bcd987"); // Should throw exception
         }
 
         [TestMethod]
@@ -59,7 +59,7 @@ namespace ParkingPlaceFunctionTest
             park[1] = "dbc423:uto765";
 
             //Act
-            Parking.doRemove(park, "1poi43"); // Should throw exception
+            Parking.Remove(park, "1poi43"); // Should throw exception
         }
         [TestMethod]
         public void RemoveMcRight3mcTest()
@@ -75,7 +75,7 @@ namespace ParkingPlaceFunctionTest
             int actualPos;
 
             //Act
-            actualPos=Parking.doRemove(park, "1poi43");
+            actualPos=Parking.Remove(park, "1poi43");
 
             // Verify
             MyAssert.AreEqual(expected, park);
@@ -95,7 +95,7 @@ namespace ParkingPlaceFunctionTest
             int actualPos;
 
             //Act
-            actualPos= Parking.doRemove(park, "dbc423");
+            actualPos= Parking.Remove(park, "dbc423");
 
             // Verify
             MyAssert.AreEqual(expected, park);
@@ -116,7 +116,7 @@ namespace ParkingPlaceFunctionTest
             int actualPos;
 
             //Act
-            actualPos = Parking.doRemove(park, carToRemove);
+            actualPos = Parking.Remove(park, carToRemove);
 
             // Verify
             MyAssert.AreEqual(expected, park);
@@ -136,7 +136,7 @@ namespace ParkingPlaceFunctionTest
             int actualPos;
 
             //Act
-            actualPos=Parking.doRemove(park, "8toi43");
+            actualPos=Parking.Remove(park, "8toi43");
 
             // Verify
             MyAssert.AreEqual(expected, park);
@@ -158,7 +158,7 @@ namespace ParkingPlaceFunctionTest
             int actualPos;
 
             //Act
-            actualPos=Parking.doRemove(park, "8toi43");
+            actualPos=Parking.Remove(park, "8toi43");
 
             //Verify
             MyAssert.AreEqual(expected, park);

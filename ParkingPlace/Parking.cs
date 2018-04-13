@@ -56,7 +56,7 @@ namespace ParkingPlace
         }    
     
  
-        public static string[] doOptimize(string[] parkingPlace)
+        public static string[] Optimize(string[] parkingPlace)
         {
             bool found;
             List<string> messages = new List<string>();
@@ -125,7 +125,7 @@ namespace ParkingPlace
 
                 if (numberOfMcAtOldPosition == 2)
                 {
-                    doRemove(parkingPlaces, registrationNumber); 
+                    Remove(parkingPlaces, registrationNumber); 
                     AddMcAtPosition(parkingPlaces, registrationNumber, newPosition);
                 }
                 if (numberOfMcAtOldPosition == 1)
@@ -189,7 +189,7 @@ namespace ParkingPlace
         }
 
 
-        public static int doRemove(string[] parkingPlace, string registrationNumber)
+        public static int Remove(string[] parkingPlace, string registrationNumber)
         {
             int found = -1;
             for (int i = 0; i < parkingPlace.Length; i++)
