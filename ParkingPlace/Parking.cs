@@ -28,9 +28,14 @@ namespace ParkingPlace
                 Console.WriteLine("7. Optimize parking lot");
                 Console.WriteLine();
                 Console.Write("Please input number : ");
-
-                int choice = int.Parse(Console.ReadLine()); // Store user choice
-
+                String Str = Console.ReadLine(); // Store user choice                
+                int choice = 0;
+                //int choice = int.Parse(Console.ReadLine()); // Store user choice                
+                if (!int.TryParse(Str, out choice))
+                {
+                    Console.WriteLine("Invalid Input, Please enter number only");
+                }
+                
                 int position = 0; // Position in array of vehicles
 
                 string registrationNumber = "ABC123"; // pseudo registration number
