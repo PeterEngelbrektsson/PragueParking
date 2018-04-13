@@ -145,7 +145,7 @@ namespace PragueParking
                                 }
                                 catch (VehicleNotFoundException)
                                 {
-                                    Console.WriteLine("The vehicle could not be found.");
+                                    Messager.WriteInformationMessage("The vehicle could not be found.");
                                 }
 
                             }
