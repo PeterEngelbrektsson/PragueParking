@@ -93,12 +93,6 @@ namespace ParkingPlace
 
                         int newPosition = FindFreePlace(parkingPlace, vehicleType ); // Original position of the vehicle
 
-                        //bool accepted;
-
-                        //accepted = false;
-
-                        //while (accepted != true)
-                        //{
                             Console.WriteLine("Suggest parking position for your vehicle will be {0}", newPosition);
                             Console.Write("Do you accept this ? Please choose YES or NO. : ");
 
@@ -107,7 +101,6 @@ namespace ParkingPlace
                             if (yesOrNo == "YES")
                             {
                                 Move(parkingPlace, registrationNumber.ToUpper(), newPosition);  // Move vehicle to new position
-                                //accepted = true;
                             }
 
                             else if (yesOrNo == "NO")
@@ -117,15 +110,12 @@ namespace ParkingPlace
                                 int userPosition = int.Parse(Console.ReadLine());
 
                                 Move(parkingPlace, registrationNumber.ToUpper(), userPosition);
-                                //accepted = true;
                             }
 
                             else
                             {
                                 Console.WriteLine("You have to make a proper choice.");
-                                //accepted = true;
                             }
-                        //}
 
                         break;
 
@@ -189,7 +179,12 @@ namespace ParkingPlace
                         Optimize(parkingPlace); // Optimize the parking place
                         break;
 
-                    default: // None of the above
+                    case 8: // List all vehicles in parking lot
+
+                        ListParkedVehicels(parkingPlace);
+                        break;
+
+                   default: // None of the above
 
                         Console.WriteLine();
                         Console.WriteLine("That number does not exist. Please enter a correct number.");
