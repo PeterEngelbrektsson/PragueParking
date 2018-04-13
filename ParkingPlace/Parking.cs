@@ -14,7 +14,9 @@ namespace ParkingPlace
         {
             // Console.Clear(); -- Do we want to clear screen between repeat displays of the menu or not ? 
 
-            while (true)
+            bool keepLoop = true;
+
+            while (true) // Perpetual loop
             {
                 Console.WriteLine();
                 Console.WriteLine("  Prague Parking v1.0");
@@ -26,22 +28,27 @@ namespace ParkingPlace
                 Console.WriteLine("5. Remove a vehicle");
                 Console.WriteLine("6. Find free place");
                 Console.WriteLine("7. Optimize parking lot");
+                Console.WriteLine("8. Display all parked vehicles");
+                Console.WriteLine("0. EXIT");
                 Console.WriteLine();
                 Console.Write("Please input number : ");
-                String Str = Console.ReadLine(); // Store user choice                
-                int choice = 0;
-                //int choice = int.Parse(Console.ReadLine()); // Store user choice                
-                if (!int.TryParse(Str, out choice))
-                {
-                    Console.WriteLine("Invalid Input, Please enter number only");
-                }
-                
-                int position = 0; // Position in array of vehicles
+
+                int choice = int.Parse(Console.ReadLine()); // Store user choice
+
+                int position = 0; // Position in array of vehicles                
 
                 string registrationNumber = "ABC123"; // pseudo registration number
 
+                string isCarOrMc = "";
+
                 switch (choice) // Check user choice
                 {
+                    case 0: // Leave menu
+
+                        keepLoop = false;
+                        break;
+
+
                     case 1: // Add a car
 
                         Console.WriteLine("Please enter the registration number of the vehicle : ");
@@ -52,14 +59,14 @@ namespace ParkingPlace
                         try
                         {
                             position = Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
+                            Console.WriteLine("Your vehicle has been parked at place number {0}.", position + 1);
                         }
 
                         catch (RegistrationNumberAlreadyExistException)
                         {
                             Console.WriteLine("Registration number already exist. Cannot have two vehicles with same.");
                         }
-
-                        Console.WriteLine("Your vehicle has been parked at place number {0}.", position + 1);
+                     
                         break;
 
                     case 2: // Add a motorcycle
@@ -72,21 +79,54 @@ namespace ParkingPlace
                         try
                         {
                             position = Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
+                            Console.WriteLine("Your vehicle has been parked at place number {0}.", position + 1);
                         }
 
                         catch (RegistrationNumberAlreadyExistException)
                         {
                             Console.WriteLine("Registration number already exist. Cannot hav two vehicles with same.");
                         }
-
-                        Console.WriteLine("Your vehicle has been parked at place number {0}.", position + 1);
+                       
                         break;
 
                     case 3: // Move a vehicle
 
                         int newPosition = FindFreePlace(parkingPlace, vehicleType ); // Original position of the vehicle
 
-                        Move(parkingPlace, registrationNumber.ToUpper(), newPosition);  // Move vehicle to new position
+                        //bool accepted;
+
+                        //accepted = false;
+
+                        //while (accepted != true)
+                        //{
+                            Console.WriteLine("Suggest parking position for your vehicle will be {0}", newPosition);
+                            Console.Write("Do you accept this ? Please choose YES or NO. : ");
+
+                            string yesOrNo = Console.ReadLine().ToUpper();
+
+                            if (yesOrNo == "YES")
+                            {
+                                Move(parkingPlace, registrationNumber.ToUpper(), newPosition);  // Move vehicle to new position
+                                //accepted = true;
+                            }
+
+                            else if (yesOrNo == "NO")
+                            {
+                                Console.WriteLine("OK, lets try finding another parking place that is suitable for you");
+                                Console.Write("Please choose a parking place and we shall see if it is available : ");
+                                int userPosition = int.Parse(Console.ReadLine());
+
+                                Move(parkingPlace, registrationNumber.ToUpper(), userPosition);
+                                //accepted = true;
+                            }
+
+                            else
+                            {
+                                Console.WriteLine("You have to make a proper choice.");
+                                //accepted = true;
+                            }
+                        //}
+
                         break;
 
                     case 4: // Find a vehicle
@@ -96,7 +136,17 @@ namespace ParkingPlace
 
                         position = Find(parkingPlace, registrationNumber); // Position where vehicle is located (if any)
 
-                        Console.WriteLine("Your vehicle is parked at spot number {0}.", position + 1); // Parking spots numbered 1 - 100 !
+                        if (position != -1)
+                        {
+                            Console.WriteLine("Your vehicle is parked at spot number {0}.", position + 1); // Parking spots numbered 1 - 100 !
+                        }
+
+                        else
+                        {
+                            Console.WriteLine("I am sorry to say you vehicle does not exist in our parking lot.");
+                            Console.WriteLine("Perhaps someone has taken it for a joyride. Our apologies.");
+                        }
+
                         break;
 
                     case 5: // Remove a vehicle
@@ -104,7 +154,7 @@ namespace ParkingPlace
                         Console.WriteLine("Please enter the registration number of the vehicle : ");
                         registrationNumber = Console.ReadLine().ToUpper();
 
-                        Console.WriteLine("Please specify if your vehicle is a car or an mc : ");
+                        /*Console.WriteLine("Please specify if your vehicle is a car or an mc : ");
 
                         string isCarOrMc = Console.ReadLine();
 
@@ -121,7 +171,7 @@ namespace ParkingPlace
                         else
                         {
                             Console.WriteLine("Please choose between car or mc.");
-                        }
+                        }*/
 
                         Remove(parkingPlace, registrationNumber); // Remove the vehicle with the specificed registration number (if it exists in the parking lot)
                         break;
@@ -158,7 +208,7 @@ namespace ParkingPlace
                         Optimize(parkingPlace); // Optimize the parking place
                         break;
 
-                    default: // None of the above, throw exception !
+                    default: // None of the above
 
                         Console.WriteLine();
                         Console.WriteLine("That number does not exist. Please enter a correct number.");
@@ -166,7 +216,23 @@ namespace ParkingPlace
                 }
             }
         }
-        
+        public static void DisplayParkedVehicels(string[] parkingPlace)
+        {
+            Dictionary<int,string> parkedVehicles;
+            parkedVehicles = ListParkedVehicels(parkingPlace);
+            if (parkedVehicles != null && parkedVehicles.Count > 0)
+            {
+                foreach (KeyValuePair<int, string> slot in parkedVehicles)
+                {
+                    Console.WriteLine("{0} {1} ", slot.Key, slot.Value);
+                }
+            }
+            else
+            {
+                Console.WriteLine("The parkingplace is empty.");
+            }
+        }
+
         public static int Add(string [] parkingPlace, string registrationNumber, VehicleType vehicleType)
         {
             int pos = Find(parkingPlace, registrationNumber);
@@ -348,24 +414,24 @@ namespace ParkingPlace
                 {
                     found = true;
                     ParkingSlot.RemoveVehicle(ref parkingPlace[i], registrationNumber);
-                    Console.WriteLine("The Vehicle with registration number " + registrationNumber + " successfully removed.");
+                    Console.WriteLine("The Vehicle with registration number " + registrationNumber + " successfully removed from position " + i);
                     break;
                 }
             }
             if (!found)
             {
                 Console.WriteLine("The Vehicle with this number " + registrationNumber + " Not found. ");
-                throw new VehicleNotFoundException("The vehicle " + registrationNumber + " you are trying to remove can not be found in the parkingplace");
+                Console.WriteLine("The vehicle " + registrationNumber + " you are trying to remove can not be found in the parkingplace"); 
             }
         }
-        public static List<string> ListParkedVehicels(string[] parkingPlace)
+        public static Dictionary<int,string> ListParkedVehicels(string[] parkingPlace)
         {
-            List<string> parkedVehicles= new List<string>();
-            foreach(string slot in parkingPlace)
+            Dictionary<int, string> parkedVehicles= new Dictionary<int, string>();
+            for(int i=0;i<parkingPlace.Length;i++)
             {
-                if (slot != null)
+                if (parkingPlace[i]!= null)
                 {
-                    parkedVehicles.Add(slot);
+                    parkedVehicles.Add(i, parkingPlace[i]);
                 }
             }
             return parkedVehicles;
