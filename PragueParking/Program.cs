@@ -242,9 +242,10 @@ namespace PragueParking
                 {
                     Messager.WriteErrorMessage("The vehicle could not be found.");
                 }
-                catch (ParkingPlaceOccupiedException)
+                catch (ParkingPlaceOccupiedException ex)
                 {
                     Messager.WriteErrorMessage("The selected new position is already full.");
+                    Messager.WriteErrorMessage(ex.Message);
                 }
                 catch (VehicleAlreadyAtThatPlaceException)
                 {
