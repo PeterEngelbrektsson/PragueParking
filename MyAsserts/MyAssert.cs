@@ -27,6 +27,17 @@ namespace MyAsserts
                 Assert.AreEqual(expected[i], actual[i], " Missmatch at list element " + i);
             }
         }
+        public static void AreEqual(Dictionary<int,String> expected, Dictionary<int, String> actual)
+        {
+
+            Assert.AreEqual(expected.Count, actual.Count);
+
+            foreach(KeyValuePair<int,string> post in expected)
+            {
+                Assert.IsTrue(actual.ContainsKey(post.Key));
+                Assert.IsTrue(actual[post.Key] == post.Value);
+            }
+        }
         public static void AreEqual(int[] arr1, int[] arr2)
         {
 
