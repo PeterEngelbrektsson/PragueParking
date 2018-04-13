@@ -105,29 +105,47 @@ namespace ParkingPlace
 
                         int newPosition = FindFreePlace(parkingPlace, vehicleType ); // Original position of the vehicle
 
-                            Console.WriteLine("Suggest parking position for your vehicle will be {0}", newPosition);
+                            Console.WriteLine("Suggest parking position for your vehicle will be {0}", newPosition+1); // convert 1 to zero based index
                             Console.Write("Do you accept this ? Please choose YES or NO. : ");
 
                             string yesOrNo = Console.ReadLine().ToUpper();
 
-                            if (yesOrNo == "YES")
+                        if (yesOrNo == "YES")
+                        {
+                            // Move vehicle to new position
+                            try
                             {
-                                Move(parkingPlace, registrationNumber.ToUpper(), newPosition);  // Move vehicle to new position
+                                Move(parkingPlace, registrationNumber.ToUpper(), newPosition);// convert form one based to zerop based index
+                            }
+                            catch (VehicleNotFoundException)
+                            {
+                                Console.WriteLine("The vehicle could not be found.");
                             }
 
-                            else if (yesOrNo == "NO")
-                            {
-                                Console.WriteLine("OK, lets try finding another parking place that is suitable for you");
-                                Console.Write("Please choose a parking place and we shall see if it is available : ");
-                                int userPosition = int.Parse(Console.ReadLine());
+                        }
 
-                                Move(parkingPlace, registrationNumber.ToUpper(), userPosition);
-                            }
-
-                            else
+                        else if (yesOrNo == "NO")
+                        {
+                            Console.WriteLine("OK, lets try finding another parking place that is suitable for you");
+                            Console.Write("Please choose a parking place and we shall see if it is available : ");
+                            int userPosition = int.Parse(Console.ReadLine());
+                            try
                             {
-                                Console.WriteLine("You have to make a proper choice.");
+                                Move(parkingPlace, registrationNumber.ToUpper(), userPosition-1);// convert form one based to zerop based index
                             }
+                            catch (VehicleNotFoundException)
+                            {
+                                Console.WriteLine("The vehicle could not be found.");
+                            }
+                            catch (ParkingPlaceOccupiedException)
+                            { 
+                                Console.WriteLine("The selected new position is already full.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("You have to make a proper choice.");
+                        }
 
                         break;
 
