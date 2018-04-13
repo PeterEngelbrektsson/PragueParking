@@ -32,11 +32,10 @@ namespace PragueParking
             Console.Write("Please input number : ");
 
         }
-  
+
         public static void DisplayMenu(string[] parkingPlace)
         {
             // Console.Clear(); -- Do we want to clear screen between repeat displays of the menu or not ? 
-            VehicleType vehicleType;
             bool keepLoop = true;
             int choice = 0;
 
@@ -54,74 +53,18 @@ namespace PragueParking
                 else
                 {
 
-                    int position = 0; // Position in array of vehicles                
-                    string registrationNumber = "ABC123"; // pseudo registration number
-
                     switch (choice) // Check user choice
                     {
                         case 0: // Leave menu permanently.
-
                             keepLoop = false;
                             break;
 
                         case 1: // Add a car
-
-                            Console.WriteLine("Please enter the registration number of the vehicle : ");
-                            registrationNumber = Console.ReadLine().ToUpper();
-                            if (registrationNumber.Length > MaxLengthOfRegistrationNumber)
-                            {
-                                Messager.WriteErrorMessage("The registration number is too long.");
-                                break;
-                            }
-                            if (!Parking.ValidRegistrationNumber(registrationNumber))
-                            {
-                                Messager.WriteErrorMessage("The registration number is not valid.");
-                                break;
-                            }
-                            vehicleType = VehicleType.Car; // Set vehicle type to car                       
-
-                            try
-                            {
-                                position = Parking.Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
-                                Messager.WriteInformationMessage(String.Format("Your vehicle has been parked at place number {0}.", position + 1));
-                            }
-
-                            catch (RegistrationNumberAlreadyExistException)
-                            {
-                                Messager.WriteErrorMessage("Registration number already exist. Cannot have two vehicles with same.");
-                            }
-
+                            AddCar(parkingPlace);
                             break;
 
                         case 2: // Add a motorcycle
-
-                            Console.WriteLine("Please enter the registration number of the vehicle : ");
-                            registrationNumber = Console.ReadLine().ToUpper();
-
-                            if (registrationNumber.Length > MaxLengthOfRegistrationNumber)
-                            {
-                                Messager.WriteErrorMessage("The registration number is too long.");
-                                break;
-                            }
-                            if (!Parking.ValidRegistrationNumber(registrationNumber))
-                            {
-                                Messager.WriteErrorMessage("The registration number is not valid.");
-                                break;
-                            }
-
-                            vehicleType = VehicleType.Mc; // Set vehicle type to motorcycle
-
-                            try
-                            {
-                                position = Parking.Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
-                                Messager.WriteInformationMessage(String.Format("Your vehicle has been parked at place number {0}.", position + 1));
-                            }
-
-                            catch (RegistrationNumberAlreadyExistException)
-                            {
-                                Messager.WriteErrorMessage("Registration number already exist. Cannot hav two vehicles with same.");
-                            }
-
+                            AddMc(parkingPlace);
                             break;
 
                         case 3: // Move a vehicle
@@ -133,9 +76,7 @@ namespace PragueParking
                             break;
 
                         case 5: // Remove a vehicle
-                            Console.WriteLine("Please enter the registration number of the vehicle : ");
-                            registrationNumber = Console.ReadLine().ToUpper();
-                            Remove(parkingPlace, registrationNumber); // Remove the vehicle with the specificed registration number (if it exists in the parking lot)
+                            RemoveVehicle(parkingPlace);
                             break;
 
                         case 6: // Find free parking spot
@@ -315,6 +256,70 @@ namespace PragueParking
                 Messager.WriteErrorMessage("You have to make a proper choice.");
             }
 
+        }
+        public static void AddMc(string[] parkingPlace)
+        {
+
+            Console.WriteLine("Please enter the registration number of the vehicle : ");
+            string registrationNumber = Console.ReadLine().ToUpper();
+
+            if (registrationNumber.Length > MaxLengthOfRegistrationNumber)
+            {
+                Messager.WriteErrorMessage("The registration number is too long.");
+                return;
+            }
+            if (!Parking.ValidRegistrationNumber(registrationNumber))
+            {
+                Messager.WriteErrorMessage("The registration number is not valid.");
+                return;
+            }
+
+            VehicleType vehicleType = VehicleType.Mc; // Set vehicle type to motorcycle
+
+            try
+            {
+                int position = Parking.Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
+                Messager.WriteInformationMessage(String.Format("Your vehicle has been parked at place number {0}.", position + 1));
+            }
+
+            catch (RegistrationNumberAlreadyExistException)
+            {
+                Messager.WriteErrorMessage("Registration number already exist. Cannot hav two vehicles with same.");
+            }
+        }
+
+        static void AddCar(string[] parkingPlace)
+        {
+            Console.WriteLine("Please enter the registration number of the vehicle : ");
+            string registrationNumber = Console.ReadLine().ToUpper();
+            if (registrationNumber.Length > MaxLengthOfRegistrationNumber)
+            {
+                Messager.WriteErrorMessage("The registration number is too long.");
+                return;
+            }
+            if (!Parking.ValidRegistrationNumber(registrationNumber))
+            {
+                Messager.WriteErrorMessage("The registration number is not valid.");
+                return;
+            }
+            VehicleType vehicleType = VehicleType.Car; // Set vehicle type to car                       
+
+            try
+            {
+                int position = Parking.Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
+                Messager.WriteInformationMessage(String.Format("Your vehicle has been parked at place number {0}.", position + 1));
+            }
+
+            catch (RegistrationNumberAlreadyExistException)
+            {
+                Messager.WriteErrorMessage("Registration number already exist. Cannot have two vehicles with same.");
+            }
+        }
+        static void RemoveVehicle(string[] parkingPlace)
+        {
+            Console.WriteLine("Please enter the registration number of the vehicle : ");
+            string registrationNumber = Console.ReadLine().ToUpper();
+            Remove(parkingPlace, registrationNumber); // Remove the vehicle with the specificed registration number (if it exists in the parking lot)
         }
         public static void Main(string[] args)
         {
