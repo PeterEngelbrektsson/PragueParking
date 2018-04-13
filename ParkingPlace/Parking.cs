@@ -266,7 +266,22 @@ namespace ParkingPlace
     
         public static void Optimize(string[] parkingPlace)
         {
+            string[] messages;
+            messages = doOptimize(parkingPlace);
+
+            foreach (string message in messages)
+            {
+                Console.WriteLine(message);
+            }
+            if (messages.Length < 1)
+            {
+                Console.WriteLine("The parkingplace is alreadey optimized.");
+            }
+        }
+        public static string[] doOptimize(string[] parkingPlace)
+        {
             bool found;
+            List<string> messages = new List<string>();
             int firstSingleMcPosition = 0;
             int lastSingleMcPosition = parkingPlace.Length - 1;
             do
@@ -278,15 +293,17 @@ namespace ParkingPlace
                 if (firstSingleMcPosition != lastSingleMcPosition && (firstSingleMcPosition != -1 && lastSingleMcPosition != -1))
                 {
                     string registrationNumber = (parkingPlace[lastSingleMcPosition]).Trim(':');
-                    Console.WriteLine("Move motorcycle {0} from parkingplace {1} to place {2}.",registrationNumber, lastSingleMcPosition+1, firstSingleMcPosition+1); // Display should be one based
+                    messages.Add(String.Format("Move motorcycle {0} from parkingplace {1} to place {2}.", registrationNumber, lastSingleMcPosition + 1, firstSingleMcPosition + 1)); // Display should be one based
                     Move(parkingPlace, registrationNumber, VehicleType.Mc, lastSingleMcPosition, firstSingleMcPosition);
                     found = true;
                 }
 
                 //  return -1 from search functions means that the search has reached the end or start of the array => exit optimize loop
             } while (found && (firstSingleMcPosition != -1 && lastSingleMcPosition != -1));
+
+            return messages.ToArray();
         }
-   
+
         public static void Move(string[] parkingPlaces, string registrationNumber, VehicleType vehicleType, int oldPosition, int newPosition)
         {
             if (oldPosition < 0)
