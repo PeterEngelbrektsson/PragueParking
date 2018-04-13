@@ -275,11 +275,9 @@ namespace PragueParking
                 return;
             }
 
-            VehicleType vehicleType = VehicleType.Mc; // Set vehicle type to motorcycle
-
             try
             {
-                int position = Parking.Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
+                int position = Parking.Add(parkingPlace, registrationNumber, VehicleType.Mc); // Park at suitable position (if any)
                 Messager.WriteInformationMessage(String.Format("Your vehicle has been parked at place number {0}.", position + 1));
             }
 
@@ -303,11 +301,10 @@ namespace PragueParking
                 Messager.WriteErrorMessage("The registration number is not valid.");
                 return;
             }
-            VehicleType vehicleType = VehicleType.Car; // Set vehicle type to car                       
 
             try
             {
-                int position = Parking.Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
+                int position = Parking.Add(parkingPlace, registrationNumber, VehicleType.Car); // Park at suitable position (if any)
                 Messager.WriteInformationMessage(String.Format("Your vehicle has been parked at place number {0}.", position + 1));
             }
 
@@ -328,15 +325,20 @@ namespace PragueParking
 
             // String array with 100 elements of parking Temp
              string[] parkingPlace = new string[100];
-  
+
             // Testdata
             parkingPlace[10] = "ABC123";
+            parkingPlace[12] = "CAR432";
+            parkingPlace[15] = "CUSTOMNME";
+            parkingPlace[18] = "MYNAME";
             parkingPlace[21] = ":MC3";
             parkingPlace[22] = ":OIU988";
             parkingPlace[24] = ":MC1";
             parkingPlace[45] = "MC4:MC2";
             parkingPlace[54] = ":MC5";
             parkingPlace[55] = ":MC6";
+            parkingPlace[85] = "CAR987";
+            parkingPlace[86] = "CAR123";
 
 
             DisplayMenu(parkingPlace);
