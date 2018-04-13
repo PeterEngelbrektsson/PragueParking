@@ -180,7 +180,7 @@ namespace ParkingPlace
 
                     case 8: // List all vehicles in parking lot
 
-                        ListParkedVehicels(parkingPlace);
+                        DisplayParkedVehicels(parkingPlace);
                         break;
 
                    default: // None of the above
