@@ -38,68 +38,82 @@ namespace ParkingPlace
                 //int choice = int.Parse(Console.ReadLine()); // Store user choice                
                 if (!int.TryParse(Str, out choice))
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Invalid Input, Please enter number only");
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
-
-                int position = 0; // Position in array of vehicles                
-
-                string registrationNumber = "ABC123"; // pseudo registration number
-
-                string isCarOrMc = "";
-
-                switch (choice) // Check user choice
+                else
                 {
-                    case 0: // Leave menu permanently.
 
-                        keepLoop = false;
-                        break;
 
-                    case 1: // Add a car
+                    int position = 0; // Position in array of vehicles                
 
-                        Console.WriteLine("Please enter the registration number of the vehicle : ");
-                        registrationNumber = Console.ReadLine().ToUpper();
+                    string registrationNumber = "ABC123"; // pseudo registration number
 
-                        vehicleType = VehicleType.Car; // Set vehicle type to car                       
+                    string isCarOrMc = "";
 
-                        try
-                        {
-                            position = Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
-                            Console.WriteLine("Your vehicle has been parked at place number {0}.", position + 1);
-                        }
+                    switch (choice) // Check user choice
+                    {
+                        case 0: // Leave menu permanently.
 
-                        catch (RegistrationNumberAlreadyExistException)
-                        {
-                            Console.WriteLine("Registration number already exist. Cannot have two vehicles with same.");
-                        }
-                     
-                        break;
+                            keepLoop = false;
+                            break;
 
-                    case 2: // Add a motorcycle
+                        case 1: // Add a car
 
-                        Console.WriteLine("Please enter the registration number of the vehicle : ");
-                        registrationNumber = Console.ReadLine().ToUpper();
+                            Console.WriteLine("Please enter the registration number of the vehicle : ");
+                            registrationNumber = Console.ReadLine().ToUpper();
 
-                        vehicleType = VehicleType.Mc; // Set vehicle type to motorcycle
+                            vehicleType = VehicleType.Car; // Set vehicle type to car                       
 
-                        try
-                        {
-                            position = Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
-                            Console.WriteLine("Your vehicle has been parked at place number {0}.", position + 1);
-                        }
+                            try
+                            {
+                                position = Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine("Your vehicle has been parked at place number {0}.", position + 1);
+                                Console.ForegroundColor = ConsoleColor.White;
+                            }
 
-                        catch (RegistrationNumberAlreadyExistException)
-                        {
-                            Console.WriteLine("Registration number already exist. Cannot hav two vehicles with same.");
-                        }
-                       
-                        break;
+                            catch (RegistrationNumberAlreadyExistException)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Registration number already exist. Cannot have two vehicles with same.");
+                                Console.ForegroundColor = ConsoleColor.White;
+                            }
 
-                    case 3: // Move a vehicle
+                            break;
 
-                        int newPosition = FindFreePlace(parkingPlace, vehicleType ); // Original position of the vehicle
+                        case 2: // Add a motorcycle
 
+                            Console.WriteLine("Please enter the registration number of the vehicle : ");
+                            registrationNumber = Console.ReadLine().ToUpper();
+
+                            vehicleType = VehicleType.Mc; // Set vehicle type to motorcycle
+
+                            try
+                            {
+                                position = Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine("Your vehicle has been parked at place number {0}.", position + 1);
+                                Console.ForegroundColor = ConsoleColor.White;
+                            }
+
+                            catch (RegistrationNumberAlreadyExistException)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Registration number already exist. Cannot hav two vehicles with same.");
+                                Console.ForegroundColor = ConsoleColor.White;
+                            }
+
+                            break;
+
+                        case 3: // Move a vehicle
+
+                            int newPosition = FindFreePlace(parkingPlace, vehicleType); // Original position of the vehicle
+                            Console.ForegroundColor = ConsoleColor.Yellow;
                             Console.WriteLine("Suggest parking position for your vehicle will be {0}", newPosition);
                             Console.Write("Do you accept this ? Please choose YES or NO. : ");
+                            Console.ForegroundColor = ConsoleColor.White;
 
                             string yesOrNo = Console.ReadLine().ToUpper();
 
@@ -119,81 +133,94 @@ namespace ParkingPlace
 
                             else
                             {
+                                Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("You have to make a proper choice.");
+                                Console.ForegroundColor = ConsoleColor.White;
                             }
 
-                        break;
-
-                    case 4: // Find a vehicle
-
-                        Console.WriteLine("Please enter the registration number of the vehicle : ");
-                        registrationNumber = Console.ReadLine().ToUpper();
-
-                        position = Find(parkingPlace, registrationNumber); // Position where vehicle is located (if any)
-
-                        if (position != -1)
-                        {
-                            Console.WriteLine("Your vehicle is parked at spot number {0}.", position + 1); // Parking spots numbered 1 - 100 !
-                        }
-
-                        else
-                        {
-                            Console.WriteLine("I am sorry to say you vehicle does not exist in our parking lot.");
-                            Console.WriteLine("Perhaps someone has taken it for a joyride. Our apologies.");
-                        }
-
-                        break;
-
-                    case 5: // Remove a vehicle
-
-                        Console.WriteLine("Please enter the registration number of the vehicle : ");
-                        registrationNumber = Console.ReadLine().ToUpper();
-
-                        Remove(parkingPlace, registrationNumber); // Remove the vehicle with the specificed registration number (if it exists in the parking lot)
-                        break;
-
-                    case 6: // Find free parking spot
-
-                        Console.WriteLine("Please specify if your vehicle is a car or an mc : ");
-
-                        isCarOrMc = Console.ReadLine(); // get user input
-
-                        if (isCarOrMc == "mc")
-                        {
-                            vehicleType = VehicleType.Mc; // It's a motorcycle
-                        }
-
-                        else if (isCarOrMc == "car")
-                        {
-                            vehicleType = VehicleType.Car; // It's a car
-                        }
-
-                        else
-                        {
-                            Console.WriteLine("Choose either car or mc. Other vehicles not allowed in the parking lot."); // Neither car nor mc, throw exception !
                             break;
-                        }
 
-                        position = FindFreePlace(parkingPlace, vehicleType); // Find a free position for car or mc, depending on user choice
+                        case 4: // Find a vehicle
 
-                        Console.WriteLine("There is a free place for your vehicle at {0}.", position + 1);
-                        break;
+                            Console.WriteLine("Please enter the registration number of the vehicle : ");
+                            registrationNumber = Console.ReadLine().ToUpper();
 
-                    case 7: // Optimize parking spot
+                            position = Find(parkingPlace, registrationNumber); // Position where vehicle is located (if any)
 
-                        Optimize(parkingPlace); // Optimize the parking place
-                        break;
+                            if (position != -1)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine("Your vehicle is parked at spot number {0}.", position + 1); // Parking spots numbered 1 - 100 !
+                                Console.ForegroundColor = ConsoleColor.White;
+                            }
 
-                    case 8: // List all vehicles in parking lot
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("I am sorry to say you vehicle does not exist in our parking lot.");
+                                Console.WriteLine("Perhaps someone has taken it for a joyride. Our apologies.");
+                                Console.ForegroundColor = ConsoleColor.White;
+                            }
 
-                        DisplayParkedVehicels(parkingPlace);
-                        break;
+                            break;
 
-                   default: // None of the above
+                        case 5: // Remove a vehicle
 
-                        Console.WriteLine();
-                        Console.WriteLine("That number does not exist. Please enter a correct number.");
-                        break;
+                            Console.WriteLine("Please enter the registration number of the vehicle : ");
+                            registrationNumber = Console.ReadLine().ToUpper();
+
+                            Remove(parkingPlace, registrationNumber); // Remove the vehicle with the specificed registration number (if it exists in the parking lot)
+                            break;
+
+                        case 6: // Find free parking spot
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Please specify if your vehicle is a car or an mc : ");
+                            Console.ForegroundColor = ConsoleColor.White;
+
+                            isCarOrMc = Console.ReadLine(); // get user input
+
+                            if (isCarOrMc == "mc")
+                            {
+                                vehicleType = VehicleType.Mc; // It's a motorcycle
+                            }
+
+                            else if (isCarOrMc == "car")
+                            {
+                                vehicleType = VehicleType.Car; // It's a car
+                            }
+
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Choose either car or mc. Other vehicles not allowed in the parking lot."); // Neither car nor mc, throw exception !
+                                Console.ForegroundColor = ConsoleColor.White;
+                                break;
+                            }
+
+                            position = FindFreePlace(parkingPlace, vehicleType); // Find a free position for car or mc, depending on user choice
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("There is a free place for your vehicle at {0}.", position + 1);
+                            Console.ForegroundColor = ConsoleColor.White;
+                            break;
+
+                        case 7: // Optimize parking spot
+
+                            Optimize(parkingPlace); // Optimize the parking place
+                            break;
+
+                        case 8: // List all vehicles in parking lot
+
+                            DisplayParkedVehicels(parkingPlace);
+                            break;
+
+                        default: // None of the above
+
+                            Console.WriteLine();
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("That number does not exist. Please enter a correct number.");
+                            Console.ForegroundColor = ConsoleColor.White;
+                            break;
+                    }
                 }
             }
         }
@@ -210,7 +237,9 @@ namespace ParkingPlace
             }
             else
             {
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("The parkingplace is empty.");
+                Console.ForegroundColor = ConsoleColor.White;
             }
         }
 
@@ -251,7 +280,9 @@ namespace ParkingPlace
             int oldPosition = Find(parkingPlace, registrationNumber);
             if (oldPosition < 0)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 throw new VehicleNotFoundException("The vehicle "+registrationNumber+" can not be found ");
+                Console.ForegroundColor = ConsoleColor.White;
             }
             VehicleType type = GetVehicleTypeOfParkedVehicle(parkingPlace, oldPosition, registrationNumber);
             Move(parkingPlace, registrationNumber, type, oldPosition, newPosition);
@@ -318,7 +349,9 @@ namespace ParkingPlace
                 int numberOfMcAtOldPosition = ParkingSlot.CountMc(parkingPlaces[oldPosition]);
                 if (numberOfMcAtOldPosition < 0)
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     throw new ArgumentException("No Mc found to move at that position.");
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
 
                 if (numberOfMcAtOldPosition == 2)
@@ -395,14 +428,18 @@ namespace ParkingPlace
                 {
                     found = true;
                     ParkingSlot.RemoveVehicle(ref parkingPlace[i], registrationNumber);
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("The Vehicle with registration number " + registrationNumber + " successfully removed from position " + i+1); // Display of parking number should be one based
+                    Console.ForegroundColor = ConsoleColor.White;
                     break;
                 }
             }
             if (!found)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("The Vehicle with this number " + registrationNumber + " Not found. ");
-                Console.WriteLine("The vehicle " + registrationNumber + " you are trying to remove can not be found in the parkingplace"); 
+                Console.WriteLine("The vehicle " + registrationNumber + " you are trying to remove can not be found in the parkingplace");
+                Console.ForegroundColor = ConsoleColor.White;
             }
         }
         public static Dictionary<int,string> ListParkedVehicels(string[] parkingPlace)
