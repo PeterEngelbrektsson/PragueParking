@@ -316,7 +316,9 @@ namespace ParkingPlace
             }
             if (messages.Length < 1)
             {
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("The parkingplace is alreadey optimized.");
+                Console.ForegroundColor = ConsoleColor.White;
             }
         }
         public static string[] doOptimize(string[] parkingPlace)
