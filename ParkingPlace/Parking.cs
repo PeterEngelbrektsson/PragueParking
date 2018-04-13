@@ -177,6 +177,21 @@ namespace ParkingPlace
 
             return -1;
         }
+        public static Dictionary<int,string> FindSearchString(string[] parkingPlace, string searhString)
+        {
+            Dictionary<int, string> matchingVehicles= new Dictionary<int, string>();
+            for(int i = 0;i < parkingPlace.Length; i++){
+                string[] slotSearchResult = ParkingSlot.SearchVehicle(parkingPlace[i],searhString);
+                if (slotSearchResult != null && slotSearchResult.Length > 0)
+                {
+                    foreach (string match in slotSearchResult)
+                    {
+                        matchingVehicles.Add(i, match);
+                    }
+                }
+            }
+            return matchingVehicles;
+        }
 
         public static int FindFreePlace(string[] parkingPlace, VehicleType vehicleType)
         {

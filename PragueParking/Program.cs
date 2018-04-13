@@ -185,13 +185,24 @@ namespace PragueParking
 
             if (position != -1)
             {
+                // The exact match found
                 Messager.WriteInformationMessage(String.Format("Your vehicle is parked at spot number {0}.", position + 1)); // Parking spots numbered 1 - 100 !
             }
-
             else
             {
-                Messager.WriteErrorMessage("I am sorry to say you vehicle does not exist in our parking lot.");
-                Messager.WriteErrorMessage("Perhaps someone has taken it for a joyride. Our apologies.");
+                // No exact match found
+                Dictionary<int,string> searchResult = Parking.FindSearchString(parkingPlace, registrationNumber);
+                if (searchResult.Count > 0)
+                {
+                    foreach(KeyValuePair<int,string> vehicle in searchResult)
+                    {
+                        Console.WriteLine("{0} {1}", vehicle.Key + 1, vehicle.Value);
+                    }
+                }
+                else { 
+                    Messager.WriteErrorMessage("I am sorry to say you vehicle does not exist in our parking lot.");
+                    Messager.WriteErrorMessage("Perhaps someone has taken it for a joyride. Our apologies.");
+                }
             }
         }
         public static void MoveVehicle(string[] parkingPlace)

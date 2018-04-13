@@ -144,6 +144,46 @@ namespace ParkingPlace
             }
             return found;
         }
+        /// <summary>
+        /// Search the parking slot for a registraion number with a search string.
+        /// </summary>
+        /// <param name="parkingSlot"></param>
+        /// <param name="registrationNumberSearchString"></param>
+        /// <returns></returns>
+        public static string[] SearchVehicle(string parkingSlot, string registrationNumberSearchString)
+        {
+            List<string> searchResult=new List<string>();
+            if (parkingSlot == null)
+            {
+                return null;
+            }
+            else if (parkingSlot.Contains(':'))
+            {
+                string[] vehilces = SplitVehicle(parkingSlot);
+                foreach (string vehicle in vehilces)
+                {
+                    if (vehicle.IndexOf(registrationNumberSearchString)!=-1)
+                    {
+                        searchResult.Add(":"+vehicle);
+                    }
+                }
+            }
+            else
+            {
+                // Its a car 
+                if(parkingSlot.IndexOf(registrationNumberSearchString) != -1)
+                {
+                    searchResult.Add(parkingSlot);
+                }
+
+            }
+            if (searchResult.Count == 0)
+            {
+                return null;
+            }
+
+            return searchResult.ToArray();
+        }
         public static VehicleType GetVehicleTypeOfParkedVehicle(string parkingSlot, string registrationNumber)
         {
             VehicleType type;
