@@ -43,7 +43,7 @@ namespace ParkingPlace
 
                 switch (choice) // Check user choice
                 {
-                    case 0: // Leave menu
+                    case 0: // Leave menu permanently.
 
                         keepLoop = false;
                         break;
