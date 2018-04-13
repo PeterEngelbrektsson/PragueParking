@@ -54,12 +54,8 @@ namespace PragueParking
                 else
                 {
 
-
                     int position = 0; // Position in array of vehicles                
-
                     string registrationNumber = "ABC123"; // pseudo registration number
-
-                    string isCarOrMc = "";
 
                     switch (choice) // Check user choice
                     {
@@ -129,129 +125,28 @@ namespace PragueParking
                             break;
 
                         case 3: // Move a vehicle
-                            Console.Write("Enter the registration number: ");
-                            registrationNumber = Console.ReadLine().ToUpper();
-                            int oldPosition = Parking.Find(parkingPlace, registrationNumber);
-                            if (oldPosition < 0)
-                            {
-                                Messager.WriteErrorMessage("The vehicle could not be found.");
-                                break;
-                            }
-                            vehicleType = Parking.GetVehicleTypeOfParkedVehicle(parkingPlace, oldPosition, registrationNumber);
-
-                            int newPosition = Parking.FindFreePlace(parkingPlace, vehicleType); // Original position of the vehicle
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-                            Console.WriteLine("Suggest parking position for your vehicle will be {0}", newPosition + 1); // zero to one based index
-                            Console.Write("Do you accept this ? Please choose YES or NO. : ");
-                            Console.ForegroundColor = ConsoleColor.White;
-
-                            string yesOrNo = Console.ReadLine().ToUpper();
-
-                            if (yesOrNo == "YES")
-                            {
-                                // Move vehicle to new position
-                                try
-                                {
-                                    Parking.Move(parkingPlace, registrationNumber.ToUpper(), newPosition);// convert form one based to zerop based index
-                                    Messager.WriteInformationMessage("The vehicle has been moved.");
-                                }
-                                catch (VehicleNotFoundException)
-                                {
-                                    Messager.WriteInformationMessage("The vehicle could not be found.");
-                                }
-
-                            }
-
-                            else if (yesOrNo == "NO")
-                            {
-                                Console.WriteLine("OK, lets try finding another parking place that is suitable for you");
-                                Console.Write("Please choose a parking place and we shall see if it is available : ");
-                                int userPosition = int.Parse(Console.ReadLine());
-                                try
-                                {
-                                    Parking.Move(parkingPlace, registrationNumber.ToUpper(), userPosition - 1);// convert form one based to zerop based index
-                                    Messager.WriteInformationMessage("The vehicle has been moved.");
-                                }
-                                catch (VehicleNotFoundException)
-                                {
-                                    Messager.WriteErrorMessage("The vehicle could not be found.");
-                                }
-                                catch (ParkingPlaceOccupiedException)
-                                {
-                                    Messager.WriteErrorMessage("The selected new position is already full.");
-                                }
-                                catch (VehicleAlreadyAtThatPlaceException)
-                                {
-                                    Messager.WriteErrorMessage("The vehicle is already parked at that position.");
-                                }
-                            }
-                            else
-                            {
-                                Messager.WriteErrorMessage("You have to make a proper choice.");
-                            }
-
+                            MoveVehicle(parkingPlace);
                             break;
 
                         case 4: // Find a vehicle
-
-                            Console.WriteLine("Please enter the registration number of the vehicle : ");
-                            registrationNumber = Console.ReadLine().ToUpper();
-
-                            position = Parking.Find(parkingPlace, registrationNumber); // Position where vehicle is located (if any)
-
-                            if (position != -1)
-                            {
-                                Messager.WriteInformationMessage(String.Format("Your vehicle is parked at spot number {0}.", position + 1)); // Parking spots numbered 1 - 100 !
-                            }
-
-                            else
-                            {
-                                Messager.WriteErrorMessage("I am sorry to say you vehicle does not exist in our parking lot.");
-                                Messager.WriteErrorMessage("Perhaps someone has taken it for a joyride. Our apologies.");
-                            }
-
+                            FindVehicle(parkingPlace);
                             break;
 
                         case 5: // Remove a vehicle
-
                             Console.WriteLine("Please enter the registration number of the vehicle : ");
                             registrationNumber = Console.ReadLine().ToUpper();
-
                             Remove(parkingPlace, registrationNumber); // Remove the vehicle with the specificed registration number (if it exists in the parking lot)
                             break;
 
                         case 6: // Find free parking spot
-                            Console.WriteLine("Please specify if your vehicle is a car or an mc : ");
-
-                            isCarOrMc = Console.ReadLine(); // get user input
-
-                            if (isCarOrMc == "mc")
-                            {
-                                vehicleType = VehicleType.Mc; // It's a motorcycle
-                            }
-
-                            else if (isCarOrMc == "car")
-                            {
-                                vehicleType = VehicleType.Car; // It's a car
-                            }
-
-                            else
-                            {
-                                Messager.WriteErrorMessage("Choose either car or mc. Other vehicles not allowed in the parking lot."); // Neither car nor mc, throw exception !
-                                break;
-                            }
-
-                            position = Parking.FindFreePlace(parkingPlace, vehicleType); // Find a free position for car or mc, depending on user choice
-                            Messager.WriteInformationMessage(String.Format("There is a free place for your vehicle at {0}.", position + 1));
+                            FindFreeSpot(parkingPlace);
                             break;
 
                         case 7: // Optimize parking spot
-
                             Optimize(parkingPlace); // Optimize the parking place
                             break;
 
                         case 8: // List all vehicles in parking lot
-
                             DisplayParkedVehicels(parkingPlace);
                             break;
 
@@ -309,6 +204,117 @@ namespace PragueParking
                 Messager.WriteErrorMessage("The vehicle " + registrationNumber + " you are trying to remove can not be found in the parkingplace");
 
             }
+        }
+        public static void FindFreeSpot(string[] parkingPlace)
+        {
+            Console.WriteLine("Please specify if your vehicle is a car or an mc : ");
+            string isCarOrMc;
+            VehicleType vehicleType;
+            int position;
+
+            isCarOrMc = Console.ReadLine(); // get user input
+
+            if (isCarOrMc == "mc")
+            {
+                vehicleType = VehicleType.Mc; // It's a motorcycle
+            }
+
+            else if (isCarOrMc == "car")
+            {
+                vehicleType = VehicleType.Car; // It's a car
+            }
+
+            else
+            {
+                Messager.WriteErrorMessage("Choose either car or mc. Other vehicles not allowed in the parking lot."); // Neither car nor mc, throw exception !
+                return;
+            }
+
+            position = Parking.FindFreePlace(parkingPlace, vehicleType); // Find a free position for car or mc, depending on user choice
+            Messager.WriteInformationMessage(String.Format("There is a free place for your vehicle at {0}.", position + 1));
+
+        }
+        static void FindVehicle(string[] parkingPlace)
+        {
+            Console.WriteLine("Please enter the registration number of the vehicle : ");
+            string registrationNumber = Console.ReadLine().ToUpper();
+
+            int position = Parking.Find(parkingPlace, registrationNumber); // Position where vehicle is located (if any)
+
+            if (position != -1)
+            {
+                Messager.WriteInformationMessage(String.Format("Your vehicle is parked at spot number {0}.", position + 1)); // Parking spots numbered 1 - 100 !
+            }
+
+            else
+            {
+                Messager.WriteErrorMessage("I am sorry to say you vehicle does not exist in our parking lot.");
+                Messager.WriteErrorMessage("Perhaps someone has taken it for a joyride. Our apologies.");
+            }
+        }
+        public static void MoveVehicle(string[] parkingPlace)
+        {
+            Console.Write("Enter the registration number: ");
+            string registrationNumber = Console.ReadLine().ToUpper();
+            int oldPosition = Parking.Find(parkingPlace, registrationNumber);
+            if (oldPosition < 0)
+            {
+                Messager.WriteErrorMessage("The vehicle could not be found.");
+                return;
+            }
+            VehicleType vehicleType = Parking.GetVehicleTypeOfParkedVehicle(parkingPlace, oldPosition, registrationNumber);
+
+            int newPosition = Parking.FindFreePlace(parkingPlace, vehicleType); // Original position of the vehicle
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Suggest parking position for your vehicle will be {0}", newPosition + 1); // zero to one based index
+            Console.Write("Do you accept this ? Please choose YES or NO. : ");
+            Console.ForegroundColor = ConsoleColor.White;
+
+            string yesOrNo = Console.ReadLine().ToUpper();
+
+            if (yesOrNo == "YES")
+            {
+                // Move vehicle to new position
+                try
+                {
+                    Parking.Move(parkingPlace, registrationNumber.ToUpper(), newPosition);// convert form one based to zerop based index
+                    Messager.WriteInformationMessage("The vehicle has been moved.");
+                }
+                catch (VehicleNotFoundException)
+                {
+                    Messager.WriteInformationMessage("The vehicle could not be found.");
+                }
+
+            }
+
+            else if (yesOrNo == "NO")
+            {
+                Console.WriteLine("OK, lets try finding another parking place that is suitable for you");
+                Console.Write("Please choose a parking place and we shall see if it is available : ");
+                int userPosition = int.Parse(Console.ReadLine());
+                try
+                {
+                    Parking.Move(parkingPlace, registrationNumber.ToUpper(), userPosition - 1);// convert form one based to zerop based index
+                    Messager.WriteInformationMessage("The vehicle has been moved.");
+                }
+                catch (VehicleNotFoundException)
+                {
+                    Messager.WriteErrorMessage("The vehicle could not be found.");
+                }
+                catch (ParkingPlaceOccupiedException)
+                {
+                    Messager.WriteErrorMessage("The selected new position is already full.");
+                }
+                catch (VehicleAlreadyAtThatPlaceException)
+                {
+                    Messager.WriteErrorMessage("The vehicle is already parked at that position.");
+                }
+            }
+            else
+            {
+                Messager.WriteErrorMessage("You have to make a proper choice.");
+            }
+
         }
         public static void Main(string[] args)
         {
