@@ -145,7 +145,7 @@ namespace ParkingPlace
 
                         else
                         {
-                            Console.WriteLine("I am sorry to say you vehicle does not exist in our parking lot.");
+                            Console.WriteLine("I am sorry to say your vehicle does not exist in our parking lot.");
                             Console.WriteLine("Perhaps someone has taken it for a joyride. Our apologies.");
                         }
 
