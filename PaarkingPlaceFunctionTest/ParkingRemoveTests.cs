@@ -29,7 +29,7 @@ namespace ParkingPlaceFunctionTest
             park[0] = "abc123";
 
             //Act
-            Parking.Remove(park, "bcd987"); // Should throw exception
+            Parking.doRemove(park, "bcd987"); // Should throw exception
         }
 
 
@@ -44,7 +44,7 @@ namespace ParkingPlaceFunctionTest
             park[0] = "abc123:uyt345";
 
             //Act
-            Parking.Remove(park, "bcd987"); // Should throw exception
+            Parking.doRemove(park, "bcd987"); // Should throw exception
         }
 
         [TestMethod]
@@ -59,7 +59,7 @@ namespace ParkingPlaceFunctionTest
             park[1] = "dbc423:uto765";
 
             //Act
-            Parking.Remove(park, "1poi43"); // Should throw exception
+            Parking.doRemove(park, "1poi43"); // Should throw exception
         }
         [TestMethod]
         public void RemoveMcRight3mcTest()
@@ -71,12 +71,15 @@ namespace ParkingPlaceFunctionTest
             string[] expected = new string[2];
             expected[0] = "abc123:uyt345";
             expected[1] = ":dbc423";
+            int expectedPos=1;
+            int actualPos;
 
             //Act
-            Parking.Remove(park, "1poi43");
+            actualPos=Parking.doRemove(park, "1poi43");
 
             // Verify
             MyAssert.AreEqual(expected, park);
+            Assert.AreEqual(expectedPos, actualPos);
         }
         [TestMethod]
         public void RemoveMcLeft3mcTest()
@@ -88,10 +91,15 @@ namespace ParkingPlaceFunctionTest
             string[] expected = new string[2];
             expected[0] = "abc123:uyt345";
             expected[1] = ":8toi43";
+            int expectedPos = 1;
+            int actualPos;
 
             //Act
-            Parking.Remove(park, "dbc423");
+            actualPos= Parking.doRemove(park, "dbc423");
+
+            // Verify
             MyAssert.AreEqual(expected, park);
+            Assert.AreEqual(expectedPos, actualPos);
         }
         [TestMethod]
         public void RemoveCarTest()
@@ -104,10 +112,15 @@ namespace ParkingPlaceFunctionTest
             expected[0] = "abc123:uyt345";
             expected[1] = null;
             string carToRemove = "dbc423";
+            int expectedPos = 1;
+            int actualPos;
 
             //Act
-            Parking.Remove(park, carToRemove);
+            actualPos = Parking.doRemove(park, carToRemove);
+
+            // Verify
             MyAssert.AreEqual(expected, park);
+            Assert.AreEqual(expectedPos, actualPos);
         }
         [TestMethod]
         public void RemoveMc100VehiclesTest()
@@ -119,12 +132,15 @@ namespace ParkingPlaceFunctionTest
             string[] expected = PopulateParkingPlace(100);
             expected[0] = "abc123:uyt345";
             expected[1] = ":dbc423";
+            int expectedPos = 1;
+            int actualPos;
 
             //Act
-            Parking.Remove(park, "8toi43");
+            actualPos=Parking.doRemove(park, "8toi43");
 
             // Verify
             MyAssert.AreEqual(expected, park);
+            Assert.AreEqual(expectedPos, actualPos);
         }
 
         [TestMethod]
@@ -138,12 +154,15 @@ namespace ParkingPlaceFunctionTest
             string[] expected = new string[2];
             expected[0] = null;
             expected[1] = "dbc423:lk433";
+            int expectedPos = 0;
+            int actualPos;
 
             //Act
-            Parking.Remove(park, "8toi43");
+            actualPos=Parking.doRemove(park, "8toi43");
 
             //Verify
             MyAssert.AreEqual(expected, park);
+            Assert.AreEqual(expectedPos, actualPos);
         }
 
     }
