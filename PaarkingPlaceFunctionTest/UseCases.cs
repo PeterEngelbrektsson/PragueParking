@@ -42,7 +42,7 @@ namespace ParkingPlaceFunctionTest
             Parking.Add(park, "947tef", VehicleType.Mc);                // park Mc 3
             Parking.Add(park, "37hjd", VehicleType.Mc);                 // park Mc 4
 
-            Parking.Optimize(park);                                         // Optimize
+            Parking.doOptimize(park);                                         // Optimize
 
             // Verify
             Assert.IsTrue(actualFindPosition >= 0 && actualFindPosition < park.Length);
