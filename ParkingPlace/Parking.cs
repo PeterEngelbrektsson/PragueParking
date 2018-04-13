@@ -353,5 +353,17 @@ namespace ParkingPlace
                 throw new VehicleNotFoundException("The vehicle " + registrationNumber + " you are trying to remove can not be found in the parkingplace");
             }
         }
+        public static List<string> ListParkedVehicels(string[] parkingPlace)
+        {
+            List<string> parkedVehicles= new List<string>();
+            foreach(string slot in parkingPlace)
+            {
+                if (slot != null)
+                {
+                    parkedVehicles.Add(slot);
+                }
+            }
+            return parkedVehicles;
+        }
     }
 }
