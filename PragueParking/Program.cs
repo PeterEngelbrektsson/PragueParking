@@ -27,6 +27,24 @@ namespace PragueParking
         {
             WriteLineColor(text, ConsoleColor.Green);
         }
+        public static void WriteMenu()
+        {
+            Console.WriteLine();
+            Console.WriteLine("  Prague Parking v1.0");
+            Console.WriteLine("-----------------------");
+            Console.WriteLine("1. Add a car");
+            Console.WriteLine("2. Add a motorcyle");
+            Console.WriteLine("3. Move a vehicle");
+            Console.WriteLine("4. Find a vehicle");
+            Console.WriteLine("5. Remove a vehicle");
+            Console.WriteLine("6. Find free place");
+            Console.WriteLine("7. Optimize parking lot");
+            Console.WriteLine("8. Display all parked vehicles");
+            Console.WriteLine("0. EXIT");
+            Console.WriteLine();
+            Console.Write("Please input number : ");
+
+        }
         public static void DisplayMenu(string[] parkingPlace, VehicleType vehicleType)
         {
             // Console.Clear(); -- Do we want to clear screen between repeat displays of the menu or not ? 
@@ -36,20 +54,7 @@ namespace PragueParking
 
             while (keepLoop) // Perpetual loop
             {
-                Console.WriteLine();
-                Console.WriteLine("  Prague Parking v1.0");
-                Console.WriteLine("-----------------------");
-                Console.WriteLine("1. Add a car");
-                Console.WriteLine("2. Add a motorcyle");
-                Console.WriteLine("3. Move a vehicle");
-                Console.WriteLine("4. Find a vehicle");
-                Console.WriteLine("5. Remove a vehicle");
-                Console.WriteLine("6. Find free place");
-                Console.WriteLine("7. Optimize parking lot");
-                Console.WriteLine("8. Display all parked vehicles");
-                Console.WriteLine("0. EXIT");
-                Console.WriteLine();
-                Console.Write("Please input number : ");
+                WriteMenu();
 
                 String Str = Console.ReadLine(); // Store user choice
                 choice = 0;
@@ -309,19 +314,8 @@ namespace PragueParking
 
             // String array with 100 elements of parking Temp
              string[] parkingPlace = new string[100];
-            /*
-             //add vehicle temporary
-             String vehicle = "asb123";
-             // Calling the find method 
-             parkingPlace[10] = "asb123";
-             int pos;
-             //pos=Parking.Find(parkingPlace, vehicle);
-             pos = Parking.Find(parkingPlace, vehicle);
-             // Remove 
-             Parking.Remove(parkingPlace, vehicle);
-
-             Console.WriteLine("Your pos is :- " + pos);
-             */
+  
+            // Testdata
             parkingPlace[10] = "ABC123";
             parkingPlace[21] = ":MC3";
             parkingPlace[22] = ":OIU988";
