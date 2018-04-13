@@ -33,10 +33,10 @@ namespace PragueParking
 
         }
   
-        public static void DisplayMenu(string[] parkingPlace, VehicleType vehicleType)
+        public static void DisplayMenu(string[] parkingPlace)
         {
             // Console.Clear(); -- Do we want to clear screen between repeat displays of the menu or not ? 
-
+            VehicleType vehicleType;
             bool keepLoop = true;
             int choice = 0;
 
@@ -131,11 +131,13 @@ namespace PragueParking
                         case 3: // Move a vehicle
                             Console.Write("Enter the registration number: ");
                             registrationNumber = Console.ReadLine().ToUpper();
-                            if (Parking.Find(parkingPlace, registrationNumber) < 0)
+                            int oldPosition = Parking.Find(parkingPlace, registrationNumber);
+                            if (oldPosition < 0)
                             {
                                 Messager.WriteErrorMessage("The vehicle could not be found.");
                                 break;
                             }
+                            vehicleType = Parking.GetVehicleTypeOfParkedVehicle(parkingPlace, oldPosition, registrationNumber);
 
                             int newPosition = Parking.FindFreePlace(parkingPlace, vehicleType); // Original position of the vehicle
                             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -325,7 +327,7 @@ namespace PragueParking
             parkingPlace[55] = ":MC6";
 
 
-            DisplayMenu(parkingPlace,VehicleType.Car);
+            DisplayMenu(parkingPlace);
             Console.ReadLine();
         }
     }
