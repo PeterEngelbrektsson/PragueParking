@@ -35,7 +35,8 @@ namespace ParkingPlace
 
                 String Str = Console.ReadLine(); // Store user choice
                 int choice = 0;
-                //int choice = int.Parse(Console.ReadLine()); // Store user choice                
+                //int choice = int.Parse(Console.ReadLine()); // Store user choice           
+                // Check if the user enter number only. 
                 if (!int.TryParse(Str, out choice))
                 {
                     Console.WriteLine("Invalid Input, Please enter number only");
