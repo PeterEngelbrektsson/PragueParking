@@ -321,8 +321,15 @@ namespace PragueParking
              Console.WriteLine("Your pos is :- " + pos);
              */
             parkingPlace[10] = "ABC123";
+            parkingPlace[21] = ":MC3";
+            parkingPlace[22] = ":OIU988";
+            parkingPlace[24] = ":MC1";
+            parkingPlace[45] = "MC4:MC2";
+            parkingPlace[54] = ":MC5";
+            parkingPlace[55] = ":MC6";
 
-           DisplayMenu(parkingPlace,VehicleType.Car);
+
+            DisplayMenu(parkingPlace,VehicleType.Car);
             Console.ReadLine();
         }
     }
