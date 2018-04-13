@@ -119,6 +119,13 @@ namespace PragueParking
                             break;
 
                         case 3: // Move a vehicle
+                            Console.Write("Enter the registration number: ");
+                            registrationNumber = Console.ReadLine().ToUpper();
+                            if (Parking.Find(parkingPlace, registrationNumber) < 0)
+                            {
+                                Messager.WriteErrorMessage("The vehicle could not be found.");
+                                break;
+                            }
 
                             int newPosition = Parking.FindFreePlace(parkingPlace, vehicleType); // Original position of the vehicle
                             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -134,6 +141,7 @@ namespace PragueParking
                                 try
                                 {
                                     Parking.Move(parkingPlace, registrationNumber.ToUpper(), newPosition);// convert form one based to zerop based index
+                                    Messager.WriteInformationMessage("The vehicle has been moved.");
                                 }
                                 catch (VehicleNotFoundException)
                                 {
@@ -150,6 +158,7 @@ namespace PragueParking
                                 try
                                 {
                                     Parking.Move(parkingPlace, registrationNumber.ToUpper(), userPosition - 1);// convert form one based to zerop based index
+                                    Messager.WriteInformationMessage("The vehicle has been moved.");
                                 }
                                 catch (VehicleNotFoundException)
                                 {
