@@ -11,6 +11,12 @@ namespace ParkingPlace
     {
         public const int MaxLengthOfRegistrationNumber = 10;
 
+
+        /// <summary>
+        /// Validates the registration number
+        /// </summary>
+        /// <param name="registrationNumber"></param>
+        /// <returns>Boolean if the registraion number is valid or not</returns>
         public static bool ValidRegistrationNumber(string registrationNumber)
         {
             bool valid = true;
@@ -70,9 +76,14 @@ namespace ParkingPlace
             }
             VehicleType type = GetVehicleTypeOfParkedVehicle(parkingPlace, oldPosition, registrationNumber);
             Move(parkingPlace, registrationNumber, type, oldPosition, newPosition);
-        }    
-    
- 
+        }
+
+        /// <summary>
+        /// Optimizes the parkin place. Moves single parked motorcycles together in the same slot.
+        /// Returns an array of messages with parking movements to be performed by employees.
+        /// </summary>
+        /// <param name="parkingPlace"></param>
+        /// <returns>An array of messages with parking movements to be performed by employees.</returns>
         public static string[] Optimize(string[] parkingPlace)
         {
             bool found;
@@ -98,7 +109,40 @@ namespace ParkingPlace
 
             return messages.ToArray();
         }
+        /// <summary>
+        /// Counts the number of single parked motorcycles in the parking place
+        /// </summary>
+        /// <param name="parkingPlace">The parking place</param>
+        /// <returns>Number of single parked motorcycles</returns>
+        public static int NumberOfSingleParkedMcs(string[] parkingPlace)
+        {
+            bool found;
+            int numnberOfSingles = 0;
+            int firstSingleMcPosition = -1;
+            do
+            {
+                found = false;
+                firstSingleMcPosition = FindFirstSingleParkedMc(parkingPlace, firstSingleMcPosition+1);
+                if ((firstSingleMcPosition > -1 )&& (firstSingleMcPosition < parkingPlace.Length-1))
+                {
+                    found = true;
+                    numnberOfSingles++;
+                }
 
+                //  return -1 from search functions means that the search has reached the end or start of the array => exit optimize loop
+            } while ((found && (firstSingleMcPosition != -1)) && (firstSingleMcPosition < parkingPlace.Length-1));
+
+            return numnberOfSingles;
+        }
+        /// <summary>
+        /// Moves a vehicel from a position to a new position.
+        /// Should be used if the old position is known.
+        /// </summary>
+        /// <param name="parkingPlaces"></param>
+        /// <param name="registrationNumber"></param>
+        /// <param name="vehicleType"></param>
+        /// <param name="oldPosition"></param>
+        /// <param name="newPosition"></param>
         public static void Move(string[] parkingPlaces, string registrationNumber, VehicleType vehicleType, int oldPosition, int newPosition)
         {
             if (oldPosition < 0)
@@ -154,6 +198,12 @@ namespace ParkingPlace
 
         }
     
+        /// <summary>
+        /// Finds a vehicle with a distinct registration number.
+        /// </summary>
+        /// <param name="parkingPlace"></param>
+        /// <param name="registrationNumber"></param>
+        /// <returns>Position of the found vehicle. -1 if not found</returns>
         public static int Find(string[] parkingPlace, string registrationNumber)
         {
 
@@ -177,11 +227,17 @@ namespace ParkingPlace
 
             return -1;
         }
-        public static Dictionary<int,string> FindSearchString(string[] parkingPlace, string searhString)
+        /// <summary>
+        /// Searches the parking place for vehicles with registration number mathing the search string
+        /// </summary>
+        /// <param name="parkingPlace">The parking place</param>
+        /// <param name="searchString">Search string for registraion number</param>
+        /// <returns></returns>
+        public static Dictionary<int,string> FindSearchString(string[] parkingPlace, string searchString)
         {
             Dictionary<int, string> matchingVehicles= new Dictionary<int, string>();
             for(int i = 0;i < parkingPlace.Length; i++){
-                string[] slotSearchResult = ParkingSlot.SearchVehicle(parkingPlace[i],searhString);
+                string[] slotSearchResult = ParkingSlot.SearchVehicle(parkingPlace[i],searchString);
                 if (slotSearchResult != null && slotSearchResult.Length > 0)
                 {
                     foreach (string match in slotSearchResult)
@@ -192,7 +248,12 @@ namespace ParkingPlace
             }
             return matchingVehicles;
         }
-
+        /// <summary>
+        /// Searches the parking place for a free place for a specific vehicle type.
+        /// </summary>
+        /// <param name="parkingPlace"></param>
+        /// <param name="vehicleType">The type of vehicle</param>
+        /// <returns></returns>
         public static int FindFreePlace(string[] parkingPlace, VehicleType vehicleType)
         {
             
@@ -238,6 +299,11 @@ namespace ParkingPlace
             }
             return found;
         }
+        /// <summary>
+        /// Finds all parked vehicles in the parkingplace.
+        /// </summary>
+        /// <param name="parkingPlace"></param>
+        /// <returns>A dictionary with all found vehicles and their parking places. Key is parking place number. Value is registration number.</returns>
         public static Dictionary<int,string> ListParkedVehicels(string[] parkingPlace)
         {
             Dictionary<int, string> parkedVehicles= new Dictionary<int, string>();
