@@ -8,20 +8,20 @@ namespace ParkingPlace
 {
     public class ParkingSlot
     {
-        public static int CountMc(string parkingPlace)
+        public static int CountMc(string parkingSlot)
         {
-            if (parkingPlace == null)
+            if (parkingSlot == null)
             {
                 return 0;
             }
 
-            if (string.IsNullOrWhiteSpace(parkingPlace))
+            if (string.IsNullOrWhiteSpace(parkingSlot))
             {
                 throw new DataMisalignedException();
             }
 
             int numberOfMcs = 0;
-            int pos = parkingPlace.IndexOf(":");
+            int pos = parkingSlot.IndexOf(":");
             if (pos == 0)
             {
                 numberOfMcs = 1;
@@ -31,6 +31,25 @@ namespace ParkingPlace
                 numberOfMcs = 2;
             }
             return numberOfMcs;
+        }
+        public static int CountCar(string parkingSlot)
+        {
+            if (parkingSlot == null)
+            {
+                return 0;
+            }
+
+            if (string.IsNullOrWhiteSpace(parkingSlot))
+            {
+                throw new DataMisalignedException();
+            }
+            int numberOfCars = 0;
+            int pos = parkingSlot.IndexOf(",");
+            if (pos > 0)
+            {
+                numberOfCars=1;
+            }
+            return numberOfCars;
         }
         public static bool IsFreeForMc(string parkingSlot, VehicleType vehicleType)
         {

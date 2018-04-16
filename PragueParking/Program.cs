@@ -29,6 +29,7 @@ namespace PragueParking
             Console.WriteLine("6. Find free place");
             Console.WriteLine("7. Optimize parking lot");
             Console.WriteLine("8. Display all parked vehicles");
+            Console.WriteLine("9. Display statistics");
             Console.WriteLine("0. EXIT");
             DisplayIfCanBeOptimized(parkingPlace);
             Console.WriteLine();
@@ -48,6 +49,18 @@ namespace PragueParking
                 Console.WriteLine();
                 Messenger.WriteInformationMessage(String.Format("The parkingspace can be optimized. There are {0} single parked motorcycles.", singleMcs));
             }
+        }
+        public static void DisplayStatistics(string[] parkingPlace)
+        {
+            int singleMcs = Parking.NumberOfSingleParkedMcs(parkingPlace);
+            int fullParkingPlaces = Parking.NumberOfFullParkingPlaces(parkingPlace);
+            int freeParkingPlacesCar = Parking.NumberOfFreeParkingPlaces(parkingPlace,VehicleType.Car);
+            int freeParkingPlacesMc = Parking.NumberOfFreeParkingPlaces(parkingPlace, VehicleType.Mc);
+            Console.WriteLine();
+            Messenger.WriteInformationMessage(String.Format("The number of free parking places for cars {0}.", freeParkingPlacesCar));
+            Messenger.WriteInformationMessage(String.Format("The number of free parking places for motorcycles {0}.", freeParkingPlacesMc));
+            Messenger.WriteInformationMessage(String.Format("The number of full parking places {0}.", fullParkingPlaces));
+            Messenger.WriteInformationMessage(String.Format("The number of single parked motorcycles {0}.", singleMcs));
         }
         public static void DisplayMenu(string[] parkingPlace)
         {
@@ -106,7 +119,9 @@ namespace PragueParking
                         case 8: // List all vehicles in parking lot
                             DisplayParkedVehicels(parkingPlace);
                             break;
-
+                        case 9: //Display statistics
+                            DisplayStatistics(parkingPlace);
+                            break;
                         default: // None of the above
 
                             Console.WriteLine();

@@ -141,6 +141,64 @@ namespace ParkingPlace
             return numnberOfSingles;
         }
         /// <summary>
+        /// Counts the number of full parking places.
+        /// </summary>
+        /// <param name="parkingPlace"></param>
+        /// <returns>Number of full parking places.</returns>
+        public static int NumberOfFullParkingPlaces(string[] parkingPlace)
+        {
+            int numnberOfFull = 0;
+ 
+            for(int i = 0; i < parkingPlace.Length; i++)
+            {
+                if (ParkingSlot.CountMc(parkingPlace[i]) == 2)
+                {
+                    numnberOfFull++;
+                }
+                else if(ParkingSlot.CountCar(parkingPlace[i])==1)
+                {
+                    numnberOfFull++;
+                }
+            }
+
+            return numnberOfFull;
+        }
+        /// <summary>
+        /// Counts the number of free parking places availabel for a specifik type of vehicle.
+        /// </summary>
+        /// <param name="parkingPlace"></param>
+        /// <returns>Number of free parking places.</returns>
+        public static int NumberOfFreeParkingPlaces(string[] parkingPlace, VehicleType type)
+        {
+            int numnberOfFree = 0;
+            if (type == VehicleType.Car)
+            {
+                for (int i = 0; i < parkingPlace.Length; i++)
+                {
+                    if (parkingPlace[i]==null)
+                    {
+                        numnberOfFree++;
+                    }
+                }
+            }
+            else{
+                // search for Motorcycle places
+                for (int i = 0; i < parkingPlace.Length; i++)
+                {
+                    if (parkingPlace[i] == null)
+                    {
+                        numnberOfFree++;
+                    }
+                    if (ParkingSlot.CountMc(parkingPlace[i]) == 1)
+                    {
+                        numnberOfFree++;
+                    }
+                }
+            }
+
+            return numnberOfFree;
+        }
+        /// <summary>
         /// Moves a vehicel from a position to a new position.
         /// Should be used if the old position is known.
         /// </summary>
