@@ -50,6 +50,10 @@ namespace PragueParking
                 Messenger.WriteInformationMessage(String.Format("The parkingspace can be optimized. There are {0} single parked motorcycles.", singleMcs));
             }
         }
+        /// <summary>
+        /// Displays statistics about the parking place.
+        /// </summary>
+        /// <param name="parkingPlace"></param>
         public static void DisplayStatistics(string[] parkingPlace)
         {
             int singleMcs = Parking.NumberOfSingleParkedMcs(parkingPlace);
