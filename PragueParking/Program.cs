@@ -166,8 +166,19 @@ namespace PragueParking
 
             try
             {
-                int pos = Parking.Remove(parkingPlace, registrationNumber);
-                Messenger.WriteInformationMessage(String.Format("The Vehicle with registration number {0} successfully removed from position {1}", registrationNumber, pos + 1)); // Display of parking number should be one based
+                KeyValuePair<int, string> result;
+                result = Parking.Remove(parkingPlace, registrationNumber);
+                int pos = result.Key;
+                string checkinTimeStamp = result.Value;
+                if (result.Value != "")
+                {
+                    Messenger.WriteInformationMessage(String.Format("The Vehicle with registration number {0} successfully removed from position {1}. Cheked in {2}", registrationNumber, pos + 1,checkinTimeStamp)); // Display of parking number should be one based
+                }
+                else
+                {
+                    Messenger.WriteInformationMessage(String.Format("The Vehicle with registration number {0} successfully removed from position {1}", registrationNumber, pos + 1)); // Display of parking number should be one based
+                }
+                
             }
             catch (VehicleNotFoundException)
             {
@@ -313,7 +324,7 @@ namespace PragueParking
             }
             if (!Parking.ValidRegistrationNumber(registrationNumber))
             {
-                Messenger.WriteErrorMessage("The registration number is not valid.");
+                Messenger.WriteErrorMessage("The registration number is not valid. Use A-Z 0-9");
                 return null;
             }
             return registrationNumber;
@@ -339,13 +350,18 @@ namespace PragueParking
         public static void AddMc(string[] parkingPlace)
         {
             string registrationNumber = PromptForRegistrationNumber();
-            ParkVehicle(parkingPlace, registrationNumber, VehicleType.Mc);
+            if (registrationNumber != null)
+            {
+                ParkVehicle(parkingPlace, registrationNumber, VehicleType.Mc);
+            }
         }
 
         static void AddCar(string[] parkingPlace)
         {
             string registrationNumber = PromptForRegistrationNumber();
-            ParkVehicle(parkingPlace, registrationNumber, VehicleType.Car);
+            if (registrationNumber != null) { 
+                ParkVehicle(parkingPlace, registrationNumber, VehicleType.Car);
+            }
         }
         static void RemoveVehicle(string[] parkingPlace)
         {
@@ -357,18 +373,18 @@ namespace PragueParking
         {
             string[] parkingPlace = new string[100];
             // Testdata
-            parkingPlace[10] = "ABC123";
-            parkingPlace[12] = "CAR432";
-            parkingPlace[15] = "CUSTOMNME";
-            parkingPlace[18] = "MYNAME";
+            parkingPlace[10] = "ABC123" + "," + DateTime.Now;
+            parkingPlace[12] = "CAR432"+","+DateTime.Now;
+            parkingPlace[15] = "CUSTOMNME" + "," + DateTime.Now;
+            parkingPlace[18] = "MYNAME" + "," + DateTime.Now;
             parkingPlace[21] = ":MC3";
             parkingPlace[22] = ":OIU988";
             parkingPlace[24] = ":MC1";
             parkingPlace[45] = "MC4:MC2";
             parkingPlace[54] = ":MC5";
             parkingPlace[55] = ":MC6";
-            parkingPlace[85] = "CAR987";
-            parkingPlace[86] = "CAR123";
+            parkingPlace[85] = "CAR987" + "," + DateTime.Now;
+            parkingPlace[86] = "CAR123" + "," + DateTime.Now;
             parkingPlace[88] = ":MC7";
             parkingPlace[99] = ":MC8";
 

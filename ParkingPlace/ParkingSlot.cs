@@ -95,8 +95,14 @@ namespace ParkingPlace
             {
                 found = false;
             }
-            else if(parkingSlot.Contains(':'))
+            else if(parkingSlot.Contains(','))
             {
+                // Its a car not an MC.
+                found = false;
+            }
+            else
+            {
+                // its a mc
                 string[] vehilces = SplitVehicle(parkingSlot);
                 foreach (string vehicle in vehilces)
                 {
@@ -106,11 +112,7 @@ namespace ParkingPlace
                         break;
                     }
                 }
-            }
-            else
-            {
-                // Its a car not an MC.
-                found = false;
+
             }
             return found;
         }
@@ -121,8 +123,18 @@ namespace ParkingPlace
             {
                 found = false;
             }
+            else if (parkingSlot.Contains(','))
+            {
+                // Its a car 
+                string carRegistrationNumber = GetRegistrationNumber(parkingSlot);
+                if (carRegistrationNumber == registrationNumber)
+                {
+                    found = true;
+                }
+            }
             else if (parkingSlot.Contains(':'))
             {
+                // its a motorcycle
                 string[] vehilces = SplitVehicle(parkingSlot);
                 foreach (string vehicle in vehilces)
                 {
@@ -133,15 +145,7 @@ namespace ParkingPlace
                     }
                 }
             }
-            else
-            {
-                // Its a car 
-                if (parkingSlot == registrationNumber)
-                {
-                    found = true;
-                }
-                
-            }
+     
             return found;
         }
         /// <summary>
@@ -157,23 +161,25 @@ namespace ParkingPlace
             {
                 return null;
             }
-            else if (parkingSlot.Contains(':'))
-            {
-                string[] vehilces = SplitVehicle(parkingSlot);
-                foreach (string vehicle in vehilces)
+            else if (parkingSlot.Contains(','))
+           {
+                // Its a car 
+                if (parkingSlot.IndexOf(registrationNumberSearchString) != -1)
                 {
-                    if (vehicle.IndexOf(registrationNumberSearchString)!=-1)
-                    {
-                        searchResult.Add(":"+vehicle);
-                    }
+                    searchResult.Add(parkingSlot);
                 }
+
             }
             else
             {
-                // Its a car 
-                if(parkingSlot.IndexOf(registrationNumberSearchString) != -1)
+                // its a motorcycle
+                string[] vehilces = SplitVehicle(parkingSlot);
+                foreach (string vehicle in vehilces)
                 {
-                    searchResult.Add(parkingSlot);
+                    if (vehicle.IndexOf(registrationNumberSearchString) != -1)
+                    {
+                        searchResult.Add(":" + vehicle);
+                    }
                 }
 
             }
@@ -193,16 +199,17 @@ namespace ParkingPlace
             }
             else
             {
-                int positionOfColon = parkingSlot.IndexOf(':');
-                // : means it's one or two Mc
-                if (positionOfColon > -1)
+                int positionOfRegistrationNumberTimeStampSeparatior= parkingSlot.IndexOf(',');
+                
+                if (positionOfRegistrationNumberTimeStampSeparatior > -1)
                 {
-                    type = VehicleType.Mc;
+                    type = VehicleType.Car;
                 }
                 else
                 {
-                    // All strings are considered cars.
-                    type = VehicleType.Car;
+                    // : means it's one or two Mc
+                    
+                    type = VehicleType.Mc;
                 }
             }
             return type;
@@ -244,7 +251,7 @@ namespace ParkingPlace
             VehicleType type = ParkingSlot.GetVehicleTypeOfParkedVehicle(parkingSlot, registrationNumber);
             if (type == VehicleType.Car)
             {
-                if (parkingSlot == registrationNumber)
+                if (ParkingSlot.GetRegistrationNumber(parkingSlot)== registrationNumber)
                 {
                     // Setting to null tells its empty
                     parkingSlot = null;
@@ -260,6 +267,35 @@ namespace ParkingPlace
                 RemoveMc(ref parkingSlot, registrationNumber);
             }
 
+        }
+        /// <summary>
+        /// Gets the checkin timestamp
+        /// </summary>
+        /// <param name="parkingSlot"></param>
+        /// <returns></returns>
+        public static string GetCheckInTimeStamp(string parkingSlot)
+        {
+
+            string checkedInTimeStamp = null;
+            int indexOfRegNrDateSeparator = parkingSlot.IndexOf(',');
+            if (indexOfRegNrDateSeparator > -1)
+            {
+                checkedInTimeStamp = parkingSlot.Substring(indexOfRegNrDateSeparator + 1, parkingSlot.Length - indexOfRegNrDateSeparator-1);
+            }
+
+            return checkedInTimeStamp;
+        }
+        public static string GetRegistrationNumber(string parkingSlot)
+        {
+
+            string registrationNumber = null;
+            int indexOfRegNrDateSeparator = parkingSlot.IndexOf(',');
+            if (indexOfRegNrDateSeparator > -1)
+            {
+                registrationNumber = parkingSlot.Substring(0,indexOfRegNrDateSeparator);
+            }
+
+            return registrationNumber;
         }
     }
 }
