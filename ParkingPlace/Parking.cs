@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 
@@ -21,6 +22,10 @@ namespace ParkingPlace
         {
             bool valid = true;
             if (registrationNumber.IndexOf(':') > -1)
+            {
+                valid = false;
+            }
+            if (!Regex.IsMatch(registrationNumber, @"[^A-Z0-9]"))
             {
                 valid = false;
             }
