@@ -11,12 +11,12 @@ namespace PragueParking
     public class Program
     {
         public const int NumberOfParkinPlaces = 100;
-        public const int MaxLengthOfRegistrationNumber = 10;
-
-       /// <summary>
-       /// Create Write Menu Options
-       /// </summary>
-        public static void WriteMenu()
+        
+        /// <summary>
+        /// Writes the main menu to console.
+        /// </summary>
+        /// <param name="parkingPlace"></param>
+        public static void WriteMenu(string[] parkingPlace)
         {
             Console.WriteLine();
             Console.WriteLine("  Prague Parking v1.0");
@@ -30,237 +30,95 @@ namespace PragueParking
             Console.WriteLine("7. Optimize parking lot");
             Console.WriteLine("8. Display all parked vehicles");
             Console.WriteLine("0. EXIT");
+            DisplayIfCanBeOptimized(parkingPlace);
             Console.WriteLine();
             Console.Write("Please input number : ");
 
         }
+
         /// <summary>
-        /// Displaying menu bar 
+        /// Display a message if the park can be optimized.
         /// </summary>
-        /// <param name="parkingPlace"></param>
-        /// <param name="vehicleType"></param>
-        public static void DisplayMenu(string[] parkingPlace, VehicleType vehicleType)
+        /// <param name="parkingPlace">The parking place</param>
+        public static void DisplayIfCanBeOptimized(string[] parkingPlace)
+        {
+            int singleMcs = Parking.NumberOfSingleParkedMcs(parkingPlace);
+            if (singleMcs > 1)
+            {
+                Console.WriteLine();
+                Messenger.WriteInformationMessage(String.Format("The parkingspace can be optimized. There are {0} single parked motorcycles.", singleMcs));
+            }
+        }
+        public static void DisplayMenu(string[] parkingPlace)
         {
             // Console.Clear(); -- Do we want to clear screen between repeat displays of the menu or not ? 
-
             bool keepLoop = true;
             int choice = 0;
 
             while (keepLoop) // Perpetual loop
             {
-                WriteMenu();
+                WriteMenu(parkingPlace);
 
                 String Str = Console.ReadLine(); // Store user choice
                 choice = 0;
                 //int choice = int.Parse(Console.ReadLine()); // Store user choice                
                 if (!int.TryParse(Str, out choice))
                 {
-                    Messager.WriteErrorMessage("Invalid Input, Please enter number only");
+                    Messenger.WriteErrorMessage("Invalid Input, Please enter number only");
                 }
                 else
                 {
 
-
-                    int position = 0; // Position in array of vehicles                
-
-                    string registrationNumber = "ABC123"; // pseudo registration number
-
-                    string isCarOrMc = "";
-
                     switch (choice) // Check user choice
                     {
                         case 0: // Leave menu permanently.
-
                             keepLoop = false;
                             break;
 
                         case 1: // Add a car
-
-                            Console.WriteLine("Please enter the registration number of the vehicle : ");
-                            registrationNumber = Console.ReadLine().ToUpper();
-
-                            if (registrationNumber.Length > MaxLengthOfRegistrationNumber)
-                            {
-                                Messager.WriteErrorMessage("The registration number is too long.");
-                                break;
-                            }
-                            vehicleType = VehicleType.Car; // Set vehicle type to car                       
-
-                            try
-                            {
-                                position = Parking.Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
-                                Messager.WriteInformationMessage(String.Format("Your vehicle has been parked at place number {0}.", position + 1));
-                            }
-
-                            catch (RegistrationNumberAlreadyExistException)
-                            {
-                                Messager.WriteErrorMessage("Registration number already exist. Cannot have two vehicles with same.");
-                            }
-
+                            AddCar(parkingPlace);
                             break;
 
                         case 2: // Add a motorcycle
-
-                            Console.WriteLine("Please enter the registration number of the vehicle : ");
-                            registrationNumber = Console.ReadLine().ToUpper();
-
-                            if (registrationNumber.Length > MaxLengthOfRegistrationNumber)
-                            {
-                                Messager.WriteErrorMessage("The registration number is too long.");
-                                break;
-                            }
-
-                            vehicleType = VehicleType.Mc; // Set vehicle type to motorcycle
-
-                            try
-                            {
-                                position = Parking.Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
-                                Messager.WriteInformationMessage(String.Format("Your vehicle has been parked at place number {0}.", position + 1));
-                            }
-
-                            catch (RegistrationNumberAlreadyExistException)
-                            {
-                                Messager.WriteErrorMessage("Registration number already exist. Cannot hav two vehicles with same.");
-                            }
-
+                            AddMc(parkingPlace);
                             break;
 
                         case 3: // Move a vehicle
-                            Console.Write("Enter the registration number: ");
-                            registrationNumber = Console.ReadLine().ToUpper();
-                            if (Parking.Find(parkingPlace, registrationNumber) < 0)
-                            {
-                                Messager.WriteErrorMessage("The vehicle could not be found.");
-                                break;
-                            }
-
-                            int newPosition = Parking.FindFreePlace(parkingPlace, vehicleType); // Original position of the vehicle
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-                            Console.WriteLine("Suggest parking position for your vehicle will be {0}", newPosition + 1); // zero to one based index
-                            Console.Write("Do you accept this ? Please choose YES or NO. : ");
-                            Console.ForegroundColor = ConsoleColor.White;
-
-                            string yesOrNo = Console.ReadLine().ToUpper();
-
-                            if (yesOrNo == "YES")
-                            {
-                                // Move vehicle to new position
-                                try
-                                {
-                                    Parking.Move(parkingPlace, registrationNumber.ToUpper(), newPosition);// convert form one based to zerop based index
-                                    Messager.WriteInformationMessage("The vehicle has been moved.");
-                                }
-                                catch (VehicleNotFoundException)
-                                {
-                                    Messager.WriteInformationMessage("The vehicle could not be found.");
-                                }
-
-                            }
-
-                            else if (yesOrNo == "NO")
-                            {
-                                Console.WriteLine("OK, lets try finding another parking place that is suitable for you");
-                                Console.Write("Please choose a parking place and we shall see if it is available : ");
-                                int userPosition = int.Parse(Console.ReadLine());
-                                try
-                                {
-                                    Parking.Move(parkingPlace, registrationNumber.ToUpper(), userPosition - 1);// convert form one based to zerop based index
-                                    Messager.WriteInformationMessage("The vehicle has been moved.");
-                                }
-                                catch (VehicleNotFoundException)
-                                {
-                                    Messager.WriteErrorMessage("The vehicle could not be found.");
-                                }
-                                catch (ParkingPlaceOccupiedException)
-                                {
-                                    Messager.WriteErrorMessage("The selected new position is already full.");
-                                }
-                                catch (VehicleAlreadyAtThatPlaceException)
-                                {
-                                    Messager.WriteErrorMessage("The vehicle is already parked at that position.");
-                                }
-                            }
-                            else
-                            {
-                                Messager.WriteErrorMessage("You have to make a proper choice.");
-                            }
-
+                            MoveVehicle(parkingPlace);
                             break;
 
                         case 4: // Find a vehicle
-
-                            Console.WriteLine("Please enter the registration number of the vehicle : ");
-                            registrationNumber = Console.ReadLine().ToUpper();
-
-                            position = Parking.Find(parkingPlace, registrationNumber); // Position where vehicle is located (if any)
-
-                            if (position != -1)
-                            {
-                                Messager.WriteInformationMessage(String.Format("Your vehicle is parked at spot number {0}.", position + 1)); // Parking spots numbered 1 - 100 !
-                            }
-
-                            else
-                            {
-                                Messager.WriteErrorMessage("I am sorry to say you vehicle does not exist in our parking lot.");
-                                Messager.WriteErrorMessage("Perhaps someone has taken it for a joyride. Our apologies.");
-                            }
-
+                            FindVehicle(parkingPlace);
                             break;
 
                         case 5: // Remove a vehicle
-
-                            Console.WriteLine("Please enter the registration number of the vehicle : ");
-                            registrationNumber = Console.ReadLine().ToUpper();
-
-                            Remove(parkingPlace, registrationNumber); // Remove the vehicle with the specificed registration number (if it exists in the parking lot)
+                            RemoveVehicle(parkingPlace);
                             break;
 
                         case 6: // Find free parking spot
-                            Console.WriteLine("Please specify if your vehicle is a car or an mc : ");
-
-                            isCarOrMc = Console.ReadLine(); // get user input
-
-                            if (isCarOrMc == "mc")
-                            {
-                                vehicleType = VehicleType.Mc; // It's a motorcycle
-                            }
-
-                            else if (isCarOrMc == "car")
-                            {
-                                vehicleType = VehicleType.Car; // It's a car
-                            }
-
-                            else
-                            {
-                                Messager.WriteErrorMessage("Choose either car or mc. Other vehicles not allowed in the parking lot."); // Neither car nor mc, throw exception !
-                                break;
-                            }
-
-                            position = Parking.FindFreePlace(parkingPlace, vehicleType); // Find a free position for car or mc, depending on user choice
-                            Messager.WriteInformationMessage(String.Format("There is a free place for your vehicle at {0}.", position + 1));
+                            FindFreeSpot(parkingPlace);
                             break;
 
                         case 7: // Optimize parking spot
-
                             Optimize(parkingPlace); // Optimize the parking place
                             break;
 
                         case 8: // List all vehicles in parking lot
-
                             DisplayParkedVehicels(parkingPlace);
                             break;
 
                         default: // None of the above
 
                             Console.WriteLine();
-                            Messager.WriteErrorMessage("That number does not exist. Please enter a correct number.");
+                            Messenger.WriteErrorMessage("That number does not exist. Please enter a correct number.");
                             break;
                     }
                 }
             }
         }
+
         /// <summary>
-        /// Display parked vehicles
+        /// Displays a list of all parked vehicles in the parking place.
         /// </summary>
         /// <param name="parkingPlace"></param>
         public static void DisplayParkedVehicels(string[] parkingPlace)
@@ -276,11 +134,12 @@ namespace PragueParking
             }
             else
             {
-                Messager.WriteInformationMessage("The parkingplace is empty.");
+                Messenger.WriteInformationMessage("The parkingplace is empty.");
             }
         }
         /// <summary>
-        /// optimize the parking place
+        /// Optimizes the parking place. Moves single parked motorcycles together in the same slots.
+        /// Displays a list of movements to be performed by the employees.
         /// </summary>
         /// <param name="parkingPlace"></param>
         public static void Optimize(string[] parkingPlace)
@@ -290,15 +149,15 @@ namespace PragueParking
 
             foreach (string message in messages)
             {
-                Messager.WriteInformationMessage(message);
+                Messenger.WriteInformationMessage(message);
             }
             if (messages.Length < 1)
             {
-                Messager.WriteInformationMessage("The parkingplace is alreadey optimized.");
+                Messenger.WriteInformationMessage("The parkingplace is alreadey optimized.");
             }
         }
         /// <summary>
-        /// Remove Vehicle from parking place
+        /// Removes a vehicle from the parking place.
         /// </summary>
         /// <param name="parkingPlace"></param>
         /// <param name="registrationNumber"></param>
@@ -308,35 +167,225 @@ namespace PragueParking
             try
             {
                 int pos = Parking.Remove(parkingPlace, registrationNumber);
-                Messager.WriteInformationMessage(String.Format("The Vehicle with registration number {0} successfully removed from position {1}", registrationNumber, pos + 1)); // Display of parking number should be one based
+                Messenger.WriteInformationMessage(String.Format("The Vehicle with registration number {0} successfully removed from position {1}", registrationNumber, pos + 1)); // Display of parking number should be one based
             }
             catch (VehicleNotFoundException)
             {
 
-                Messager.WriteErrorMessage("The Vehicle with this number " + registrationNumber + " Not found. ");
-                Messager.WriteErrorMessage("The vehicle " + registrationNumber + " you are trying to remove can not be found in the parkingplace");
+                Messenger.WriteErrorMessage("The Vehicle with this number " + registrationNumber + " Not found. ");
+                Messenger.WriteErrorMessage("The vehicle " + registrationNumber + " you are trying to remove can not be found in the parkingplace");
 
             }
         }
-
-        public static void Main(string[] args)
+        public static void FindFreeSpot(string[] parkingPlace)
         {
-            //Main file
+            Console.WriteLine("Please specify if your vehicle is a car or an mc : ");
+            string isCarOrMc;
+            VehicleType vehicleType;
+            int position;
 
-            // String array with 100 elements of parking Temp
-             string[] parkingPlace = new string[100];
-  
+            isCarOrMc = Console.ReadLine(); // get user input
+
+            if (isCarOrMc == "mc")
+            {
+                vehicleType = VehicleType.Mc; // It's a motorcycle
+            }
+
+            else if (isCarOrMc == "car")
+            {
+                vehicleType = VehicleType.Car; // It's a car
+            }
+
+            else
+            {
+                Messenger.WriteErrorMessage("Choose either car or mc. Other vehicles not allowed in the parking lot."); // Neither car nor mc, throw exception !
+                return;
+            }
+
+            position = Parking.FindFreePlace(parkingPlace, vehicleType); // Find a free position for car or mc, depending on user choice
+            Messenger.WriteInformationMessage(String.Format("There is a free place for your vehicle at {0}.", position + 1));
+
+        }
+        static void FindVehicle(string[] parkingPlace)
+        {
+            Console.WriteLine("Please enter the registration number of the vehicle : ");
+            string registrationNumber = Console.ReadLine().ToUpper();
+
+            int position = Parking.Find(parkingPlace, registrationNumber); // Position where vehicle is located (if any)
+
+            if (position != -1)
+            {
+                // The exact match found
+                Messenger.WriteInformationMessage(String.Format("Your vehicle is parked at spot number {0}.", position + 1)); // Parking spots numbered 1 - 100 !
+            }
+            else
+            {
+                // No exact match found
+                Dictionary<int,string> searchResult = Parking.FindSearchString(parkingPlace, registrationNumber);
+                if (searchResult.Count > 0)
+                {
+                    foreach(KeyValuePair<int,string> vehicle in searchResult)
+                    {
+                        Console.WriteLine("{0} {1}", vehicle.Key + 1, vehicle.Value);
+                    }
+                }
+                else { 
+                    Messenger.WriteErrorMessage("I am sorry to say you vehicle does not exist in our parking lot.");
+                    Messenger.WriteErrorMessage("Perhaps someone has taken it for a joyride. Our apologies.");
+                }
+            }
+        }
+        public static void MoveVehicle(string[] parkingPlace)
+        {
+            Console.Write("Enter the registration number: ");
+            string registrationNumber = Console.ReadLine().ToUpper();
+            int oldPosition = Parking.Find(parkingPlace, registrationNumber);
+            if (oldPosition < 0)
+            {
+                Messenger.WriteErrorMessage("The vehicle could not be found.");
+                return;
+            }
+            VehicleType vehicleType = Parking.GetVehicleTypeOfParkedVehicle(parkingPlace, oldPosition, registrationNumber);
+
+            int newPosition = Parking.FindFreePlace(parkingPlace, vehicleType); // Original position of the vehicle
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Suggest parking position for your vehicle will be {0}", newPosition + 1); // zero to one based index
+            Console.Write("Do you accept this ? Please choose YES or NO. : ");
+            Console.ForegroundColor = ConsoleColor.White;
+
+            string yesOrNo = Console.ReadLine().ToUpper();
+
+            if (yesOrNo == "YES")
+            {
+                // Move vehicle to new position
+                try
+                {
+                    Parking.Move(parkingPlace, registrationNumber.ToUpper(), newPosition);// convert form one based to zerop based index
+                    Messenger.WriteInformationMessage("The vehicle has been moved.");
+                }
+                catch (VehicleNotFoundException)
+                {
+                    Messenger.WriteInformationMessage("The vehicle could not be found.");
+                }
+
+            }
+
+            else if (yesOrNo == "NO")
+            {
+                Console.WriteLine("OK, lets try finding another parking place that is suitable for you");
+                Console.Write("Please choose a parking place and we shall see if it is available : ");
+                int userPosition = int.Parse(Console.ReadLine());
+                try
+                {
+                    Parking.Move(parkingPlace, registrationNumber.ToUpper(), userPosition - 1);// convert form one based to zerop based index
+                    Messenger.WriteInformationMessage("The vehicle has been moved.");
+                }
+                catch (VehicleNotFoundException)
+                {
+                    Messenger.WriteErrorMessage("The vehicle could not be found.");
+                }
+                catch (ParkingPlaceOccupiedException ex)
+                {
+                    Messenger.WriteErrorMessage("The selected new position is already full.");
+                    Messenger.WriteErrorMessage(ex.Message);
+                }
+                catch (VehicleAlreadyAtThatPlaceException)
+                {
+                    Messenger.WriteErrorMessage("The vehicle is already parked at that position.");
+                }
+            }
+            else
+            {
+                Messenger.WriteErrorMessage("You have to make a proper choice.");
+            }
+
+        }
+        public static string PromptForRegistrationNumber()
+        {
+
+            Console.WriteLine("Please enter the registration number of the vehicle : ");
+            string registrationNumber = Console.ReadLine().ToUpper();
+
+            if (registrationNumber.Length > Parking.MaxLengthOfRegistrationNumber)
+            {
+                Messenger.WriteErrorMessage("The registration number is too long.");
+                return null;
+            }
+            if (!Parking.ValidRegistrationNumber(registrationNumber))
+            {
+                Messenger.WriteErrorMessage("The registration number is not valid.");
+                return null;
+            }
+            return registrationNumber;
+        }
+
+        public static void ParkVehicle(string[] parkingPlace, string registrationNumber, VehicleType vehicleType)
+        {
+            try
+            {
+                int position = Parking.Add(parkingPlace, registrationNumber, vehicleType); // Park at suitable position (if any)
+                Messenger.WriteInformationMessage(String.Format("Your vehicle has been parked at place number {0}.", position + 1));
+            }
+            catch (RegistrationNumberAlreadyExistException)
+            {
+                Messenger.WriteErrorMessage("Registration number already exist. Cannot have two vehicles with same.");
+            }
+            catch (ParkingPlaceFullException)
+            {
+                Messenger.WriteErrorMessage("The parking place has no room for the vehicel.");
+            }
+        }
+            
+        public static void AddMc(string[] parkingPlace)
+        {
+            string registrationNumber = PromptForRegistrationNumber();
+            ParkVehicle(parkingPlace, registrationNumber, VehicleType.Mc);
+        }
+
+        static void AddCar(string[] parkingPlace)
+        {
+            string registrationNumber = PromptForRegistrationNumber();
+            ParkVehicle(parkingPlace, registrationNumber, VehicleType.Car);
+        }
+        static void RemoveVehicle(string[] parkingPlace)
+        {
+            Console.WriteLine("Please enter the registration number of the vehicle : ");
+            string registrationNumber = Console.ReadLine().ToUpper();
+            Remove(parkingPlace, registrationNumber); // Remove the vehicle with the specificed registration number (if it exists in the parking lot)
+        }
+        public static string[] PopulateTestData()
+        {
+            string[] parkingPlace = new string[100];
             // Testdata
             parkingPlace[10] = "ABC123";
+            parkingPlace[12] = "CAR432";
+            parkingPlace[15] = "CUSTOMNME";
+            parkingPlace[18] = "MYNAME";
             parkingPlace[21] = ":MC3";
             parkingPlace[22] = ":OIU988";
             parkingPlace[24] = ":MC1";
             parkingPlace[45] = "MC4:MC2";
             parkingPlace[54] = ":MC5";
             parkingPlace[55] = ":MC6";
+            parkingPlace[85] = "CAR987";
+            parkingPlace[86] = "CAR123";
+            parkingPlace[88] = ":MC7";
+            parkingPlace[99] = ":MC8";
 
-            // Display menu bar
-            DisplayMenu(parkingPlace,VehicleType.Car);
+            return parkingPlace;
+        }
+
+        public static void Main(string[] args)
+        {
+            //Main file
+
+            // String array with elements of parking 
+             string[] parkingPlace = new string[NumberOfParkinPlaces];
+
+            // Setup demo with testdata.  FIXME remove this in production code.
+            parkingPlace = PopulateTestData();
+
+            DisplayMenu(parkingPlace);
             Console.ReadLine();
         }
     }

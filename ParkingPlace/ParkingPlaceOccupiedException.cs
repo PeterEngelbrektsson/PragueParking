@@ -11,7 +11,7 @@ namespace ParkingPlace
     /// </summary>
     public class ParkingPlaceOccupiedException : Exception
     {
-        const string defaultMessage = "The parkingplace is alrady occupied.";
+        const string defaultMessage = "The parkingplace is already occupied.";
         public ParkingPlaceOccupiedException() : base(defaultMessage)
         {
         }

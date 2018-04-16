@@ -631,5 +631,105 @@ namespace ParkingPlaceTests
             //Verify
             Assert.AreEqual(expected, actual);
         }
+        [TestMethod]
+        public void FindSearchString2MatchingMcsTest()
+        {
+            // Setup
+            string slot = "abc123:lka987";
+
+            string[] expected = new string[2];
+            expected[0]= ":abc123";
+            expected[1] = ":lka987";
+
+            string[] actual;
+
+            //Act
+            actual = ParkingSlot.SearchVehicle(slot, "a");
+
+            //Verify
+            MyAssert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void FindSearchStringOneMatchingMcTest()
+        {
+            // Setup
+            string slot = "abc123:lka987";
+
+            string[] expected = new string[1];
+            expected[0] = ":lka987";
+
+            string[] actual;
+
+            //Act
+            actual = ParkingSlot.SearchVehicle(slot, "k");
+
+            //Verify
+            MyAssert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void FindSearchStringOneMatchingCarTest()
+        {
+            // Setup
+            string slot = "abc123";
+
+            string[] expected = new string[1];
+            expected[0] = "abc123";
+
+            string[] actual;
+
+            //Act
+            actual = ParkingSlot.SearchVehicle(slot, "b");
+
+            //Verify
+            MyAssert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void FindSearchStringNoMatchingCarTest()
+        {
+            // Setup
+            string slot = "abc123";
+
+            string[] expected = null;
+
+            string[] actual;
+
+            //Act
+            actual = ParkingSlot.SearchVehicle(slot, "z");
+
+            //Verify
+            MyAssert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void FindSearchStringNoMatchingOneMcTest()
+        {
+            // Setup
+            string slot = ":abc123";
+
+            string[] expected = null;
+
+            string[] actual;
+
+            //Act
+            actual = ParkingSlot.SearchVehicle(slot, "zaa");
+
+            //Verify
+            MyAssert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void FindSearchStringNoMatchingTwoMcTest()
+        {
+            // Setup
+            string slot = "tre4321:abc123";
+
+            string[] expected = null;
+
+            string[] actual;
+
+            //Act
+            actual = ParkingSlot.SearchVehicle(slot, "zaa");
+
+            //Verify
+            MyAssert.AreEqual(expected, actual);
+        }
     }
 }

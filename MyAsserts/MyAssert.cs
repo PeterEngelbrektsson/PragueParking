@@ -9,12 +9,14 @@ namespace MyAsserts
     {
         public static void AreEqual(string[] arr1, string[] arr2)
         {
+            if(!(arr1==null && arr2 == null)){
 
-            Assert.AreEqual(arr1.Length, arr2.Length);
+                Assert.AreEqual(arr1.Length, arr2.Length);
 
-            for (int i = 0; i < arr1.Length; i++)
-            {
-                Assert.AreEqual(arr1[i], arr2[i]," Missmatch at array element "+i);
+                for (int i = 0; i < arr1.Length; i++)
+                {
+                    Assert.AreEqual(arr1[i], arr2[i], " Missmatch at array element " + i);
+                }
             }
         }
         public static void AreEqual(List<String> expected, List<string> actual)

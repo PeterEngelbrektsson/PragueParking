@@ -57,6 +57,7 @@
     <Compile Include="ParkingMovePosition.cs" />
     <Compile Include="ParkingRemoveTests.cs" />
     <Compile Include="ParkingListParkedVehicels.cs" />
+    <Compile Include="ParkingFindSearchStringTest.cs" />
     <Compile Include="UseCases.cs" />
   </ItemGroup>
   <ItemGroup>

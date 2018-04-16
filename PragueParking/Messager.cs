@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PragueParking
 {
-    public class Messager
+    public class Messenger
     {
         public static void WriteLineColor(string text, ConsoleColor color)
         {

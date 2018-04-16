@@ -571,6 +571,55 @@ namespace ParkingPlaceFunctionTest
             // Occupied by car => should throw exception
             Parking.AddMcAtPosition(parkingPlaces, "mnb543", 7);
         }
+        [TestMethod]
+        public void NumberOfSingleMc5SinglesTest()
 
+        {
+            //Setup
+            string[] parkingPlaces = new string[10];
+            parkingPlaces[0] = null;
+            parkingPlaces[1] = "abc123:lkj987";
+            parkingPlaces[2] = ":abc124";
+            parkingPlaces[3] = ":abc125";
+            parkingPlaces[4] = ":abc126";
+            parkingPlaces[5] = null;
+            parkingPlaces[6] = ":abc128";
+            parkingPlaces[7] = "abc129";
+            parkingPlaces[8] = ":abc120";
+            parkingPlaces[9] = "abc121";
+            int expected = 5;
+            int actual;
+
+            //Act
+           actual =Parking.NumberOfSingleParkedMcs(parkingPlaces);
+
+            // Verify
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void NumberOfSingleMcNoSinglesTest()
+
+        {
+            //Setup
+            string[] parkingPlaces = new string[10];
+            parkingPlaces[0] = null;
+            parkingPlaces[1] = "abc123:lkj987";
+            parkingPlaces[2] = "werwer:abc124";
+            parkingPlaces[3] = "ewrwe:abc125";
+            parkingPlaces[4] = "asdsad:abc126";
+            parkingPlaces[5] = null;
+            parkingPlaces[6] = "adasdas:adabc128";
+            parkingPlaces[7] = "abc129";
+            parkingPlaces[8] = "asdad:abc120";
+            parkingPlaces[9] = "abc121";
+            int expected = 0;
+            int actual;
+
+            //Act
+            actual = Parking.NumberOfSingleParkedMcs(parkingPlaces);
+
+            // Verify
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
