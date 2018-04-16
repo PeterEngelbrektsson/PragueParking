@@ -8,12 +8,19 @@ namespace ParkingPlace
 {
     public partial class Parking
     {
+            
         public static VehicleType GetVehicleTypeOfParkedVehicle(string[] parkingPlace, int position, string registrationNumber)
         {
             VehicleType type;
             type = ParkingSlot.GetVehicleTypeOfParkedVehicle(parkingPlace[position],registrationNumber);
             return type;
         }
+        /// <summary>
+        /// Find the first single parked motocycle into the parking place
+        /// </summary>
+        /// <param name="parkingPlace"></param>
+        /// <param name="startPosition"></param>
+        /// <returns></returns>
         public static int FindFirstSingleParkedMc(string[] parkingPlace, int startPosition)
         {
             if (startPosition > (parkingPlace.Length - 1))
@@ -35,6 +42,13 @@ namespace ParkingPlace
             // No single parked mc found => returning -1
             return -1;
         }
+
+        /// <summary>
+        /// find the last position for the parked motocycle into the parking place
+        /// </summary>
+        /// <param name="parkingPlace"></param>
+        /// <param name="startPosition"></param>
+        /// <returns></returns>
         public static int FindLastSingleParkedMc(string[] parkingPlace, int startPosition)
         {
             if (startPosition > (parkingPlace.Length - 1))
@@ -56,6 +70,12 @@ namespace ParkingPlace
             // No single parked mc found => returning -1
             return -1;
         }
+        /// <summary>
+        /// Adding the motocycle at position into the parking place
+        /// </summary>
+        /// <param name="parkingPlaces"></param>
+        /// <param name="registrationNumber"></param>
+        /// <param name="newPosition"></param>
         public static void AddMcAtPosition(string[] parkingPlaces, string registrationNumber, int newPosition)
         {
             if (newPosition < 0)

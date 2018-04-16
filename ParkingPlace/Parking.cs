@@ -10,7 +10,13 @@ namespace ParkingPlace
     public partial class Parking // Parking place
     {
 
-  
+        /*
+         *Add Vehicle 
+         * @parkingPlace String Array for parking place
+         * @registrationNumnber Get Vehicle registration number
+         * VeicleType Get Vehicle Type Car or Motocycle.
+         * 
+         */
 
         public static int Add(string [] parkingPlace, string registrationNumber, VehicleType vehicleType)
         {
@@ -18,6 +24,7 @@ namespace ParkingPlace
             if(pos != -1)
             {
                 // The registration number already exists
+                // Create registration number already exist exception
                 throw new RegistrationNumberAlreadyExistException();
             }
 
@@ -43,7 +50,12 @@ namespace ParkingPlace
 
             return pos;
         }
-              
+        /*
+         * Move Vehicle position 
+         * @parkingPlace String Array get parlingPlace.
+         * @registrationNumber String get vehicle registration number
+         * @newPosition integer 
+         */
         public static void Move(string[] parkingPlace, string registrationNumber, int newPosition)
         {
             int oldPosition = Find(parkingPlace, registrationNumber);
@@ -59,7 +71,12 @@ namespace ParkingPlace
             Move(parkingPlace, registrationNumber, type, oldPosition, newPosition);
         }    
     
- 
+        /*
+         * Optimizeing the parking slots
+         * @Optimized String Array
+         * @parkingPlace String for get parking place
+         * 
+         */
         public static string[] Optimize(string[] parkingPlace)
         {
             bool found;
@@ -85,7 +102,14 @@ namespace ParkingPlace
 
             return messages.ToArray();
         }
-
+        /*
+         * Move function for moving vehicles one place to anotyher place
+         * @parkingPlaces String Array
+         * @registrationNumber String
+         * @vehicleType VehicleType
+         * @oldPosition integer oldPosition
+         * @newPosition integer new position
+         */
         public static void Move(string[] parkingPlaces, string registrationNumber, VehicleType vehicleType, int oldPosition, int newPosition)
         {
             if (oldPosition < 0)
@@ -140,7 +164,12 @@ namespace ParkingPlace
             }
 
         }
-    
+        /*
+         * Find Free Plcae for Parking
+         * @registrationNumber Vehicle Registratyion
+         * @parkingPlace[] String Array for Parling Place.
+         */
+
         public static int Find(string[] parkingPlace, string registrationNumber)
         {
 
@@ -149,15 +178,15 @@ namespace ParkingPlace
                 // Try to find car
                 if (parkingPlace[i] == registrationNumber)
                 {
-                   // Console.WriteLine("Your Vehicle is found with registration number " + parkingPlace[i]);
+                    // Console.WriteLine("Your Vehicle is found with registration number " + parkingPlace[i]);
                     return i;
-                }else 
+                } else
                 {
                     // Try to find motorcycle
-                    if (ParkingSlot.ContainsMc(parkingPlace[i], registrationNumber)) { 
-                           // Console.WriteLine("Your Vehicle is found with registration number " + parkingPlace[i]);
-                            return i;
-                        
+                    if (ParkingSlot.ContainsMc(parkingPlace[i], registrationNumber)) {
+                        // Console.WriteLine("Your Vehicle is found with registration number " + parkingPlace[i]);
+                        return i;
+
                     }
                 }
             }
@@ -165,6 +194,11 @@ namespace ParkingPlace
 
             return -1;
         }
+
+        /*Find Free Place for vehicle 
+         * @parkingPlace
+         * @Vehicle Type
+         */
 
         public static int FindFreePlace(string[] parkingPlace, VehicleType vehicleType)
         {
@@ -192,6 +226,11 @@ namespace ParkingPlace
             return position;
         }
 
+        /*
+         * Remove the vehcile from parking place
+         * @parkingPlace String Array
+         * @registrationNumber
+         */
 
         public static int Remove(string[] parkingPlace, string registrationNumber)
         {

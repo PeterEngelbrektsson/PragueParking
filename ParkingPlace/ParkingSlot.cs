@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ParkingPlace
 {
+    /// <summary>
+    /// count motor cycles 
+    /// </summary>
     public class ParkingSlot
     {
         public static int CountMc(string parkingPlace)
@@ -32,6 +35,12 @@ namespace ParkingPlace
             }
             return numberOfMcs;
         }
+        /// <summary>
+        /// is parking free for moto cycle
+        /// </summary>
+        /// <param name="parkingSlot"></param>
+        /// <param name="vehicleType"></param>
+        /// <returns></returns>
         public static bool IsFreeForMc(string parkingSlot, VehicleType vehicleType)
         {
             bool isFree = false;
@@ -55,6 +64,12 @@ namespace ParkingPlace
             return isFree;
 
         }
+        /// <summary>
+        /// Check place is free for vehicle.
+        /// </summary>
+        /// <param name="parkingSlot"></param>
+        /// <param name="vehicleType"></param>
+        /// <returns></returns>
         public static bool IsFreeFor(string parkingSlot, VehicleType vehicleType)
         {
             bool isFree = false;
@@ -70,6 +85,12 @@ namespace ParkingPlace
 
             return isFree;
         }
+
+        /// <summary>
+        /// Splite the two diffrent vehicles 
+        /// </summary>
+        /// <param name="parkingSlot"></param>
+        /// <returns></returns>
         public static string[] SplitVehicle(string parkingSlot)
         {
             string[] result = new string[1];
@@ -88,6 +109,13 @@ namespace ParkingPlace
             }
             return result;
         }
+
+        /// <summary>
+        /// Checking for contaning the Motocycle.
+        /// </summary>
+        /// <param name="parkingSlot"></param>
+        /// <param name="registrationNumber"></param>
+        /// <returns></returns>
         public static bool ContainsMc(string parkingSlot, string registrationNumber)
         {
             bool found = false;
@@ -114,6 +142,13 @@ namespace ParkingPlace
             }
             return found;
         }
+
+        /// <summary>
+        /// Cheking the Vehicle is Containing the Vehicle
+        /// </summary>
+        /// <param name="parkingSlot"></param>
+        /// <param name="registrationNumber"></param>
+        /// <returns></returns>
         public static bool ContainsVehicle(string parkingSlot, string registrationNumber)
         {
             bool found = false;
@@ -144,6 +179,12 @@ namespace ParkingPlace
             }
             return found;
         }
+        /// <summary>
+        //
+        /// </summary>
+        /// <param name="parkingSlot"></param>
+        /// <param name="registrationNumber"></param>
+        /// <returns></returns>
         public static VehicleType GetVehicleTypeOfParkedVehicle(string parkingSlot, string registrationNumber)
         {
             VehicleType type;

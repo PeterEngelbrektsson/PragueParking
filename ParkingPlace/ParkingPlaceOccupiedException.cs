@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ParkingPlace
 {
+    /// <summary>
+    /// parking place is occupied by another vechile
+    /// </summary>
     public class ParkingPlaceOccupiedException : Exception
     {
         const string defaultMessage = "The parkingplace is alrady occupied.";

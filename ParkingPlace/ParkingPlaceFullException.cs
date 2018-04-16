@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ParkingPlace
 {
+    /// <summary>
+    /// Creating execption for parking place is full. 
+    /// </summary>
     public class ParkingPlaceFullException : Exception
     {
         const string message = "The parking place has no room for the vehilce.";

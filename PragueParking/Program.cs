@@ -13,7 +13,9 @@ namespace PragueParking
         public const int NumberOfParkinPlaces = 100;
         public const int MaxLengthOfRegistrationNumber = 10;
 
-
+       /// <summary>
+       /// Create Write Menu Options
+       /// </summary>
         public static void WriteMenu()
         {
             Console.WriteLine();
@@ -32,6 +34,11 @@ namespace PragueParking
             Console.Write("Please input number : ");
 
         }
+        /// <summary>
+        /// Displaying menu bar 
+        /// </summary>
+        /// <param name="parkingPlace"></param>
+        /// <param name="vehicleType"></param>
         public static void DisplayMenu(string[] parkingPlace, VehicleType vehicleType)
         {
             // Console.Clear(); -- Do we want to clear screen between repeat displays of the menu or not ? 
@@ -252,6 +259,10 @@ namespace PragueParking
                 }
             }
         }
+        /// <summary>
+        /// Display parked vehicles
+        /// </summary>
+        /// <param name="parkingPlace"></param>
         public static void DisplayParkedVehicels(string[] parkingPlace)
         {
             Dictionary<int, string> parkedVehicles;
@@ -268,6 +279,10 @@ namespace PragueParking
                 Messager.WriteInformationMessage("The parkingplace is empty.");
             }
         }
+        /// <summary>
+        /// optimize the parking place
+        /// </summary>
+        /// <param name="parkingPlace"></param>
         public static void Optimize(string[] parkingPlace)
         {
             string[] messages;
@@ -282,6 +297,11 @@ namespace PragueParking
                 Messager.WriteInformationMessage("The parkingplace is alreadey optimized.");
             }
         }
+        /// <summary>
+        /// Remove Vehicle from parking place
+        /// </summary>
+        /// <param name="parkingPlace"></param>
+        /// <param name="registrationNumber"></param>
         public static void Remove(string[] parkingPlace, string registrationNumber)
         {
 
@@ -298,6 +318,7 @@ namespace PragueParking
 
             }
         }
+
         public static void Main(string[] args)
         {
             //Main file
@@ -314,7 +335,7 @@ namespace PragueParking
             parkingPlace[54] = ":MC5";
             parkingPlace[55] = ":MC6";
 
-
+            // Display menu bar
             DisplayMenu(parkingPlace,VehicleType.Car);
             Console.ReadLine();
         }
