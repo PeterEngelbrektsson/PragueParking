@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PragueParking", "PragueParking\PragueParking.csproj", "{16E00284-A05C-4A76-82B7-637C8E8F3937}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PragueParkingUI", "PragueParking\PragueParkingUI.csproj", "{16E00284-A05C-4A76-82B7-637C8E8F3937}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingPlace", "ParkingPlace\ParkingPlace.csproj", "{37DD4BDE-F2DE-4BAD-9ECB-00C3801A0502}"
 EndProject

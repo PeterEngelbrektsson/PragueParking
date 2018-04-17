@@ -332,20 +332,32 @@ namespace PragueParking
         }
         public static string PromptForRegistrationNumber()
         {
-
-            Console.WriteLine("Please enter the registration number of the vehicle : ");
-            string registrationNumber = Console.ReadLine().ToUpper();
-
-            if (registrationNumber.Length > Parking.MaxLengthOfRegistrationNumber)
+            bool loop = true;
+            string registrationNumber=null;
+            do
             {
-                Messenger.WriteErrorMessage("The registration number is too long.");
-                return null;
-            }
-            if (!Parking.ValidRegistrationNumber(registrationNumber))
-            {
-                Messenger.WriteErrorMessage("The registration number is not valid. Use A-Z 0-9");
-                return null;
-            }
+                Console.WriteLine("Please enter the registration number of the vehicle or 0 to bort: ");
+                registrationNumber = Console.ReadLine().ToUpper();
+                int inputNumber = 0;
+                if(int.TryParse(registrationNumber,out inputNumber)&& inputNumber == 0)
+                {
+                    registrationNumber = null;
+                    loop = false;
+                }
+                else if (registrationNumber.Length > Parking.MaxLengthOfRegistrationNumber)
+                {
+                    Messenger.WriteErrorMessage("The registration number is too long.");
+                }
+                else if (!Parking.ValidRegistrationNumber(registrationNumber))
+                {
+                    Messenger.WriteErrorMessage("The registration number is not valid. Use A-Z 0-9");
+                }
+                else
+                {
+                    //valid registration number
+                    loop = false;
+                }
+            }while(loop);
             return registrationNumber;
         }
 
