@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 
@@ -24,6 +28,10 @@ namespace ParkingPlace
             {
                 valid = false;
             }
+            if (!Regex.IsMatch(registrationNumber, @"^[A-Z0-9]*$"))
+            {
+                valid = false;
+            }
             if (registrationNumber.Length > MaxLengthOfRegistrationNumber)
             {
                 valid = false;
@@ -33,7 +41,7 @@ namespace ParkingPlace
 
         public static int Add(string [] parkingPlace, string registrationNumber, VehicleType vehicleType)
         {
-            int pos = Find(parkingPlace, registrationNumber);
+            int pos = FindDistinct(parkingPlace, registrationNumber);
             if(pos != -1)
             {
                 // The registration number already exists
@@ -41,13 +49,14 @@ namespace ParkingPlace
             }
 
             pos = FindFreePlace(parkingPlace, vehicleType);
-
-            if ((parkingPlace[pos] != null) && vehicleType == VehicleType.Mc) // If parking place not empty and vehicle is motorcyle
+            bool containsOneMc = (ParkingSlot.CountMc(parkingPlace[pos])==1);
+            // contains one mc and adding one mc
+            if ((parkingPlace[pos] != null) && containsOneMc && vehicleType == VehicleType.Mc) // If parking place not empty and vehicle is motorcyle
             {
                 parkingPlace[pos] = string.Concat(registrationNumber,parkingPlace[pos] ); // then add the motorcycle before  the ':' char before first motorcycle
             }
 
-            else
+            else // adding to empty place
             {
                 if (vehicleType == VehicleType.Mc) // if parking place empty and the vehicle is a motorcycle ?
                 {
@@ -56,7 +65,7 @@ namespace ParkingPlace
 
                 else
                 {
-                    parkingPlace[pos] = registrationNumber; // else, add it
+                    parkingPlace[pos] = registrationNumber+","+DateTime.Now; // else, add it. Add timestamp
                 }
             }
 
@@ -65,7 +74,7 @@ namespace ParkingPlace
               
         public static void Move(string[] parkingPlace, string registrationNumber, int newPosition)
         {
-            int oldPosition = Find(parkingPlace, registrationNumber);
+            int oldPosition = FindDistinct(parkingPlace, registrationNumber);
             if (oldPosition < 0)
             {
                 throw new VehicleNotFoundException("The vehicle "+registrationNumber+" can not be found ");
@@ -133,6 +142,64 @@ namespace ParkingPlace
             } while ((found && (firstSingleMcPosition != -1)) && (firstSingleMcPosition < parkingPlace.Length-1));
 
             return numnberOfSingles;
+        }
+        /// <summary>
+        /// Counts the number of full parking places.
+        /// </summary>
+        /// <param name="parkingPlace"></param>
+        /// <returns>Number of full parking places.</returns>
+        public static int NumberOfFullParkingPlaces(string[] parkingPlace)
+        {
+            int numnberOfFull = 0;
+ 
+            for(int i = 0; i < parkingPlace.Length; i++)
+            {
+                if (ParkingSlot.CountMc(parkingPlace[i]) == 2)
+                {
+                    numnberOfFull++;
+                }
+                else if(ParkingSlot.CountCar(parkingPlace[i])==1)
+                {
+                    numnberOfFull++;
+                }
+            }
+
+            return numnberOfFull;
+        }
+        /// <summary>
+        /// Counts the number of free parking places availabel for a specifik type of vehicle.
+        /// </summary>
+        /// <param name="parkingPlace"></param>
+        /// <returns>Number of free parking places.</returns>
+        public static int NumberOfFreeParkingPlaces(string[] parkingPlace, VehicleType type)
+        {
+            int numnberOfFree = 0;
+            if (type == VehicleType.Car)
+            {
+                for (int i = 0; i < parkingPlace.Length; i++)
+                {
+                    if (parkingPlace[i]==null)
+                    {
+                        numnberOfFree++;
+                    }
+                }
+            }
+            else{
+                // search for Motorcycle places
+                for (int i = 0; i < parkingPlace.Length; i++)
+                {
+                    if (parkingPlace[i] == null)
+                    {
+                        numnberOfFree++;
+                    }
+                    if (ParkingSlot.CountMc(parkingPlace[i]) == 1)
+                    {
+                        numnberOfFree++;
+                    }
+                }
+            }
+
+            return numnberOfFree;
         }
         /// <summary>
         /// Moves a vehicel from a position to a new position.
@@ -204,24 +271,38 @@ namespace ParkingPlace
         /// <param name="parkingPlace"></param>
         /// <param name="registrationNumber"></param>
         /// <returns>Position of the found vehicle. -1 if not found</returns>
-        public static int Find(string[] parkingPlace, string registrationNumber)
+        public static int FindDistinct(string[] parkingPlace, string registrationNumber)
         {
 
             for (int i = 0; i < parkingPlace.Length; i++)
             {
-                // Try to find car
-                if (parkingPlace[i] == registrationNumber)
+
+                 // Try to find motorcycle
+                if (ParkingSlot.ContainsMc(parkingPlace[i], registrationNumber))
                 {
-                    // Car found
+                    // Mc found 
                     return i;
-                }else 
+                }else if(parkingPlace[i]==null)
                 {
-                    // Try to find motorcycle
-                    if (ParkingSlot.ContainsMc(parkingPlace[i], registrationNumber)) { 
-                           // Mc found 
-                            return i;
+                    // empty parking place. Do nothing.
+                }
+                else
+                {
+                    // try to find a car
+                    string CarRegNr= null;
+                    int indexOfRegNrDateSeparator = parkingPlace[i].IndexOf(',');
+                    if (indexOfRegNrDateSeparator > -1)
+                    {
+                        CarRegNr = ParkingSlot.GetRegistrationNumber(parkingPlace[i]);
+                    }
+                    // Try to find car
+                    if (registrationNumber == CarRegNr)
+                    {
+                        // Car found
+                        return i;
                     }
                 }
+
             }
             //Your Vehicle is not found 
 
@@ -279,16 +360,30 @@ namespace ParkingPlace
             }
             return position;
         }
-
-
-        public static int Remove(string[] parkingPlace, string registrationNumber)
+        
+        /// <summary>
+        /// Removes a vehicle.
+        /// </summary>
+        /// <param name="parkingPlace"></param>
+        /// <param name="registrationNumber"></param>
+        /// <returns>parking place number, check in timestamp</returns>
+        public static KeyValuePair<int,string> Remove(string[] parkingPlace, string registrationNumber)
         {
+            string checkInTimeStamp="";
+            KeyValuePair<int, string> result=new KeyValuePair<int, string>();
             int found = -1;
             for (int i = 0; i < parkingPlace.Length; i++)
             {
                 if (ParkingSlot.ContainsVehicle(parkingPlace[i], registrationNumber))
                 {
                     found = i;
+                    VehicleType vehicleType = GetVehicleTypeOfParkedVehicle(parkingPlace, found, registrationNumber);
+                    if (vehicleType == VehicleType.Car)
+                    {
+                        checkInTimeStamp = ParkingSlot.GetCheckInTimeStamp(parkingPlace[found]);
+
+                    }
+                    result = new KeyValuePair<int, string>(found, checkInTimeStamp);
                     ParkingSlot.RemoveVehicle(ref parkingPlace[i], registrationNumber);
                     break;
                 }
@@ -297,7 +392,9 @@ namespace ParkingPlace
             {
                 throw new VehicleNotFoundException();
             }
-            return found;
+
+ 
+            return result;
         }
         /// <summary>
         /// Finds all parked vehicles in the parkingplace.
@@ -316,9 +413,41 @@ namespace ParkingPlace
             }
             return parkedVehicles;
         }
+        /// <summary>
+        /// Saves the parking place to file
+        /// </summary>
+        /// <param name="parkingPlace"></param>
+        /// <param name="fileName"></param>
+        public static void SaveToFile(string[] parkingPlace, string fileName)
+        {
 
+            IFormatter formatter = new BinaryFormatter();
+            using (Stream stream = new FileStream(fileName,
+                                     FileMode.Create,
+                                     FileAccess.Write, FileShare.None))
+            {
+                formatter.Serialize(stream, parkingPlace);
+                stream.Close();
+            }
+        }
+        /// <summary>
+        /// Loads the parking place from file
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public static string[] LoadFromFile(string fileName)
+        {
+            string[] place;
+            IFormatter formatter = new BinaryFormatter();
+            using (Stream fromStream = new FileStream(fileName,
+                                       FileMode.Open,
+                                       FileAccess.Read,
+                                       FileShare.Read))
+            {
+                place = (string[]) formatter.Deserialize(fromStream);
+                fromStream.Close();
+            }
+            return place;
+        }
     }
-
-
-
 }

@@ -33,10 +33,10 @@ namespace ParkingPlaceFunctionTest
             // Setup
             string[] park = new string[2];
             park[0] = null;
-            park[1] = "8toi43";
+            park[1] = "8toi43,1999-01-02 13:34";
 
             string[] expected = new string[2];
-            expected[0] = "8toi43";
+            expected[0] = "8toi43,1999-01-02 13:34";
             expected[1] = null;
 
 
@@ -52,15 +52,15 @@ namespace ParkingPlaceFunctionTest
             // Setup
             string[] park = new string[4];
             park[0] = null;
-            park[1] = "8toi43";
-            park[2] = "abc213";
+            park[1] = "8toi43,1999-01-02 13:34";
+            park[2] = "abc213,1999-01-02 13:34";
             park[3] = null;
 
             string[] expected = new string[4];
             expected[0] = null;
-            expected[1] = "8toi43";
+            expected[1] = "8toi43,1999-01-02 13:34";
             expected[2] = null;
-            expected[3] = "abc213";
+            expected[3] = "abc213,1999-01-02 13:34";
 
 
             //Act

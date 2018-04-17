@@ -11,6 +11,7 @@ namespace PragueParking
     public class Program
     {
         public const int NumberOfParkinPlaces = 100;
+        public const string ParkingPlaceFileName = "ParkinPlace1_1.bin";
         
         /// <summary>
         /// Writes the main menu to console.
@@ -29,6 +30,9 @@ namespace PragueParking
             Console.WriteLine("6. Find free place");
             Console.WriteLine("7. Optimize parking lot");
             Console.WriteLine("8. Display all parked vehicles");
+            Console.WriteLine("9. Display statistics");
+            Console.WriteLine("10. Save");
+            Console.WriteLine("11. Load");
             Console.WriteLine("0. EXIT");
             DisplayIfCanBeOptimized(parkingPlace);
             Console.WriteLine();
@@ -49,7 +53,23 @@ namespace PragueParking
                 Messenger.WriteInformationMessage(String.Format("The parkingspace can be optimized. There are {0} single parked motorcycles.", singleMcs));
             }
         }
-        public static void DisplayMenu(string[] parkingPlace)
+        /// <summary>
+        /// Displays statistics about the parking place.
+        /// </summary>
+        /// <param name="parkingPlace"></param>
+        public static void DisplayStatistics(string[] parkingPlace)
+        {
+            int singleMcs = Parking.NumberOfSingleParkedMcs(parkingPlace);
+            int fullParkingPlaces = Parking.NumberOfFullParkingPlaces(parkingPlace);
+            int freeParkingPlacesCar = Parking.NumberOfFreeParkingPlaces(parkingPlace,VehicleType.Car);
+            int freeParkingPlacesMc = Parking.NumberOfFreeParkingPlaces(parkingPlace, VehicleType.Mc);
+            Console.WriteLine();
+            Messenger.WriteInformationMessage(String.Format("The number of free parking places for cars {0}.", freeParkingPlacesCar));
+            Messenger.WriteInformationMessage(String.Format("The number of free parking places for motorcycles {0}.", freeParkingPlacesMc));
+            Messenger.WriteInformationMessage(String.Format("The number of full parking places {0}.", fullParkingPlaces));
+            Messenger.WriteInformationMessage(String.Format("The number of single parked motorcycles {0}.", singleMcs));
+        }
+        public static void DisplayMenu(ref string[] parkingPlace)
         {
             // Console.Clear(); -- Do we want to clear screen between repeat displays of the menu or not ? 
             bool keepLoop = true;
@@ -105,6 +125,17 @@ namespace PragueParking
 
                         case 8: // List all vehicles in parking lot
                             DisplayParkedVehicels(parkingPlace);
+                            break;
+                        case 9: //Display statistics
+                            DisplayStatistics(parkingPlace);
+                            break;
+                        case 10: //Save
+                            Parking.SaveToFile(parkingPlace,ParkingPlaceFileName);
+                            Messenger.WriteInformationMessage("Database saved to file.");
+                            break;
+                        case 11: //Load
+                            parkingPlace=Parking.LoadFromFile(ParkingPlaceFileName);
+                            Messenger.WriteInformationMessage("Database loaded from file.");
                             break;
                         default: // None of the above
 
@@ -165,8 +196,19 @@ namespace PragueParking
 
             try
             {
-                int pos = Parking.Remove(parkingPlace, registrationNumber);
-                Messenger.WriteInformationMessage(String.Format("The Vehicle with registration number {0} successfully removed from position {1}", registrationNumber, pos + 1)); // Display of parking number should be one based
+                KeyValuePair<int, string> result;
+                result = Parking.Remove(parkingPlace, registrationNumber);
+                int pos = result.Key;
+                string checkinTimeStamp = result.Value;
+                if (result.Value != "")
+                {
+                    Messenger.WriteInformationMessage(String.Format("The Vehicle with registration number {0} successfully removed from position {1}. Cheked in {2}", registrationNumber, pos + 1,checkinTimeStamp)); // Display of parking number should be one based
+                }
+                else
+                {
+                    Messenger.WriteInformationMessage(String.Format("The Vehicle with registration number {0} successfully removed from position {1}", registrationNumber, pos + 1)); // Display of parking number should be one based
+                }
+                
             }
             catch (VehicleNotFoundException)
             {
@@ -210,7 +252,7 @@ namespace PragueParking
             Console.WriteLine("Please enter the registration number of the vehicle : ");
             string registrationNumber = Console.ReadLine().ToUpper();
 
-            int position = Parking.Find(parkingPlace, registrationNumber); // Position where vehicle is located (if any)
+            int position = Parking.FindDistinct(parkingPlace, registrationNumber); // Position where vehicle is located (if any)
 
             if (position != -1)
             {
@@ -238,7 +280,7 @@ namespace PragueParking
         {
             Console.Write("Enter the registration number: ");
             string registrationNumber = Console.ReadLine().ToUpper();
-            int oldPosition = Parking.Find(parkingPlace, registrationNumber);
+            int oldPosition = Parking.FindDistinct(parkingPlace, registrationNumber);
             if (oldPosition < 0)
             {
                 Messenger.WriteErrorMessage("The vehicle could not be found.");
@@ -299,22 +341,38 @@ namespace PragueParking
             }
 
         }
+        /// <summary>
+        /// Prompts the user for a valid registration number or exit code 0
+        /// </summary>
+        /// <returns></returns>
         public static string PromptForRegistrationNumber()
         {
-
-            Console.WriteLine("Please enter the registration number of the vehicle : ");
-            string registrationNumber = Console.ReadLine().ToUpper();
-
-            if (registrationNumber.Length > Parking.MaxLengthOfRegistrationNumber)
+            bool loop = true;
+            string registrationNumber=null;
+            do
             {
-                Messenger.WriteErrorMessage("The registration number is too long.");
-                return null;
-            }
-            if (!Parking.ValidRegistrationNumber(registrationNumber))
-            {
-                Messenger.WriteErrorMessage("The registration number is not valid.");
-                return null;
-            }
+                Console.WriteLine("Please enter the registration number of the vehicle or 0 to bort: ");
+                registrationNumber = Console.ReadLine().ToUpper();
+                int inputNumber = 0;
+                if(int.TryParse(registrationNumber,out inputNumber)&& inputNumber == 0)
+                {
+                    registrationNumber = null;
+                    loop = false;
+                }
+                else if (registrationNumber.Length > Parking.MaxLengthOfRegistrationNumber)
+                {
+                    Messenger.WriteErrorMessage("The registration number is too long.");
+                }
+                else if (!Parking.ValidRegistrationNumber(registrationNumber))
+                {
+                    Messenger.WriteErrorMessage("The registration number is not valid. Use A-Z 0-9");
+                }
+                else
+                {
+                    //valid registration number
+                    loop = false;
+                }
+            }while(loop);
             return registrationNumber;
         }
 
@@ -338,36 +396,43 @@ namespace PragueParking
         public static void AddMc(string[] parkingPlace)
         {
             string registrationNumber = PromptForRegistrationNumber();
-            ParkVehicle(parkingPlace, registrationNumber, VehicleType.Mc);
+            if (registrationNumber != null)
+            {
+                ParkVehicle(parkingPlace, registrationNumber, VehicleType.Mc);
+            }
         }
 
         static void AddCar(string[] parkingPlace)
         {
             string registrationNumber = PromptForRegistrationNumber();
-            ParkVehicle(parkingPlace, registrationNumber, VehicleType.Car);
+            if (registrationNumber != null) { 
+                ParkVehicle(parkingPlace, registrationNumber, VehicleType.Car);
+            }
         }
         static void RemoveVehicle(string[] parkingPlace)
         {
-            Console.WriteLine("Please enter the registration number of the vehicle : ");
-            string registrationNumber = Console.ReadLine().ToUpper();
-            Remove(parkingPlace, registrationNumber); // Remove the vehicle with the specificed registration number (if it exists in the parking lot)
+            string registrationNumber = PromptForRegistrationNumber();
+            if (registrationNumber != null)
+            {
+                Remove(parkingPlace, registrationNumber); // Remove the vehicle with the specificed registration number (if it exists in the parking lot)
+            }
         }
         public static string[] PopulateTestData()
         {
             string[] parkingPlace = new string[100];
             // Testdata
-            parkingPlace[10] = "ABC123";
-            parkingPlace[12] = "CAR432";
-            parkingPlace[15] = "CUSTOMNME";
-            parkingPlace[18] = "MYNAME";
+            parkingPlace[10] = "ABC123" + "," + DateTime.Now;
+            parkingPlace[12] = "CAR432"+","+DateTime.Now;
+            parkingPlace[15] = "CUSTOMNME" + "," + DateTime.Now;
+            parkingPlace[18] = "MYNAME" + "," + DateTime.Now;
             parkingPlace[21] = ":MC3";
             parkingPlace[22] = ":OIU988";
             parkingPlace[24] = ":MC1";
             parkingPlace[45] = "MC4:MC2";
             parkingPlace[54] = ":MC5";
             parkingPlace[55] = ":MC6";
-            parkingPlace[85] = "CAR987";
-            parkingPlace[86] = "CAR123";
+            parkingPlace[85] = "CAR987" + "," + DateTime.Now;
+            parkingPlace[86] = "CAR123" + "," + DateTime.Now;
             parkingPlace[88] = ":MC7";
             parkingPlace[99] = ":MC8";
 
@@ -378,17 +443,14 @@ namespace PragueParking
         {
             //Main file
 
-
             // String array with elements of parking 
              string[] parkingPlace = new string[NumberOfParkinPlaces];
 
             // Setup demo with testdata.  FIXME remove this in production code.
             parkingPlace = PopulateTestData();
 
-            DisplayMenu(parkingPlace);
+            DisplayMenu(ref parkingPlace);
             Console.ReadLine();
-
-
         }
     }
 }

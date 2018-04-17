@@ -192,7 +192,7 @@ namespace ParkingPlaceTests
         {
             //Setup
             string parkingPlace;
-            parkingPlace = "gfd765";
+            parkingPlace = "gfd765,1999-01-02 13:34";
             string registrationNumber = "gfd765";
             bool expected = false;
             bool actual;
@@ -308,7 +308,7 @@ namespace ParkingPlaceTests
             VehicleType actualVehicleType;
             string registrationNumber = "abc123";
 
-            string parkingSlot = "abc123";
+            string parkingSlot = "abc123,1999-01-02 13:34";
 
             // Act
             actualVehicleType = ParkingSlot.GetVehicleTypeOfParkedVehicle(parkingSlot, registrationNumber);
@@ -500,7 +500,7 @@ namespace ParkingPlaceTests
         {
             // Setup
             string registrationNumber = "abc123";
-            string parkingSlot = "poi654";
+            string parkingSlot = "poi654,1999-01-02 13:34";
 
             // Act
             ParkingSlot.RemoveVehicle(ref parkingSlot, registrationNumber);
@@ -510,7 +510,7 @@ namespace ParkingPlaceTests
         {
             // Setup
             string registrationNumber = "poi654";
-            string parkingSlot = "poi654";
+            string parkingSlot = "poi654,1999-01-02 13:34";
             string expectedParkingSlot = null;
 
             // Act
@@ -540,7 +540,7 @@ namespace ParkingPlaceTests
         {
             //Setup
             string parkingPlace;
-            parkingPlace = "gfd765";
+            parkingPlace = "gfd765,1999-01-02 13:34";
             string registrationNumber = "gfd765";
             bool expected = true;
             bool actual;
@@ -670,10 +670,10 @@ namespace ParkingPlaceTests
         public void FindSearchStringOneMatchingCarTest()
         {
             // Setup
-            string slot = "abc123";
+            string slot = "abc123,1999-01-02 13:34";
 
             string[] expected = new string[1];
-            expected[0] = "abc123";
+            expected[0] = "abc123,1999-01-02 13:34";
 
             string[] actual;
 
