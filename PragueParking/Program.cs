@@ -106,7 +106,6 @@ namespace PragueParking
                         case 8: // List all vehicles in parking lot
                             DisplayParkedVehicels(parkingPlace);
                             break;
-
                         default: // None of the above
 
                             Console.WriteLine();
@@ -379,6 +378,7 @@ namespace PragueParking
         {
             //Main file
 
+
             // String array with elements of parking 
              string[] parkingPlace = new string[NumberOfParkinPlaces];
 
@@ -387,6 +387,8 @@ namespace PragueParking
 
             DisplayMenu(parkingPlace);
             Console.ReadLine();
+
+
         }
     }
 }
