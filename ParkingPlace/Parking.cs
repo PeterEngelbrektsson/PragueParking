@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -409,6 +412,42 @@ namespace ParkingPlace
                 }
             }
             return parkedVehicles;
+        }
+        /// <summary>
+        /// Saves the parking place to file
+        /// </summary>
+        /// <param name="parkingPlace"></param>
+        /// <param name="fileName"></param>
+        public static void SaveToFile(string[] parkingPlace, string fileName)
+        {
+
+            IFormatter formatter = new BinaryFormatter();
+            using (Stream stream = new FileStream(fileName,
+                                     FileMode.Create,
+                                     FileAccess.Write, FileShare.None))
+            {
+                formatter.Serialize(stream, parkingPlace);
+                stream.Close();
+            }
+        }
+        /// <summary>
+        /// Loads the parking place from file
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public static string[] LoadFromFile(string fileName)
+        {
+            string[] place;
+            IFormatter formatter = new BinaryFormatter();
+            using (Stream fromStream = new FileStream(fileName,
+                                       FileMode.Open,
+                                       FileAccess.Read,
+                                       FileShare.Read))
+            {
+                place = (string[]) formatter.Deserialize(fromStream);
+                fromStream.Close();
+            }
+            return place;
         }
     }
 }

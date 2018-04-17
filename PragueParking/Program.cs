@@ -11,6 +11,7 @@ namespace PragueParking
     public class Program
     {
         public const int NumberOfParkinPlaces = 100;
+        public const string ParkingPlaceFileName = "ParkinPlace1_1.bin";
         
         /// <summary>
         /// Writes the main menu to console.
@@ -30,6 +31,8 @@ namespace PragueParking
             Console.WriteLine("7. Optimize parking lot");
             Console.WriteLine("8. Display all parked vehicles");
             Console.WriteLine("9. Display statistics");
+            Console.WriteLine("10. Save");
+            Console.WriteLine("11. Load");
             Console.WriteLine("0. EXIT");
             DisplayIfCanBeOptimized(parkingPlace);
             Console.WriteLine();
@@ -66,7 +69,7 @@ namespace PragueParking
             Messenger.WriteInformationMessage(String.Format("The number of full parking places {0}.", fullParkingPlaces));
             Messenger.WriteInformationMessage(String.Format("The number of single parked motorcycles {0}.", singleMcs));
         }
-        public static void DisplayMenu(string[] parkingPlace)
+        public static void DisplayMenu(ref string[] parkingPlace)
         {
             // Console.Clear(); -- Do we want to clear screen between repeat displays of the menu or not ? 
             bool keepLoop = true;
@@ -125,6 +128,14 @@ namespace PragueParking
                             break;
                         case 9: //Display statistics
                             DisplayStatistics(parkingPlace);
+                            break;
+                        case 10: //Save
+                            Parking.SaveToFile(parkingPlace,ParkingPlaceFileName);
+                            Messenger.WriteInformationMessage("Database saved to file.");
+                            break;
+                        case 11: //Load
+                            parkingPlace=Parking.LoadFromFile(ParkingPlaceFileName);
+                            Messenger.WriteInformationMessage("Database loaded from file.");
                             break;
                         default: // None of the above
 
@@ -432,7 +443,7 @@ namespace PragueParking
             // Setup demo with testdata.  FIXME remove this in production code.
             parkingPlace = PopulateTestData();
 
-            DisplayMenu(parkingPlace);
+            DisplayMenu(ref parkingPlace);
             Console.ReadLine();
         }
     }
