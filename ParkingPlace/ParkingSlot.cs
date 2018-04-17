@@ -8,6 +8,11 @@ namespace ParkingPlace
 {
     public class ParkingSlot
     {
+        /// <summary>
+        /// cout the motocycle
+        /// </summary>
+        /// <param name="parkingSlot"></param>
+        /// <returns></returns>
         public static int CountMc(string parkingSlot)
         {
             if (parkingSlot == null)
@@ -32,6 +37,11 @@ namespace ParkingPlace
             }
             return numberOfMcs;
         }
+        /// <summary>
+        /// count car
+        /// </summary>
+        /// <param name="parkingSlot"></param>
+        /// <returns></returns>
         public static int CountCar(string parkingSlot)
         {
             if (parkingSlot == null)
@@ -51,6 +61,12 @@ namespace ParkingPlace
             }
             return numberOfCars;
         }
+        /// <summary>
+        /// check for free space for motocycle
+        /// </summary>
+        /// <param name="parkingSlot"></param>
+        /// <param name="vehicleType"></param>
+        /// <returns></returns>
         public static bool IsFreeForMc(string parkingSlot, VehicleType vehicleType)
         {
             bool isFree = false;
@@ -74,6 +90,12 @@ namespace ParkingPlace
             return isFree;
 
         }
+        /// <summary>
+        /// check free space for car
+        /// </summary>
+        /// <param name="parkingSlot"></param>
+        /// <param name="vehicleType"></param>
+        /// <returns></returns>
         public static bool IsFreeFor(string parkingSlot, VehicleType vehicleType)
         {
             bool isFree = false;
@@ -89,6 +111,11 @@ namespace ParkingPlace
 
             return isFree;
         }
+        /// <summary>
+        /// spliting the vehicles
+        /// </summary>
+        /// <param name="parkingSlot"></param>
+        /// <returns></returns>
         public static string[] SplitVehicle(string parkingSlot)
         {
             string[] result = new string[1];
@@ -107,6 +134,12 @@ namespace ParkingPlace
             }
             return result;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parkingSlot"></param>
+        /// <param name="registrationNumber"></param>
+        /// <returns></returns>
         public static bool ContainsMc(string parkingSlot, string registrationNumber)
         {
             bool found = false;
@@ -135,6 +168,12 @@ namespace ParkingPlace
             }
             return found;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parkingSlot"></param>
+        /// <param name="registrationNumber"></param>
+        /// <returns></returns>
         public static bool ContainsVehicle(string parkingSlot, string registrationNumber)
         {
             bool found = false;
@@ -209,6 +248,12 @@ namespace ParkingPlace
 
             return searchResult.ToArray();
         }
+        /// <summary>
+        /// get vehicle type of parked vehicles
+        /// </summary>
+        /// <param name="parkingSlot"></param>
+        /// <param name="registrationNumber"></param>
+        /// <returns></returns>
         public static VehicleType GetVehicleTypeOfParkedVehicle(string parkingSlot, string registrationNumber)
         {
             VehicleType type;
@@ -233,6 +278,11 @@ namespace ParkingPlace
             }
             return type;
         }
+        /// <summary>
+        /// remove the motocycle
+        /// </summary>
+        /// <param name="parkingSlot"></param>
+        /// <param name="registrationNumber"></param>
         public static void RemoveMc(ref string parkingSlot, string registrationNumber)
         {
             int countMc = CountMc(parkingSlot);
@@ -264,6 +314,11 @@ namespace ParkingPlace
                 throw new ArgumentException("Expected to find the 1 or 2 mcs in the parkingslot.");
             }
         }
+        /// <summary>
+        /// remove the vehicle
+        /// </summary>
+        /// <param name="parkingSlot"></param>
+        /// <param name="registrationNumber"></param>
         public static void RemoveVehicle(ref string parkingSlot, string registrationNumber)
         {
 
@@ -304,6 +359,11 @@ namespace ParkingPlace
 
             return checkedInTimeStamp;
         }
+        /// <summary>
+        /// get registration numberof parking vehicle
+        /// </summary>
+        /// <param name="parkingSlot"></param>
+        /// <returns></returns>
         public static string GetRegistrationNumber(string parkingSlot)
         {
 
