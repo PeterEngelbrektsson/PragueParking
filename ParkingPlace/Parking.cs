@@ -39,6 +39,13 @@ namespace ParkingPlace
             return valid;
         }
 
+        /// <summary>
+        /// Adding the Vehicle and check the type of vehicle
+        /// </summary>
+        /// <param name="parkingPlace"></param>
+        /// <param name="registrationNumber"></param>
+        /// <param name="vehicleType"></param>
+        /// <returns></returns>
         public static int Add(string [] parkingPlace, string registrationNumber, VehicleType vehicleType)
         {
             int pos = FindDistinct(parkingPlace, registrationNumber);
@@ -71,7 +78,12 @@ namespace ParkingPlace
 
             return pos;
         }
-              
+        /// <summary>
+        /// Move Vehicle into new position.
+        /// </summary>
+        /// <param name="parkingPlace"></param>
+        /// <param name="registrationNumber"></param>
+        /// <param name="newPosition"></param>
         public static void Move(string[] parkingPlace, string registrationNumber, int newPosition)
         {
             int oldPosition = FindDistinct(parkingPlace, registrationNumber);

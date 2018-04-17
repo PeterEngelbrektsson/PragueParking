@@ -8,19 +8,34 @@ namespace PragueParking
 {
     public class Messenger
     {
-        public static void WriteLineColor(string text, ConsoleColor color)
+        /// <summary>
+        /// writes a message. use write information message or write error message insted 
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="color"></param>
+        private static void WriteMessage(string text, ConsoleColor color)
         {
             Console.ForegroundColor = color;
+            Console.WriteLine("----------------------------------------------------------------------------------------------");
             Console.WriteLine(text);
+            Console.WriteLine("----------------------------------------------------------------------------------------------");
             Console.ForegroundColor = ConsoleColor.White;
         }
+        /// <summary>
+        /// Write error message.
+        /// </summary>
+        /// <param name="text"></param>
         public static void WriteErrorMessage(string text)
         {
-            WriteLineColor(text, ConsoleColor.Red);
+            WriteMessage(text, ConsoleColor.Red);
         }
+        /// <summary>
+        /// Write Infomation message.
+        /// </summary>
+        /// <param name="text"></param>
         public static void WriteInformationMessage(string text)
         {
-            WriteLineColor(text, ConsoleColor.Green);
+            WriteMessage(text, ConsoleColor.Green);
         }
     }
 }

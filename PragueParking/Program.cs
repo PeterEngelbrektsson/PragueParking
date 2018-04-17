@@ -14,7 +14,7 @@ namespace PragueParking
         public const string ParkingPlaceFileName = "ParkinPlace1_1.bin";
         
         /// <summary>
-        /// Writes the main menu to console.
+        /// Writes the main menu 
         /// </summary>
         /// <param name="parkingPlace"></param>
         public static void WriteMenu(string[] parkingPlace)
@@ -69,6 +69,10 @@ namespace PragueParking
             Messenger.WriteInformationMessage(String.Format("The number of full parking places {0}.", fullParkingPlaces));
             Messenger.WriteInformationMessage(String.Format("The number of single parked motorcycles {0}.", singleMcs));
         }
+        /// <summary>
+        /// Display the menu bar.
+        /// </summary>
+        /// <param name="parkingPlace"></param>
         public static void DisplayMenu(ref string[] parkingPlace)
         {
             // Console.Clear(); -- Do we want to clear screen between repeat displays of the menu or not ? 
@@ -218,6 +222,10 @@ namespace PragueParking
 
             }
         }
+        /// <summary>
+        /// Finding free parking place. 
+        /// </summary>
+        /// <param name="parkingPlace"></param>
         public static void FindFreeSpot(string[] parkingPlace)
         {
             Console.WriteLine("Please specify if your vehicle is a car or an mc : ");
@@ -247,6 +255,10 @@ namespace PragueParking
             Messenger.WriteInformationMessage(String.Format("There is a free place for your vehicle at {0}.", position + 1));
 
         }
+        /// <summary>
+        /// Finding Vehicle
+        /// </summary>
+        /// <param name="parkingPlace"></param>
         static void FindVehicle(string[] parkingPlace)
         {
             Console.WriteLine("Please enter the registration number of the vehicle : ");
@@ -276,6 +288,10 @@ namespace PragueParking
                 }
             }
         }
+        /// <summary>
+        /// Moving Vehicle one place to another place.
+        /// </summary>
+        /// <param name="parkingPlace"></param>
         public static void MoveVehicle(string[] parkingPlace)
         {
             Console.Write("Enter the registration number: ");
@@ -376,6 +392,12 @@ namespace PragueParking
             return registrationNumber;
         }
 
+        /// <summary>
+        /// Park Vehicle
+        /// </summary>
+        /// <param name="parkingPlace"></param>
+        /// <param name="registrationNumber"></param>
+        /// <param name="vehicleType"></param>
         public static void ParkVehicle(string[] parkingPlace, string registrationNumber, VehicleType vehicleType)
         {
             try
@@ -392,7 +414,10 @@ namespace PragueParking
                 Messenger.WriteErrorMessage("The parking place has no room for the vehicel.");
             }
         }
-            
+            /// <summary>
+            /// Add motocycle
+            /// </summary>
+            /// <param name="parkingPlace"></param>
         public static void AddMc(string[] parkingPlace)
         {
             string registrationNumber = PromptForRegistrationNumber();
@@ -402,6 +427,10 @@ namespace PragueParking
             }
         }
 
+        /// <summary>
+        /// Add Car
+        /// </summary>
+        /// <param name="parkingPlace"></param>
         static void AddCar(string[] parkingPlace)
         {
             string registrationNumber = PromptForRegistrationNumber();
@@ -409,6 +438,10 @@ namespace PragueParking
                 ParkVehicle(parkingPlace, registrationNumber, VehicleType.Car);
             }
         }
+        /// <summary>
+        /// Revome Vehicle
+        /// </summary>
+        /// <param name="parkingPlace"></param>
         static void RemoveVehicle(string[] parkingPlace)
         {
             string registrationNumber = PromptForRegistrationNumber();
@@ -417,6 +450,10 @@ namespace PragueParking
                 Remove(parkingPlace, registrationNumber); // Remove the vehicle with the specificed registration number (if it exists in the parking lot)
             }
         }
+        /// <summary>
+        /// Adding some test data
+        /// </summary>
+        /// <returns></returns>
         public static string[] PopulateTestData()
         {
             string[] parkingPlace = new string[100];
@@ -438,7 +475,10 @@ namespace PragueParking
 
             return parkingPlace;
         }
-
+        /// <summary>
+        /// Main 
+        /// </summary>
+        /// <param name="args"></param>
         public static void Main(string[] args)
         {
             //Main file
