@@ -252,7 +252,7 @@ namespace PragueParking
             Console.WriteLine("Please enter the registration number of the vehicle : ");
             string registrationNumber = Console.ReadLine().ToUpper();
 
-            int position = Parking.Find(parkingPlace, registrationNumber); // Position where vehicle is located (if any)
+            int position = Parking.FindDistinct(parkingPlace, registrationNumber); // Position where vehicle is located (if any)
 
             if (position != -1)
             {
@@ -280,7 +280,7 @@ namespace PragueParking
         {
             Console.Write("Enter the registration number: ");
             string registrationNumber = Console.ReadLine().ToUpper();
-            int oldPosition = Parking.Find(parkingPlace, registrationNumber);
+            int oldPosition = Parking.FindDistinct(parkingPlace, registrationNumber);
             if (oldPosition < 0)
             {
                 Messenger.WriteErrorMessage("The vehicle could not be found.");
@@ -341,6 +341,10 @@ namespace PragueParking
             }
 
         }
+        /// <summary>
+        /// Prompts the user for a valid registration number or exit code 0
+        /// </summary>
+        /// <returns></returns>
         public static string PromptForRegistrationNumber()
         {
             bool loop = true;
@@ -407,9 +411,11 @@ namespace PragueParking
         }
         static void RemoveVehicle(string[] parkingPlace)
         {
-            Console.WriteLine("Please enter the registration number of the vehicle : ");
-            string registrationNumber = Console.ReadLine().ToUpper();
-            Remove(parkingPlace, registrationNumber); // Remove the vehicle with the specificed registration number (if it exists in the parking lot)
+            string registrationNumber = PromptForRegistrationNumber();
+            if (registrationNumber != null)
+            {
+                Remove(parkingPlace, registrationNumber); // Remove the vehicle with the specificed registration number (if it exists in the parking lot)
+            }
         }
         public static string[] PopulateTestData()
         {

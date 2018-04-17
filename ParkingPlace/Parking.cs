@@ -41,7 +41,7 @@ namespace ParkingPlace
 
         public static int Add(string [] parkingPlace, string registrationNumber, VehicleType vehicleType)
         {
-            int pos = Find(parkingPlace, registrationNumber);
+            int pos = FindDistinct(parkingPlace, registrationNumber);
             if(pos != -1)
             {
                 // The registration number already exists
@@ -74,7 +74,7 @@ namespace ParkingPlace
               
         public static void Move(string[] parkingPlace, string registrationNumber, int newPosition)
         {
-            int oldPosition = Find(parkingPlace, registrationNumber);
+            int oldPosition = FindDistinct(parkingPlace, registrationNumber);
             if (oldPosition < 0)
             {
                 throw new VehicleNotFoundException("The vehicle "+registrationNumber+" can not be found ");
@@ -271,7 +271,7 @@ namespace ParkingPlace
         /// <param name="parkingPlace"></param>
         /// <param name="registrationNumber"></param>
         /// <returns>Position of the found vehicle. -1 if not found</returns>
-        public static int Find(string[] parkingPlace, string registrationNumber)
+        public static int FindDistinct(string[] parkingPlace, string registrationNumber)
         {
 
             for (int i = 0; i < parkingPlace.Length; i++)

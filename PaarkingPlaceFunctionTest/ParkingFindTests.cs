@@ -18,7 +18,7 @@ namespace ParkingPlaceFunctionTest
                 int expectedPlace = -1;
 
                 //Act
-                actualPlace = Parking.Find(park, "bcd987");
+                actualPlace = Parking.FindDistinct(park, "bcd987");
 
                 //Verify
                 Assert.AreEqual(expectedPlace, actualPlace);
@@ -36,7 +36,7 @@ namespace ParkingPlaceFunctionTest
                 int expectedPlace = 2;
 
                 //Act
-                actualPlace = Parking.Find(park, "htr863");
+                actualPlace = Parking.FindDistinct(park, "htr863");
 
                 //Verify
                 Assert.AreEqual(expectedPlace, actualPlace);
@@ -54,7 +54,7 @@ namespace ParkingPlaceFunctionTest
                 int expectedPlace = 2;
 
                 //Act
-                actualPlace = Parking.Find(park, "htr863");
+                actualPlace = Parking.FindDistinct(park, "htr863");
 
                 //Verify
                 Assert.AreEqual(expectedPlace, actualPlace);
@@ -72,7 +72,7 @@ namespace ParkingPlaceFunctionTest
                 int expectedPlace = 1;
 
                 //Act
-                actualPlace = Parking.Find(park, "pou456");
+                actualPlace = Parking.FindDistinct(park, "pou456");
 
                 //Verify
                 Assert.AreEqual(expectedPlace, actualPlace);
@@ -90,7 +90,7 @@ namespace ParkingPlaceFunctionTest
                 int expectedPlace = 1;
 
                 //Act
-                actualPlace = Parking.Find(park, "der123");
+                actualPlace = Parking.FindDistinct(park, "der123");
 
                 //Verify
                 Assert.AreEqual(expectedPlace, actualPlace);
@@ -108,7 +108,7 @@ namespace ParkingPlaceFunctionTest
                 int expectedPlace = 1;
 
                 //Act
-                actualPlace = Parking.Find(park, "pou456");
+                actualPlace = Parking.FindDistinct(park, "pou456");
 
                 //Verify
                 Assert.AreEqual(expectedPlace, actualPlace);
@@ -126,7 +126,7 @@ namespace ParkingPlaceFunctionTest
                 int expectedPlace = 0;
 
                 //Act
-                actualPlace = Parking.Find(park, "abc123");
+                actualPlace = Parking.FindDistinct(park, "abc123");
 
                 //Verify
                 Assert.AreEqual(expectedPlace, actualPlace);
