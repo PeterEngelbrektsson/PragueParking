@@ -61,7 +61,7 @@ namespace ParkingPlaceFunctionTest
             //Act
             Parking.Remove(park, "1poi43"); // Should throw exception
         }
-        [TestMethod]
+    /*    [TestMethod]
         public void RemoveMcRight3mcTest()
         {
             // Setup
@@ -81,6 +81,8 @@ namespace ParkingPlaceFunctionTest
             MyAssert.AreEqual(expected, park);
             Assert.AreEqual(expectedPos, actualPos);
         }
+        */
+        /*
         [TestMethod]
         public void RemoveMcLeft3mcTest()
         {
@@ -101,6 +103,8 @@ namespace ParkingPlaceFunctionTest
             MyAssert.AreEqual(expected, park);
             Assert.AreEqual(expectedPos, actualPos);
         }
+        */
+        /*
         [TestMethod]
         public void RemoveCarTest()
         {
@@ -122,6 +126,8 @@ namespace ParkingPlaceFunctionTest
             MyAssert.AreEqual(expected, park);
             Assert.AreEqual(expectedPos, actualPos);
         }
+        */
+        /*
         [TestMethod]
         public void RemoveMc100VehiclesTest()
         {
@@ -142,7 +148,8 @@ namespace ParkingPlaceFunctionTest
             MyAssert.AreEqual(expected, park);
             Assert.AreEqual(expectedPos, actualPos);
         }
-
+        */
+        /*
         [TestMethod]
         public void RemoveCar100VehiclesTest()
         {
@@ -164,6 +171,7 @@ namespace ParkingPlaceFunctionTest
             MyAssert.AreEqual(expected, park);
             Assert.AreEqual(expectedPos, actualPos);
         }
+        */
 
     }
 

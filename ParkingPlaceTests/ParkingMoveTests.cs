@@ -36,7 +36,7 @@ namespace ParkingPlaceTests
             string registrationNumber = "abc123";
 
             string[] parkingPlace = new string[1];
-            parkingPlace[0] = "abc123";
+            parkingPlace[0] = "abc123,1999-01-02 13:34";
 
             // Act
             actualVehicleType = Parking.GetVehicleTypeOfParkedVehicle(parkingPlace, 0,registrationNumber);

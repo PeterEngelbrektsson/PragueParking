@@ -163,7 +163,7 @@ namespace ParkingPlaceFunctionTest
             park[1] = "dbc423:lk433";
 
             string[] expected = new string[2];
-            expected[0] = "8toi43";
+            expected[0] = "8toi43"+","+DateTime.Now;
             expected[1] = "dbc423:lk433";
 
             int expectedPosition = 0;
@@ -241,7 +241,7 @@ namespace ParkingPlaceFunctionTest
             park[1] = "dbc423:lk433";
 
             string[] expected = new string[2];
-            expected[0] = GoodCustomPlateRegistrationNumber;
+            expected[0] = GoodCustomPlateRegistrationNumber+ ","+ DateTime.Now;
             expected[1] = "dbc423:lk433";
 
             int expectedPosition = 0;
